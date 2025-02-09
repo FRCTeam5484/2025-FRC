@@ -1,17 +1,40 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
 package frc.robot.subsystems;
 
+import com.revrobotics.spark.SparkBase.PersistMode;
+import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+import com.revrobotics.spark.config.SparkMaxConfig;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class subCoral extends SubsystemBase {
-  /** Creates a new subCoral. */
-  public subCoral() {}
+  SparkMax feedMotor = new SparkMax(Constants.Elevator.LowerMotor, SparkMax.MotorType.kBrushless);
+  SparkMaxConfig feedConfig = new SparkMaxConfig();
+  public subCoral() {
+    feedConfig
+      .inverted(false)
+      .idleMode(IdleMode.kBrake);
+    feedConfig.encoder
+      .positionConversionFactor(1000)
+      .velocityConversionFactor(1000);
+    feedConfig.closedLoop
+      .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+      .pid(1.0, 0.0, 0.0);
+    feedMotor.configure(feedConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+  }
+
+  public void teleOp(double speed) {
+    feedMotor.set(speed);
+  }
+
+  public void stop(){
+    feedMotor.stopMotor();
   }
 }
