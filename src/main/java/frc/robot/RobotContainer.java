@@ -1,14 +1,12 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
 package frc.robot;
 
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.cmdAlgaeArm_TeleOp;
-import frc.robot.commands.cmdAlgaeIntake_TeleOp;
-import frc.robot.commands.cmdCoral_TeleOp;
 import frc.robot.commands.cmdElevator_TeleOp;
+import frc.robot.subsystems.subSwerve;
+import swervelib.SwerveInputStream;
 import frc.robot.subsystems.subAlgae;
 import frc.robot.subsystems.subCoral;
 import frc.robot.subsystems.subElevator;
@@ -20,29 +18,35 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 public class RobotContainer {
   //private final subCoral coral = new subCoral();
   //private final subAlgae algae = new subAlgae();
+  private final subSwerve swerve = new subSwerve();
   private final subElevator elevator = new subElevator();
-
   private final CommandXboxController driverOne = new CommandXboxController(OperatorConstants.DriverOne);
+  SwerveInputStream driveAngularVelocity = SwerveInputStream.of(swerve.getSwerveDrive(), 
+                                                                () -> driverOne.getLeftY() * -1, 
+                                                                () -> driverOne.getLeftX() * -1)
+                                                                .withControllerRotationAxis(driverOne::getRightX)
+                                                                .deadband(0.05)
+                                                                .scaleTranslation(0.5)
+                                                                .allianceRelativeControl(true);
 
+  SwerveInputStream driveDirectAngle = driveAngularVelocity.copy().withControllerHeadingAxis(driverOne::getRightX,
+                                                                                            driverOne::getRightY)
+                                                                                           .headingWhile(true);
+  
   public RobotContainer() {
-    configureBindings();
+    //DriverOneControls();
+    //DriverTwoControls();
+    SingleDriverControls();
   }
 
-  private void configureBindings() {
-    configureDriverOne();
-    configureDriverTwo();
-    configureSingleDriver();
-    // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    //new Trigger(m_exampleSubsystem::exampleCondition)
-    //    .onTrue(new ExampleCommand(m_exampleSubsystem));
+  private void DriverOneControls() {
+    Command driveFieldOrientatedDirectAngle = swerve.driveFieldOrientated(driveDirectAngle);
+    Command driveFieldOrientatedAngularVelocity = swerve.driveFieldOrientated(driveAngularVelocity);
 
-    // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
-    // cancelling on release.
-    //m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+    swerve.setDefaultCommand(driveFieldOrientatedAngularVelocity);
   }
-  private void configureDriverOne() {}
-  private void configureDriverTwo(){}
-  private void configureSingleDriver() {
+  private void DriverTwoControls(){}
+  private void SingleDriverControls() {
     // Elevator
     elevator.setDefaultCommand(
       new cmdElevator_TeleOp(

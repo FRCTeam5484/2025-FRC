@@ -1,129 +1,89 @@
+
 package frc.robot.subsystems;
 
-import com.ctre.phoenix6.configs.Pigeon2Configuration;
-import com.ctre.phoenix6.hardware.Pigeon2;
-import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.config.PIDConstants;
-
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import java.io.File;
+import java.util.function.Supplier;
+import edu.wpi.first.wpilibj.Filesystem;
+import swervelib.parser.SwerveParser;
+import swervelib.telemetry.SwerveDriveTelemetry;
+import swervelib.telemetry.SwerveDriveTelemetry.TelemetryVerbosity;
+import swervelib.SwerveDrive;
+import edu.wpi.first.apriltag.AprilTagFieldLayout;
+import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
-import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
-import edu.wpi.first.math.kinematics.SwerveModulePosition;
-import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.units.measure.Angle;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
-import frc.robot.Constants.SwerveConstants;
-import frc.robot.classes.swerveModule;
+import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.util.Units;
+import static edu.wpi.first.units.Units.Meter;
 
 public class subSwerve extends SubsystemBase {
-  
-  private final swerveModule frontLeftModule = new swerveModule(SwerveConstants.kFrontLeftDrivingCanId,SwerveConstants.kFrontLeftTurningCanId,SwerveConstants.kFrontLeftCANcoder,SwerveConstants.kFrontLeftOffset);
-  private final swerveModule frontRightModule = new swerveModule(SwerveConstants.kFrontRightDrivingCanId,SwerveConstants.kFrontRightTurningCanId,SwerveConstants.kFrontRightCANcoder,SwerveConstants.kFrontRightOffset);
-  private final swerveModule rearLeftModule = new swerveModule(SwerveConstants.kRearLeftDrivingCanId,SwerveConstants.kRearLeftTurningCanId,SwerveConstants.kRearLeftCANcoder,SwerveConstants.kRearLeftOffset);
-  private final swerveModule rearRightModule = new swerveModule(SwerveConstants.kRearRightDrivingCanId,SwerveConstants.kRearRightTurningCanId,SwerveConstants.kRearRightCANcoder,SwerveConstants.kRearRightOffset);
-
-  private final Pigeon2 gyro;
-  public SwerveDriveOdometry odometry;
-
+  private final double kMaxSpeed = Units.feetToMeters(19.3);
+  private final SwerveDrive swerveDrive;
+  private final File directory = new File(Filesystem.getDeployDirectory(), "swerve");
+  private final AprilTagFieldLayout aprilTagFieldLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2025Reefscape);
   public subSwerve() {
-    gyro = new Pigeon2(SwerveConstants.Pigeon2);
-    gyro.getConfigurator().apply(new Pigeon2Configuration());
-    gyro.setYaw(0);
-    odometry = new SwerveDriveOdometry(
-      SwerveConstants.kDriveKinematics,
-      gyro.getRotation2d(),
-      new SwerveModulePosition[] {
-        frontLeftModule.getPosition(),
-        frontRightModule.getPosition(),
-        rearLeftModule.getPosition(),
-        rearRightModule.getPosition()
-      });
-
-    /* AutoBuilder.configureHolonomic(
-      this::getPose,
-      this::resetPose,
-      this::getChassisSpeeds,
-      this::driveRobotRelative,
-      new HolonomicPathFollowerConfig( 
-              new PIDConstants(1.0, 0.0, 0.0),
-              new PIDConstants(1.0, 0.0, 0.0),
-              4.5,
-              0.4,
-              new ReplanningConfig()
-      ),
-      () -> {
-        var alliance = DriverStation.getAlliance();
-        if (alliance.isPresent()) {
-          return alliance.get() == DriverStation.Alliance.Red;
-        }
-        return false;
-      },
-      this
-    ); */
-  }
-
-  public void updateOdometry(){
-    odometry.update(
-      gyro.getRotation2d(),
-      new SwerveModulePosition[] {
-        frontLeftModule.getPosition(),
-        frontRightModule.getPosition(),
-        rearLeftModule.getPosition(),
-        rearRightModule.getPosition()
-      });
-  }
-  
-  public void setModuleStates(SwerveModuleState[] desiredStates) {
-    SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, Constants.DriveConstants.kMaxSpeedMetersPerSecond);
-    frontLeftModule.setDesiredState(desiredStates[0]);
-    frontRightModule.setDesiredState(desiredStates[1]);
-    rearLeftModule.setDesiredState(desiredStates[2]);
-    rearRightModule.setDesiredState(desiredStates[3]);
-  }
-
-  public void drive(double xSpeed, double ySpeed, double rot) { 
-    setModuleStates(SwerveConstants.kDriveKinematics.toSwerveModuleStates(ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rot, getRotation2d()))); 
-  }
-  public void stopModules(){ 
-    frontLeftModule.stopModule(); frontRightModule.stopModule(); rearLeftModule.stopModule(); rearRightModule.stopModule(); 
-  }
-  public void zeroHeading() { gyro.setYaw(0); }
-  public Rotation2d getRotation2d() { return gyro.getRotation2d(); }
-  /* public void setGryoOffset(Angle offset){
-    Angle correction = gyro.getYaw().getValue();
-    gyro.setYaw(correction.plus(offset));
-  } */
-
-  // Methods for PathPlanner
-  public Pose2d getPose() { return odometry.getPoseMeters(); }
-  public void resetPose(Pose2d pose) {
-    odometry.resetPosition(
-      getRotation2d(),
-      new SwerveModulePosition[] {
-        frontLeftModule.getPosition(),
-        frontRightModule.getPosition(),
-        rearLeftModule.getPosition(),
-        rearRightModule.getPosition()
-      },
-      pose);
-  }
-  public ChassisSpeeds getChassisSpeeds(){ 
-    return SwerveConstants.kDriveKinematics.toChassisSpeeds(
-      frontLeftModule.getState(), 
-      frontRightModule.getState(), 
-      rearLeftModule.getState(), 
-      rearRightModule.getState());
-  }
-  public void driveRobotRelative(ChassisSpeeds chassisSpeeds) { 
-    this.drive(chassisSpeeds.vxMetersPerSecond, chassisSpeeds.vyMetersPerSecond, chassisSpeeds.omegaRadiansPerSecond); 
+    SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;
+    try {
+      swerveDrive = new SwerveParser(directory).createSwerveDrive(kMaxSpeed,
+                                                                  new Pose2d(new Translation2d(Meter.of(1),
+                                                                                               Meter.of(4)),
+                                                                             Rotation2d.fromDegrees(0)));  
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
   }
 
   @Override
   public void periodic() {
-    updateOdometry();
+  }
+  public SwerveDrive getSwerveDrive() {
+    return swerveDrive;
+  }
+
+  public void driveFieldOrientated(ChassisSpeeds speeds) {
+    swerveDrive.driveFieldOriented(speeds);
+  }
+
+  public Command driveFieldOrientated(Supplier<ChassisSpeeds> chassisSpeeds) {
+    return run(() -> {  
+      driveFieldOrientated(chassisSpeeds.get());
+    });
+  }
+
+  public SwerveDriveKinematics getKinematics(){
+    return swerveDrive.kinematics;
+  }
+
+  public void resetOdometry(Pose2d initialHolonomicPose){
+    swerveDrive.resetOdometry(initialHolonomicPose);
+  }
+
+  public Pose2d getPose(){
+    return swerveDrive.getPose();
+  }
+
+  public void setChassisSpeeds(ChassisSpeeds chassisSpeeds){
+    swerveDrive.setChassisSpeeds(chassisSpeeds);
+  }
+
+  public void postTrajectory(Trajectory trajectory){
+    swerveDrive.postTrajectory(trajectory);
+  }
+
+  public void zeroGyro(){
+    swerveDrive.zeroGyro();
+  }
+
+  public void setMotorBrake(boolean brake) {
+    swerveDrive.setMotorIdleMode(brake);
+  }
+
+  public Rotation2d getHeading(){
+    return getPose().getRotation();
   }
 }
