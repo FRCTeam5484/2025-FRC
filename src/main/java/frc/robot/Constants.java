@@ -23,6 +23,28 @@ public class Constants {
             new Translation2d(kWheelBase / 2, -kTrackWidth / 2),
             new Translation2d(-kWheelBase / 2, kTrackWidth / 2),
             new Translation2d(-kWheelBase / 2, -kTrackWidth / 2));
+
+        public static final double kFrontLeftOffset = 0.93652;
+        public static final double kFrontRightOffset = 0.42968;
+        public static final double kRearLeftOffset = 0.04614;
+        public static final double kRearRightOffset = 0.61659;
+      
+        public static final int kFrontLeftDrivingCanId = 1;
+        public static final int kFrontRightDrivingCanId = 4;
+        public static final int kRearLeftDrivingCanId = 7;
+        public static final int kRearRightDrivingCanId = 10;
+      
+        public static final int kFrontLeftTurningCanId = 2;
+        public static final int kFrontRightTurningCanId = 5;
+        public static final int kRearLeftTurningCanId = 8;
+        public static final int kRearRightTurningCanId = 11;
+      
+        public static final int kFrontLeftCANcoder = 3;
+        public static final int kFrontRightCANcoder = 6;
+        public static final int kRearLeftCANcoder = 9;
+        public static final int kRearRightCANcoder = 12;
+
+        public static final int Pigeon2 = 1;
     }
     public static final class Elevator{
       public static final int LowerMotor = 13;

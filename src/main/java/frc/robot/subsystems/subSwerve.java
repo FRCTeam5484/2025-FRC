@@ -20,36 +20,17 @@ import frc.robot.Constants.SwerveConstants;
 import frc.robot.classes.swerveModule;
 
 public class subSwerve extends SubsystemBase {
-  public static final double kFrontLeftOffset = 0.93652;
-  public static final double kFrontRightOffset = 0.42968;
-  public static final double kRearLeftOffset = 0.04614;
-  public static final double kRearRightOffset = 0.61659;
-
-  public static final int kFrontLeftDrivingCanId = 1;
-  public static final int kFrontRightDrivingCanId = 4;
-  public static final int kRearLeftDrivingCanId = 7;
-  public static final int kRearRightDrivingCanId = 10;
-
-  public static final int kFrontLeftTurningCanId = 2;
-  public static final int kFrontRightTurningCanId = 5;
-  public static final int kRearLeftTurningCanId = 8;
-  public static final int kRearRightTurningCanId = 11;
-
-  public static final int kFrontLeftCANcoder = 3;
-  public static final int kFrontRightCANcoder = 6;
-  public static final int kRearLeftCANcoder = 9;
-  public static final int kRearRightCANcoder = 12;
-
-  private final swerveModule frontLeftModule = new swerveModule(kFrontLeftDrivingCanId,kFrontLeftTurningCanId,kFrontLeftCANcoder,kFrontLeftOffset);
-  private final swerveModule frontRightModule = new swerveModule(kFrontRightDrivingCanId,kFrontRightTurningCanId,kFrontRightCANcoder,kFrontRightOffset);
-  private final swerveModule rearLeftModule = new swerveModule(kRearLeftDrivingCanId,kRearLeftTurningCanId,kRearLeftCANcoder,kRearLeftOffset);
-  private final swerveModule rearRightModule = new swerveModule(kRearRightDrivingCanId,kRearRightTurningCanId,kRearRightCANcoder,kRearRightOffset);
+  
+  private final swerveModule frontLeftModule = new swerveModule(SwerveConstants.kFrontLeftDrivingCanId,SwerveConstants.kFrontLeftTurningCanId,SwerveConstants.kFrontLeftCANcoder,SwerveConstants.kFrontLeftOffset);
+  private final swerveModule frontRightModule = new swerveModule(SwerveConstants.kFrontRightDrivingCanId,SwerveConstants.kFrontRightTurningCanId,SwerveConstants.kFrontRightCANcoder,SwerveConstants.kFrontRightOffset);
+  private final swerveModule rearLeftModule = new swerveModule(SwerveConstants.kRearLeftDrivingCanId,SwerveConstants.kRearLeftTurningCanId,SwerveConstants.kRearLeftCANcoder,SwerveConstants.kRearLeftOffset);
+  private final swerveModule rearRightModule = new swerveModule(SwerveConstants.kRearRightDrivingCanId,SwerveConstants.kRearRightTurningCanId,SwerveConstants.kRearRightCANcoder,SwerveConstants.kRearRightOffset);
 
   private final Pigeon2 gyro;
   public SwerveDriveOdometry odometry;
 
   public subSwerve() {
-    gyro = new Pigeon2(1);
+    gyro = new Pigeon2(SwerveConstants.Pigeon2);
     gyro.getConfigurator().apply(new Pigeon2Configuration());
     gyro.setYaw(0);
     odometry = new SwerveDriveOdometry(
