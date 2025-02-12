@@ -11,6 +11,7 @@ import frc.robot.subsystems.subAlgae;
 import frc.robot.subsystems.subCoral;
 import frc.robot.subsystems.subElevator;
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -18,10 +19,10 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 public class RobotContainer {
   //private final subCoral coral = new subCoral();
   //private final subAlgae algae = new subAlgae();
-  private final subSwerve swerve = new subSwerve();
+  //private final subSwerve swerve = new subSwerve();
   private final subElevator elevator = new subElevator();
-  private final CommandXboxController driverOne = new CommandXboxController(OperatorConstants.DriverOne);
-  SwerveInputStream driveAngularVelocity = SwerveInputStream.of(swerve.getSwerveDrive(), 
+  private final XboxController driverOne = new XboxController(OperatorConstants.DriverOne);
+  /* SwerveInputStream driveAngularVelocity = SwerveInputStream.of(swerve.getSwerveDrive(), 
                                                                 () -> driverOne.getLeftY() * -1, 
                                                                 () -> driverOne.getLeftX() * -1)
                                                                 .withControllerRotationAxis(driverOne::getRightX)
@@ -31,7 +32,7 @@ public class RobotContainer {
 
   SwerveInputStream driveDirectAngle = driveAngularVelocity.copy().withControllerHeadingAxis(driverOne::getRightX,
                                                                                             driverOne::getRightY)
-                                                                                           .headingWhile(true);
+                                                                                           .headingWhile(true); */
   
   public RobotContainer() {
     //DriverOneControls();
@@ -40,10 +41,10 @@ public class RobotContainer {
   }
 
   private void DriverOneControls() {
-    Command driveFieldOrientatedDirectAngle = swerve.driveFieldOrientated(driveDirectAngle);
+    /* Command driveFieldOrientatedDirectAngle = swerve.driveFieldOrientated(driveDirectAngle);
     Command driveFieldOrientatedAngularVelocity = swerve.driveFieldOrientated(driveAngularVelocity);
 
-    swerve.setDefaultCommand(driveFieldOrientatedAngularVelocity);
+    swerve.setDefaultCommand(driveFieldOrientatedAngularVelocity); */
   }
   private void DriverTwoControls(){}
   private void SingleDriverControls() {
