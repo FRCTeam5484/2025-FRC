@@ -56,6 +56,8 @@ public class RobotContainer {
 
     swerve.setDefaultCommand(driveFieldOrientatedAngularVelocity);
 
+    driverOne.start().whileTrue(new InstantCommand(() -> swerve.zeroGyro()));
+
     // Elevator
     driverOne.povUp().whileTrue(new cmdElevator_TeleOp(elevator, ()-> 0.2));
     driverOne.povDown().whileTrue(new cmdElevator_TeleOp(elevator, ()-> -0.2));
