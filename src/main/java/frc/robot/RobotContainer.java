@@ -15,9 +15,7 @@ import frc.robot.subsystems.subCoral;
 import frc.robot.subsystems.subElevator;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 public class RobotContainer {
   private final subCoral coral = new subCoral();
@@ -43,12 +41,7 @@ public class RobotContainer {
     SingleDriverControls();
   }
 
-  private void DriverOneControls() {
-    /* Command driveFieldOrientatedDirectAngle = swerve.driveFieldOrientated(driveDirectAngle);
-    Command driveFieldOrientatedAngularVelocity = swerve.driveFieldOrientated(driveAngularVelocity);
-
-    swerve.setDefaultCommand(driveFieldOrientatedAngularVelocity); */
-  }
+  private void DriverOneControls() {}
   private void DriverTwoControls(){}
   private void SingleDriverControls() {
     Command driveFieldOrientatedDirectAngle = swerve.driveFieldOrientated(driveDirectAngle);
@@ -61,31 +54,18 @@ public class RobotContainer {
     // Elevator
     driverOne.povUp().whileTrue(new cmdElevator_TeleOp(elevator, ()-> 0.2));
     driverOne.povDown().whileTrue(new cmdElevator_TeleOp(elevator, ()-> -0.2));
-    /* elevator.setDefaultCommand(
-      new cmdElevator_TeleOp(
-          elevator,
-          () -> MathUtil.applyDeadband(-driverOne.getLeftY(), 0.05))); */
 
     // Coral
     driverOne.povLeft().whileTrue(new cmdCoral_TeleOp(coral, ()-> 0.5));
     driverOne.povRight().whileTrue(new cmdCoral_TeleOp(coral, ()-> -0.5));
-    /* coral.setDefaultCommand(
-      new cmdCoral_TeleOp(
-          coral,
-          () -> MathUtil.applyDeadband(-driverOne.getRightY(), 0.05))); */
           
     // Intake
     driverOne.x().whileTrue(new cmdAlgaeIntake_TeleOp(algae, ()-> 0.5));
     driverOne.b().whileTrue(new cmdAlgaeIntake_TeleOp(algae, ()-> -0.5));
-    driverOne.a().whileTrue(new cmdAlgaeArm_TeleOp(algae, ()-> 0.2));
-    driverOne.y().whileTrue(new cmdAlgaeArm_TeleOp(algae, ()-> -0.2));
-    //driverOne.getAButton().whileTrue(new cmdAlgaeIntake_TeleOp(algae, ()-> 0.5));
-    //driverOne.b().whileTrue(new cmdAlgaeIntake_TeleOp(algae, ()-> -0.5));
 
     // Arm
-    //driverOne.x().whileTrue(new cmdAlgaeArm_TeleOp(algae, ()->0.5));
-    //driverOne.y().whileTrue(new cmdAlgaeArm_TeleOp(algae, ()->-0.5));
-   
+    driverOne.a().whileTrue(new cmdAlgaeArm_TeleOp(algae, ()-> 0.2));
+    driverOne.y().whileTrue(new cmdAlgaeArm_TeleOp(algae, ()-> -0.2));
   }
   public Command getAutonomousCommand() {
     return new InstantCommand();

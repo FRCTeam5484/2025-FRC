@@ -7,7 +7,13 @@ import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
+import com.revrobotics.spark.SparkClosedLoopController;
 
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.AnalogPotentiometer;
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -18,8 +24,15 @@ public class subElevator extends SubsystemBase {
   RelativeEncoder upperEncoder = upperMotor.getEncoder();
   SparkMaxConfig lowerConfig = new SparkMaxConfig();
   SparkMaxConfig upperConfig = new SparkMaxConfig();
+  DigitalInput lowerLimit = new DigitalInput(Constants.Elevator.LowerLimit);
+  DigitalInput upperLimit = new DigitalInput(Constants.Elevator.UpperLimit);
+  AnalogPotentiometer stringPotentiometer = new AnalogPotentiometer(Constants.Elevator.StringPot);
+  PIDController elevatorPID = new PIDController(0.04, 0.0, 0.0);
 
   public subElevator() {
+    elevatorPID.setTolerance(0.1);
+    elevatorPID.setIntegratorRange(-0.1, 0.1);
+
     lowerEncoder.setPosition(0);
     upperEncoder.setPosition(0);
 
@@ -29,9 +42,6 @@ public class subElevator extends SubsystemBase {
     lowerConfig.encoder
       .positionConversionFactor(1000)
       .velocityConversionFactor(1000);
-    lowerConfig.closedLoop
-      .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-      .pid(1.0, 0.0, 0.0);
     lowerMotor.configure(lowerConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
     upperConfig
@@ -41,19 +51,28 @@ public class subElevator extends SubsystemBase {
     upperConfig.encoder
       .positionConversionFactor(1000)
       .velocityConversionFactor(1000);
-    upperConfig.closedLoop
-      .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-      .pid(1.0, 0.0, 0.0);
     upperMotor.configure(upperConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
   }
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+    SmartDashboard.putNumber("Elevator Height", stringPotentiometer.get());
   }
 
   public void teleOp(double speed) {
     lowerMotor.set(speed);
+  }
+
+  public void autoToPosition(double position) {
+    if(lowerLimit.get() && lowerMotor.get() > 0) {
+      stop();
+    }
+    else if (upperLimit.get() && lowerMotor.get() < 0) {
+      stop();
+    }
+    else{
+      lowerMotor.set(elevatorPID.calculate(stringPotentiometer.get(), position));
+    }
   }
 
   public void stop() {

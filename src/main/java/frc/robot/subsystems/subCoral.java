@@ -24,9 +24,6 @@ public class subCoral extends SubsystemBase {
     feedConfig.encoder
       .positionConversionFactor(1000)
       .velocityConversionFactor(1000);
-    feedConfig.closedLoop
-      .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-      .pid(1.0, 0.0, 0.0);
     feedMotor.configure(feedConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
    }
 
@@ -38,6 +35,14 @@ public class subCoral extends SubsystemBase {
 
   public void teleOp(double speed) {
     feedMotor.set(speed);
+  }
+
+  public void autoIntake(){
+    if(inSensor.get() && outSensor.get()){
+      stop();
+    } else {
+      feedMotor.set(0.3);
+    }
   }
 
   public void stop(){

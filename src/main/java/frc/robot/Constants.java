@@ -24,6 +24,7 @@ public class Constants {
             new Translation2d(-kWheelBase / 2, kTrackWidth / 2),
             new Translation2d(-kWheelBase / 2, -kTrackWidth / 2));
 
+        //The following values are only for reference.  You must change them in the Src -> Deploy -> Swerve -> *.json files
         public static final double kFrontLeftOffset = 0.93652;
         public static final double kFrontRightOffset = 0.42968;
         public static final double kRearLeftOffset = 0.04614;
@@ -49,6 +50,16 @@ public class Constants {
     public static final class Elevator{
       public static final int LowerMotor = 13;
       public static final int UpperMotor = 14;
+      public static final int LowerLimit = 0;
+      public static final int UpperLimit = 1;
+      public static final int StringPot = 2;
+
+      public static final double bottomPosition = 0;
+      public static final double L1 = 0;
+      public static final double L2 = 0;
+      public static final double L3 = 0;
+      public static final double L4 = 0;
+      public static final double topPosition = 0;
     }
     public static final class Algae {
       public static final int ArmMotor = 15;
