@@ -4,6 +4,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.cmdAlgaeArm_TeleOp;
+import frc.robot.commands.cmdAlgaeIntake_TeleOp;
+import frc.robot.commands.cmdCoral_TeleOp;
 import frc.robot.commands.cmdElevator_TeleOp;
 import frc.robot.subsystems.subSwerve;
 import swervelib.SwerveInputStream;
@@ -17,12 +20,12 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 public class RobotContainer {
-  //private final subCoral coral = new subCoral();
-  //private final subAlgae algae = new subAlgae();
-  //private final subSwerve swerve = new subSwerve();
+  private final subCoral coral = new subCoral();
+  private final subAlgae algae = new subAlgae();
+  private final subSwerve swerve = new subSwerve();
   private final subElevator elevator = new subElevator();
-  private final XboxController driverOne = new XboxController(OperatorConstants.DriverOne);
-  /* SwerveInputStream driveAngularVelocity = SwerveInputStream.of(swerve.getSwerveDrive(), 
+  private final CommandXboxController driverOne = new CommandXboxController(OperatorConstants.DriverOne);
+  SwerveInputStream driveAngularVelocity = SwerveInputStream.of(swerve.getSwerveDrive(), 
                                                                 () -> driverOne.getLeftY() * -1, 
                                                                 () -> driverOne.getLeftX() * -1)
                                                                 .withControllerRotationAxis(driverOne::getRightX)
@@ -32,7 +35,7 @@ public class RobotContainer {
 
   SwerveInputStream driveDirectAngle = driveAngularVelocity.copy().withControllerHeadingAxis(driverOne::getRightX,
                                                                                             driverOne::getRightY)
-                                                                                           .headingWhile(true); */
+                                                                                           .headingWhile(true);
   
   public RobotContainer() {
     //DriverOneControls();
@@ -48,27 +51,39 @@ public class RobotContainer {
   }
   private void DriverTwoControls(){}
   private void SingleDriverControls() {
+    Command driveFieldOrientatedDirectAngle = swerve.driveFieldOrientated(driveDirectAngle);
+    Command driveFieldOrientatedAngularVelocity = swerve.driveFieldOrientated(driveAngularVelocity);
+
+    swerve.setDefaultCommand(driveFieldOrientatedAngularVelocity);
+
     // Elevator
-    elevator.setDefaultCommand(
+    driverOne.povUp().whileTrue(new cmdElevator_TeleOp(elevator, ()-> 0.2));
+    driverOne.povDown().whileTrue(new cmdElevator_TeleOp(elevator, ()-> -0.2));
+    /* elevator.setDefaultCommand(
       new cmdElevator_TeleOp(
           elevator,
-          () -> MathUtil.applyDeadband(-driverOne.getLeftY(), 0.05)));
+          () -> MathUtil.applyDeadband(-driverOne.getLeftY(), 0.05))); */
 
     // Coral
-    /*
-    coral.setDefaultCommand(
+    driverOne.povLeft().whileTrue(new cmdCoral_TeleOp(coral, ()-> 0.5));
+    driverOne.povRight().whileTrue(new cmdCoral_TeleOp(coral, ()-> -0.5));
+    /* coral.setDefaultCommand(
       new cmdCoral_TeleOp(
           coral,
-          () -> MathUtil.applyDeadband(-driverOne.getRightY(), 0.05)));
+          () -> MathUtil.applyDeadband(-driverOne.getRightY(), 0.05))); */
           
     // Intake
-    driverOne.a().whileTrue(new cmdAlgaeIntake_TeleOp(algae, ()-> 0.5));
+    driverOne.x().whileTrue(new cmdAlgaeIntake_TeleOp(algae, ()-> 0.5));
     driverOne.b().whileTrue(new cmdAlgaeIntake_TeleOp(algae, ()-> -0.5));
+    driverOne.a().whileTrue(new cmdAlgaeArm_TeleOp(algae, ()-> 0.2));
+    driverOne.y().whileTrue(new cmdAlgaeArm_TeleOp(algae, ()-> -0.2));
+    //driverOne.getAButton().whileTrue(new cmdAlgaeIntake_TeleOp(algae, ()-> 0.5));
+    //driverOne.b().whileTrue(new cmdAlgaeIntake_TeleOp(algae, ()-> -0.5));
 
     // Arm
-    driverOne.x().whileTrue(new cmdAlgaeArm_TeleOp(algae, ()->0.5));
-    driverOne.y().whileTrue(new cmdAlgaeArm_TeleOp(algae, ()->-0.5));
-    */
+    //driverOne.x().whileTrue(new cmdAlgaeArm_TeleOp(algae, ()->0.5));
+    //driverOne.y().whileTrue(new cmdAlgaeArm_TeleOp(algae, ()->-0.5));
+   
   }
   public Command getAutonomousCommand() {
     return new InstantCommand();

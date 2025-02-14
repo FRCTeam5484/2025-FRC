@@ -3,13 +3,16 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
 import java.io.File;
 import java.util.function.Supplier;
 import edu.wpi.first.wpilibj.Filesystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import swervelib.parser.SwerveParser;
 import swervelib.telemetry.SwerveDriveTelemetry;
 import swervelib.telemetry.SwerveDriveTelemetry.TelemetryVerbosity;
 import swervelib.SwerveDrive;
+import swervelib.SwerveModule;
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -40,6 +43,11 @@ public class subSwerve extends SubsystemBase {
 
   @Override
   public void periodic() {
+    SwerveModule[] modules = swerveDrive.getModules();
+    SmartDashboard.putNumber("Front Left CanCoder", modules[0].getAbsolutePosition());
+    SmartDashboard.putNumber("Front Right CanCoder", modules[1].getAbsolutePosition());
+    SmartDashboard.putNumber("Back Left CanCoder", modules[2].getAbsolutePosition());
+    SmartDashboard.putNumber("Back Right CanCoder", modules[3].getAbsolutePosition());
   }
   public SwerveDrive getSwerveDrive() {
     return swerveDrive;

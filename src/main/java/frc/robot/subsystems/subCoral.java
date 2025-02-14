@@ -15,7 +15,7 @@ import frc.robot.Constants;
 public class subCoral extends SubsystemBase {
   DigitalInput inSensor = new DigitalInput(Constants.Coral.InSensor);
   DigitalInput outSensor = new DigitalInput(Constants.Coral.OutSensor);
-  SparkMax feedMotor = new SparkMax(Constants.Elevator.LowerMotor, SparkMax.MotorType.kBrushless);
+  SparkMax feedMotor = new SparkMax(Constants.Coral.FeedMotor, SparkMax.MotorType.kBrushless);
   SparkMaxConfig feedConfig = new SparkMaxConfig();
   public subCoral() {
     feedConfig
