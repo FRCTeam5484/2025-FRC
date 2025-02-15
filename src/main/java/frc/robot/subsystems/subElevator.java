@@ -57,10 +57,20 @@ public class subElevator extends SubsystemBase {
   @Override
   public void periodic() {
     SmartDashboard.putNumber("Elevator Height", stringPotentiometer.get());
+    SmartDashboard.putBoolean("Elevator Top Limit", !upperLimit.get());
+    SmartDashboard.putBoolean("Elevator Bottom Limit", !lowerLimit.get());
   }
 
   public void teleOp(double speed) {
-    lowerMotor.set(speed);
+    if(!lowerLimit.get() && speed < 0) {
+      stop();
+    }
+    else if (!upperLimit.get() && speed > 0) {
+      stop();
+    }
+    else{
+      lowerMotor.set(speed);
+    }    
   }
 
   public void autoToPosition(double position) {

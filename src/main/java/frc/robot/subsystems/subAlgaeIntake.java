@@ -10,26 +10,14 @@ import com.revrobotics.spark.config.SparkMaxConfig;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-public class subAlgae extends SubsystemBase {
-  SparkMax armMotor = new SparkMax(Constants.Algae.ArmMotor, SparkMax.MotorType.kBrushless);
+public class subAlgaeIntake extends SubsystemBase {
   SparkMax intakeMotor = new SparkMax(Constants.Algae.IntakeMotor, SparkMax.MotorType.kBrushless);
-  SparkMaxConfig armConfig = new SparkMaxConfig();
   SparkMaxConfig intakeConfig = new SparkMaxConfig();
-  public subAlgae() {
-    armConfig
-      .inverted(false)
-      .idleMode(IdleMode.kBrake);
-    armConfig.encoder
-      .positionConversionFactor(1000)
-      .velocityConversionFactor(1000);
-    armConfig.closedLoop
-      .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-      .pid(1.0, 0.0, 0.0);
-    armMotor.configure(armConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-
+  public subAlgaeIntake() {
     intakeConfig
       .inverted(false)
       .idleMode(IdleMode.kBrake);
+      //.smartCurrentLimit(20);
     intakeConfig.encoder 
       .positionConversionFactor(1000)
       .velocityConversionFactor(1000);
@@ -44,18 +32,11 @@ public class subAlgae extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-  public void teleOp_Arm(double speed) {
-    armMotor.set(speed);
-  }
   public void teleOp_Intake(double speed) {
     intakeMotor.set(speed);
   }
   public void stop() {
-    armMotor.stopMotor();
     intakeMotor.stopMotor();
-  }
-  public void stopArm() {
-    armMotor.stopMotor();
   }
   public void stopIntake() {
     intakeMotor.stopMotor();

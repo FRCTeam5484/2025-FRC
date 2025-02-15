@@ -3,12 +3,12 @@ package frc.robot.commands;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.subAlgae;
+import frc.robot.subsystems.subAlgaeArm;
 
 public class cmdAlgaeArm_TeleOp extends Command {
-  subAlgae algae;
+  subAlgaeArm algae;
   DoubleSupplier speed;
-  public cmdAlgaeArm_TeleOp(subAlgae algae, DoubleSupplier speed) {
+  public cmdAlgaeArm_TeleOp(subAlgaeArm algae, DoubleSupplier speed) {
     this.algae = algae;
     this.speed = speed;
     addRequirements(algae);

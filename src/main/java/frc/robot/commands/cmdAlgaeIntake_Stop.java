@@ -1,11 +1,11 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.subAlgae;
+import frc.robot.subsystems.subAlgaeIntake;
 
 public class cmdAlgaeIntake_Stop extends Command {
-  subAlgae algae;
-  public cmdAlgaeIntake_Stop(subAlgae algae) {
+  subAlgaeIntake algae;
+  public cmdAlgaeIntake_Stop(subAlgaeIntake algae) {
     this.algae = algae;
     addRequirements(algae);
   }

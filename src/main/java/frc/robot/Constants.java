@@ -50,8 +50,8 @@ public class Constants {
     public static final class Elevator{
       public static final int LowerMotor = 13;
       public static final int UpperMotor = 14;
-      public static final int LowerLimit = 0;
-      public static final int UpperLimit = 1;
+      public static final int LowerLimit = 3;
+      public static final int UpperLimit = 4;
       public static final int StringPot = 2;
 
       public static final double bottomPosition = 0;
