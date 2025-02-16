@@ -24,8 +24,10 @@ public class subElevator extends SubsystemBase {
   RelativeEncoder upperEncoder = upperMotor.getEncoder();
   SparkMaxConfig lowerConfig = new SparkMaxConfig();
   SparkMaxConfig upperConfig = new SparkMaxConfig();
-  DigitalInput lowerLimit = new DigitalInput(Constants.Elevator.LowerLimit);
-  DigitalInput upperLimit = new DigitalInput(Constants.Elevator.UpperLimit);
+  DigitalInput lowerLimitFront = new DigitalInput(Constants.Elevator.LowerLimitFront);
+  DigitalInput lowerLimitBack = new DigitalInput(Constants.Elevator.LowerLimitBack);
+  DigitalInput upperLimitFront = new DigitalInput(Constants.Elevator.UpperLimitFront);
+  DigitalInput upperLimitBack = new DigitalInput(Constants.Elevator.UpperLimitBack);
   AnalogPotentiometer stringPotentiometer = new AnalogPotentiometer(Constants.Elevator.StringPot);
   PIDController elevatorPID = new PIDController(0.04, 0.0, 0.0);
 
@@ -57,15 +59,27 @@ public class subElevator extends SubsystemBase {
   @Override
   public void periodic() {
     SmartDashboard.putNumber("Elevator Height", stringPotentiometer.get());
-    SmartDashboard.putBoolean("Elevator Top Limit", !upperLimit.get());
-    SmartDashboard.putBoolean("Elevator Bottom Limit", !lowerLimit.get());
+    SmartDashboard.putBoolean("Elevator Top Limit Front", !upperLimitFront.get());
+    SmartDashboard.putBoolean("Elevator Bottom Limit Back", !lowerLimitBack.get());
+    SmartDashboard.putBoolean("Elevator Top Limit Back", !upperLimitBack.get());
+    SmartDashboard.putBoolean("Elevator Bottom Limit Front", !lowerLimitFront.get());
+    SmartDashboard.putBoolean("Elevator Bottom Combined", getLowerLimit());
+    SmartDashboard.putBoolean("Elevator Top Combined", getUpperLimit());
+  }
+
+  public boolean getLowerLimit() {
+    return lowerLimitBack.get() || lowerLimitFront.get() ? false : true;
+  }
+
+  public boolean getUpperLimit() {
+    return upperLimitBack.get() || upperLimitFront.get() ? false : true;
   }
 
   public void teleOp(double speed) {
-    if(!lowerLimit.get() && speed < 0) {
+    if(getLowerLimit() && speed < 0) {
       stop();
     }
-    else if (!upperLimit.get() && speed > 0) {
+    else if (getUpperLimit() && speed > 0) {
       stop();
     }
     else{
@@ -73,11 +87,11 @@ public class subElevator extends SubsystemBase {
     }    
   }
 
-  public void autoToPosition(double position) {
-    if(lowerLimit.get() && lowerMotor.get() > 0) {
+  public void moveToPosition(double position) {
+    if(getLowerLimit() && lowerMotor.get() > 0) {
       stop();
     }
-    else if (upperLimit.get() && lowerMotor.get() < 0) {
+    else if (getUpperLimit() && lowerMotor.get() < 0) {
       stop();
     }
     else{
@@ -87,6 +101,7 @@ public class subElevator extends SubsystemBase {
 
   public void stop() {
     lowerMotor.stopMotor();
+    upperMotor.stopMotor();
   }
 
   public void resetEncoders() {

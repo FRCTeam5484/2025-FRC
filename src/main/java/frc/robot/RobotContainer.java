@@ -6,8 +6,10 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.cmdAlgaeArm_TeleOp;
 import frc.robot.commands.cmdAlgaeIntake_TeleOp;
+import frc.robot.commands.cmdCoral_EjectCoral;
 import frc.robot.commands.cmdCoral_TeleOp;
 import frc.robot.commands.cmdElevator_TeleOp;
+import frc.robot.commands.cmdSwerve_TeleOp;
 import frc.robot.subsystems.subSwerve;
 import swervelib.SwerveInputStream;
 import frc.robot.subsystems.subAlgaeArm;
@@ -46,10 +48,9 @@ public class RobotContainer {
   private void DriverOneControls() {}
   private void DriverTwoControls(){}
   private void SingleDriverControls() {
-    Command driveFieldOrientatedDirectAngle = swerve.driveFieldOrientated(driveDirectAngle);
-    Command driveFieldOrientatedAngularVelocity = swerve.driveFieldOrientated(driveAngularVelocity);
+    //Command driveFieldOrientatedDirectAngle = swerve.driveFieldOrientated(driveDirectAngle);
 
-    swerve.setDefaultCommand(driveFieldOrientatedAngularVelocity);
+    swerve.setDefaultCommand(new cmdSwerve_TeleOp(swerve, driveAngularVelocity));
 
     driverOne.start().whileTrue(new InstantCommand(() -> swerve.zeroGyro()));
 
@@ -60,10 +61,10 @@ public class RobotContainer {
     // Coral
     driverOne.povLeft().whileTrue(new cmdCoral_TeleOp(coral, ()-> 0.5));
     driverOne.povRight().whileTrue(new cmdCoral_TeleOp(coral, ()-> -0.5));
+    driverOne.leftBumper().onTrue(new cmdCoral_EjectCoral(coral));
           
     // Intake
     driverOne.x().whileTrue(new cmdAlgaeIntake_TeleOp(algaeIntake, ()-> 0.6));
-    //driverOne.x().onFalse(new InstantCommand(() -> algaeIntake.teleOp_Intake(-0.7)));
     driverOne.b().whileTrue(new cmdAlgaeIntake_TeleOp(algaeIntake, ()-> -0.6));
 
     // Arm
