@@ -22,8 +22,6 @@ import frc.robot.subsystems.subAlgaeIntake;
 import frc.robot.subsystems.subAlgaeRemover;
 import frc.robot.subsystems.subCoral;
 import frc.robot.subsystems.subElevator;
-import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 public class RobotContainer {
