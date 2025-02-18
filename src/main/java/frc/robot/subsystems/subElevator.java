@@ -71,6 +71,10 @@ public class subElevator extends SubsystemBase {
     return upperLimitBack.get() || upperLimitFront.get() ? false : true;
   }
 
+  public void teleOpNoSafety(double speed) {
+    lowerMotor.set(speed);
+  }
+
   public void teleOp(double speed) {
     if(getLowerLimit() && speed < 0) {
       stop();
