@@ -3,15 +3,15 @@ package frc.robot.commands;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.subAlgaeIntake;
+import frc.robot.subsystems.subAlgaeRemover;
 
-public class cmdAlgaeIntake_TeleOp extends Command {
-  subAlgaeIntake algae;
+public class cmdAlgaeRemover_TeleOp extends Command {
+  subAlgaeRemover remover;
   DoubleSupplier speed;
-  public cmdAlgaeIntake_TeleOp(subAlgaeIntake algae, DoubleSupplier speed) {
-    this.algae = algae;
+  public cmdAlgaeRemover_TeleOp(subAlgaeRemover remover, DoubleSupplier speed) {
+    this.remover = remover;
     this.speed = speed;
-    addRequirements(algae);
+    addRequirements(remover);
   }
 
   @Override
@@ -19,12 +19,12 @@ public class cmdAlgaeIntake_TeleOp extends Command {
 
   @Override
   public void execute() {
-    algae.teleOp(speed.getAsDouble());
+    remover.teleOp(speed.getAsDouble());
   }
 
   @Override
   public void end(boolean interrupted) {
-    algae.stop();
+    remover.stop();
   }
 
   @Override

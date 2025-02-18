@@ -32,13 +32,16 @@ public class subAlgaeIntake extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-  public void teleOp_Intake(double speed) {
+  public void teleOp(double speed) {
     intakeMotor.set(speed);
   }
   public void stop() {
     intakeMotor.stopMotor();
   }
-  public void stopIntake() {
-    intakeMotor.stopMotor();
+  public void autoIntake(){
+    intakeMotor.set(0.6);
+  } 
+  public void autoHold(){
+    intakeMotor.set(0.1);
   }
 }
