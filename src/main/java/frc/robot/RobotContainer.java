@@ -14,6 +14,7 @@ import frc.robot.commands.cmdCoral_EjectCoral;
 import frc.robot.commands.cmdCoral_TeleOp;
 import frc.robot.commands.cmdElevator_AutoToPosition;
 import frc.robot.commands.cmdElevator_TeleOp;
+import frc.robot.commands.cmdElevator_TeleOpNoSafety;
 import frc.robot.commands.cmdSwerve_TeleOp;
 import frc.robot.subsystems.subSwerve;
 import swervelib.SwerveInputStream;
@@ -46,9 +47,9 @@ public class RobotContainer {
                                                                                            .headingWhile(true);
   
   public RobotContainer() {
-    DriverOneControls();
-    DriverTwoControls();
-    //SingleDriverControls();
+    //DriverOneControls();
+    //DriverTwoControls();
+    SingleDriverControls();
   }
 
   private void DriverOneControls(){
@@ -79,6 +80,9 @@ public class RobotContainer {
     
     // Manual Elevator
     elevator.setDefaultCommand(new cmdElevator_TeleOp(elevator, driverTwo::getLeftY));  
+    driverTwo.povUp().whileTrue(new cmdElevator_TeleOpNoSafety(elevator, () -> 0.6));
+    driverTwo.povDown().whileTrue(new cmdElevator_TeleOpNoSafety(elevator, () -> -0.45));
+
 
     // Auto Coral
     driverTwo.leftBumper().onTrue(new cmdCoral_AutoIntake(coral));
@@ -89,8 +93,7 @@ public class RobotContainer {
     driverTwo.povRight().whileTrue(new cmdCoral_TeleOp(coral, ()-> -0.5));    
 
     // Manual Algae Remover
-    driverTwo.povUp().whileTrue(new InstantCommand(() -> algaeRemover.teleOp(0.5)));
-    driverTwo.povDown().whileTrue(new InstantCommand(() -> algaeRemover.teleOp(-0.5)));
+    
   }
   private void SingleDriverControls() {
     //Command driveFieldOrientatedDirectAngle = swerve.driveFieldOrientated(driveDirectAngle);
