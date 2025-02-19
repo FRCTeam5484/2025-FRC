@@ -64,8 +64,10 @@ public class RobotContainer {
     driverOne.rightBumper().whileTrue(new cmdAlgae_AutoEject(algaeArm, algaeIntake));
     
     // Manual Intake
-    driverOne.povRight().whileTrue(new cmdAlgaeIntake_TeleOp(algaeIntake, ()-> 0.6));
-    driverOne.povLeft().whileTrue(new cmdAlgaeIntake_TeleOp(algaeIntake, ()-> -0.6));
+    driverOne.leftTrigger().whileTrue(new cmdAlgaeIntake_TeleOp(algaeIntake, ()-> driverOne.getLeftTriggerAxis()));
+    driverOne.rightTrigger().whileTrue(new cmdAlgaeIntake_TeleOp(algaeIntake, ()-> driverOne.getRightTriggerAxis()));
+    //driverOne.povRight().whileTrue(new cmdAlgaeIntake_TeleOp(algaeIntake, ()-> 0.6));
+    //driverOne.povLeft().whileTrue(new cmdAlgaeIntake_TeleOp(algaeIntake, ()-> -0.6));
 
     // Manual Arm
     driverOne.povUp().whileTrue(new cmdAlgaeArm_TeleOp(algaeArm, ()-> 0.2));
