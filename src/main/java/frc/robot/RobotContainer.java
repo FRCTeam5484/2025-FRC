@@ -50,6 +50,7 @@ public class RobotContainer {
   public RobotContainer() {
     //DriverOneControls();
     //DriverTwoControls();
+    //swerve.setDefaultCommand(driveAngularVelocity);
     SingleDriverControls();
   }
 
@@ -66,8 +67,8 @@ public class RobotContainer {
     // Manual Intake
     driverOne.leftTrigger().whileTrue(new cmdAlgaeIntake_TeleOp(algaeIntake, ()-> driverOne.getLeftTriggerAxis()));
     driverOne.rightTrigger().whileTrue(new cmdAlgaeIntake_TeleOp(algaeIntake, ()-> driverOne.getRightTriggerAxis()));
-    //driverOne.povRight().whileTrue(new cmdAlgaeIntake_TeleOp(algaeIntake, ()-> 0.6));
-    //driverOne.povLeft().whileTrue(new cmdAlgaeIntake_TeleOp(algaeIntake, ()-> -0.6));
+    driverOne.povRight().whileTrue(new cmdAlgaeIntake_TeleOp(algaeIntake, ()-> 0.6));
+    driverOne.povLeft().whileTrue(new cmdAlgaeIntake_TeleOp(algaeIntake, ()-> -0.6));
 
     // Manual Arm
     driverOne.povUp().whileTrue(new cmdAlgaeArm_TeleOp(algaeArm, ()-> 0.2));
@@ -99,9 +100,10 @@ public class RobotContainer {
     driverTwo.start().whileTrue(new cmdAlgaeRemover_TeleOp(algaeRemover, ()->-0.2));
   }
   private void SingleDriverControls() {
-    //Command driveFieldOrientatedDirectAngle = swerve.driveFieldOrientated(driveDirectAngle);
-    // Swerve
-    swerve.setDefaultCommand(new cmdSwerve_TeleOp(swerve, driveAngularVelocity));
+    Command driveFieldOrientatedDirectAngle = swerve.driveFieldOrientated(driveDirectAngle);
+    Command driveFieldOrientatedAngularVelocity = swerve.driveFieldOrientated(driveAngularVelocity);
+
+    swerve.setDefaultCommand(driveFieldOrientatedAngularVelocity);
     driverOne.start().whileTrue(new InstantCommand(() -> swerve.zeroGyro()));
 
     // Elevator
@@ -123,8 +125,8 @@ public class RobotContainer {
     driverOne.y().whileTrue(new cmdAlgaeArm_TeleOp(algaeArm, ()-> -0.2));
 
     // Algae Remover
-    driverOne.leftTrigger().whileTrue(new cmdAlgaeRemover_TeleOp(algaeRemover, () -> 0.2));
-    driverOne.rightTrigger().whileTrue(new cmdAlgaeRemover_TeleOp(algaeRemover, () -> -0.2));
+    driverOne.leftTrigger().whileTrue(new cmdAlgaeRemover_TeleOp(algaeRemover, () -> 0.5));
+    driverOne.rightTrigger().whileTrue(new cmdAlgaeRemover_TeleOp(algaeRemover, () -> -0.5));
   }
   public Command getAutonomousCommand() {
     return new InstantCommand();

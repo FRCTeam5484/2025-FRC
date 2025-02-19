@@ -9,6 +9,7 @@ import com.revrobotics.spark.config.SparkMaxConfig;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -25,6 +26,7 @@ public class subElevator extends SubsystemBase {
   DigitalInput upperLimitFront = new DigitalInput(Constants.Elevator.UpperLimitFront);
   DigitalInput upperLimitBack = new DigitalInput(Constants.Elevator.UpperLimitBack);
   AnalogPotentiometer stringPotentiometer = new AnalogPotentiometer(Constants.Elevator.StringPot);
+  Encoder elevatorEncoder = new Encoder(8, 9);
   PIDController elevatorPID = new PIDController(0.04, 0.0, 0.0);
 
   public subElevator() {
@@ -61,6 +63,7 @@ public class subElevator extends SubsystemBase {
     SmartDashboard.putBoolean("Elevator Bottom Limit Front", !lowerLimitFront.get());
     SmartDashboard.putBoolean("Elevator Bottom Combined", getLowerLimit());
     SmartDashboard.putBoolean("Elevator Top Combined", getUpperLimit());
+    SmartDashboard.putNumber("Elevator Encoder", elevatorEncoder.get());
   }
 
   public boolean getLowerLimit() {

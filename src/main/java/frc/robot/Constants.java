@@ -66,7 +66,7 @@ public class Constants {
     public static final class Algae {
       public static final int ArmMotor = 15;
       public static final int IntakeMotor = 16;
-      public static final int RemoverMotor = 17;
+      public static final int RemoverMotor = 18;
 
       public static final int ArmUpSensorValue = 1;
       public static final int ArmDownSensorValue = 2;
