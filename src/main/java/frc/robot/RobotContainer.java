@@ -81,10 +81,9 @@ public class RobotContainer {
     driverTwo.x().whileTrue(new cmdElevator_AutoToPosition(elevator, Constants.Elevator.L3));
     driverTwo.b().whileTrue(new cmdElevator_AutoToPosition(elevator, Constants.Elevator.L2));
     driverTwo.a().whileTrue(new cmdElevator_AutoToPosition(elevator, Constants.Elevator.L1));
-    driverTwo.start().whileTrue(new cmdElevator_AutoToPosition(elevator, Constants.Elevator.bottomPosition));
     
     // Manual Elevator
-    //elevator.setDefaultCommand(new cmdElevator_TeleOp(elevator, driverTwo::getLeftY));  
+    elevator.setDefaultCommand(new cmdElevator_TeleOp(elevator, driverTwo::getLeftY));  
     driverTwo.povUp().whileTrue(new cmdElevator_TeleOpNoSafety(elevator, () -> 0.6));
     driverTwo.povDown().whileTrue(new cmdElevator_TeleOpNoSafety(elevator, () -> -0.45));
 
@@ -97,6 +96,7 @@ public class RobotContainer {
     driverTwo.povRight().whileTrue(new cmdCoral_TeleOp(coral, ()-> -0.5));    
 
     // Manual Algae Remover
+    algaeRemover.setDefaultCommand(new cmdAlgaeRemover_TeleOp(algaeRemover, driverTwo::getRightY));
     driverTwo.back().whileTrue(new cmdAlgaeRemover_TeleOp(algaeRemover, ()->0.2));
     driverTwo.start().whileTrue(new cmdAlgaeRemover_TeleOp(algaeRemover, ()->-0.2));
   }
