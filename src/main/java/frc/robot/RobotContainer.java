@@ -98,9 +98,8 @@ public class RobotContainer {
   }
   private void SingleDriverControls() {
     //Command driveFieldOrientatedDirectAngle = swerve.driveFieldOrientated(driveDirectAngle);
-
+    // Swerve
     swerve.setDefaultCommand(new cmdSwerve_TeleOp(swerve, driveAngularVelocity));
-
     driverOne.start().whileTrue(new InstantCommand(() -> swerve.zeroGyro()));
 
     // Elevator
@@ -110,7 +109,8 @@ public class RobotContainer {
     // Coral
     driverOne.povLeft().whileTrue(new cmdCoral_TeleOp(coral, ()-> 0.5));
     driverOne.povRight().whileTrue(new cmdCoral_TeleOp(coral, ()-> -0.5));
-    driverOne.leftBumper().onTrue(new cmdCoral_EjectCoral(coral));
+    driverOne.leftBumper().onTrue(new cmdCoral_AutoIntake(coral));
+    driverOne.rightBumper().onTrue(new cmdCoral_EjectCoral(coral));
           
     // Intake
     driverOne.x().whileTrue(new cmdAlgaeIntake_TeleOp(algaeIntake, ()-> 0.6));
