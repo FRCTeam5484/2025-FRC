@@ -21,9 +21,6 @@ public class subAlgaeIntake extends SubsystemBase {
     intakeConfig.encoder 
       .positionConversionFactor(1000)
       .velocityConversionFactor(1000);
-    intakeConfig.closedLoop
-      .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-      .pid(1.0, 0.0, 0.0);
     intakeMotor.configure(intakeConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
   }
 

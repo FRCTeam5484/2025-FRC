@@ -43,11 +43,11 @@ public class subSwerve extends SubsystemBase {
 
   @Override
   public void periodic() {
-    SwerveModule[] modules = swerveDrive.getModules();
+    /* SwerveModule[] modules = swerveDrive.getModules();
     SmartDashboard.putNumber("Front Left CanCoder", modules[0].getAbsolutePosition());
     SmartDashboard.putNumber("Front Right CanCoder", modules[1].getAbsolutePosition());
     SmartDashboard.putNumber("Back Left CanCoder", modules[2].getAbsolutePosition());
-    SmartDashboard.putNumber("Back Right CanCoder", modules[3].getAbsolutePosition());
+    SmartDashboard.putNumber("Back Right CanCoder", modules[3].getAbsolutePosition()); */
   }
   public SwerveDrive getSwerveDrive() {
     return swerveDrive;

@@ -16,7 +16,6 @@ import frc.robot.commands.cmdCoral_TeleOp;
 import frc.robot.commands.cmdElevator_AutoToPosition;
 import frc.robot.commands.cmdElevator_TeleOp;
 import frc.robot.commands.cmdElevator_TeleOpNoSafety;
-import frc.robot.commands.cmdSwerve_TeleOp;
 import frc.robot.subsystems.subSwerve;
 import swervelib.SwerveInputStream;
 import frc.robot.subsystems.subAlgaeArm;
@@ -50,13 +49,15 @@ public class RobotContainer {
   public RobotContainer() {
     //DriverOneControls();
     //DriverTwoControls();
-    //swerve.setDefaultCommand(driveAngularVelocity);
     SingleDriverControls();
   }
 
   private void DriverOneControls(){
     //Swerve
-    swerve.setDefaultCommand(new cmdSwerve_TeleOp(swerve, driveAngularVelocity));
+    Command driveFieldOrientatedDirectAngle = swerve.driveFieldOrientated(driveDirectAngle);
+    Command driveFieldOrientatedAngularVelocity = swerve.driveFieldOrientated(driveAngularVelocity);
+
+    swerve.setDefaultCommand(driveFieldOrientatedAngularVelocity);
     driverOne.start().whileTrue(new InstantCommand(() -> swerve.zeroGyro()));
           
     // Auto Intake

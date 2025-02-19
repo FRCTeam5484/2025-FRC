@@ -56,12 +56,12 @@ public class Constants {
       public static final int UpperLimitBack = 4;
       public static final int StringPot = 2;
 
-      public static final double bottomPosition = 0;
-      public static final double L1 = 0;
-      public static final double L2 = 0;
-      public static final double L3 = 0;
-      public static final double L4 = 0;
-      public static final double topPosition = 0;
+      public static final double bottomPosition = 100;
+      public static final double L1 = 1000;
+      public static final double L2 = 1300;
+      public static final double L3 = 3300;
+      public static final double L4 = 6500;
+      public static final double topPosition = 6600;
     }
     public static final class Algae {
       public static final int ArmMotor = 15;

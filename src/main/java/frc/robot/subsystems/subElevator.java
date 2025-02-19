@@ -25,7 +25,6 @@ public class subElevator extends SubsystemBase {
   DigitalInput lowerLimitBack = new DigitalInput(Constants.Elevator.LowerLimitBack);
   DigitalInput upperLimitFront = new DigitalInput(Constants.Elevator.UpperLimitFront);
   DigitalInput upperLimitBack = new DigitalInput(Constants.Elevator.UpperLimitBack);
-  AnalogPotentiometer stringPotentiometer = new AnalogPotentiometer(Constants.Elevator.StringPot);
   Encoder elevatorEncoder = new Encoder(8, 9);
   PIDController elevatorPID = new PIDController(0.04, 0.0, 0.0);
 
@@ -56,7 +55,6 @@ public class subElevator extends SubsystemBase {
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("Elevator Height", stringPotentiometer.get());
     SmartDashboard.putBoolean("Elevator Top Limit Front", !upperLimitFront.get());
     SmartDashboard.putBoolean("Elevator Bottom Limit Back", !lowerLimitBack.get());
     SmartDashboard.putBoolean("Elevator Top Limit Back", !upperLimitBack.get());

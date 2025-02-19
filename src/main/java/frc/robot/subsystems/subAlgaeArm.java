@@ -25,9 +25,6 @@ public class subAlgaeArm extends SubsystemBase {
     armConfig.encoder
       .positionConversionFactor(1000)
       .velocityConversionFactor(1000);
-    armConfig.closedLoop
-      .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-      .pid(1.0, 0.0, 0.0);
     armMotor.configure(armConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
   }
 
