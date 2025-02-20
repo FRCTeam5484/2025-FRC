@@ -27,8 +27,8 @@ public class subCoral extends SubsystemBase {
 
   @Override
   public void periodic() {
-    SmartDashboard.putBoolean("Coral In Sensor", inSensor.get());
-    SmartDashboard.putBoolean("Coral Out Sensor", outSensor.get());
+    SmartDashboard.putBoolean("Coral In Sensor", InSensor());
+    SmartDashboard.putBoolean("Coral Out Sensor", OutSensor());
   }
 
   public void teleOp(double speed) {
@@ -36,10 +36,17 @@ public class subCoral extends SubsystemBase {
   }
 
   public boolean hasCoral(){
-    return inSensor.get() && outSensor.get();
+    return InSensor() && OutSensor();
   }
 
   public void stop(){
     feedMotor.stopMotor();
+  }
+
+  public boolean InSensor(){
+    return !inSensor.get();
+  }
+  public boolean OutSensor(){
+    return !outSensor.get();
   }
 }

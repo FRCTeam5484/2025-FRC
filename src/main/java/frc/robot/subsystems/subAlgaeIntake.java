@@ -39,6 +39,6 @@ public class subAlgaeIntake extends SubsystemBase {
     intakeMotor.set(0.6);
   } 
   public void autoHold(){
-    intakeMotor.set(0.1);
+    intakeMotor.set(0.3);
   }
 }

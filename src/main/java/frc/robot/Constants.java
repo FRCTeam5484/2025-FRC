@@ -68,8 +68,9 @@ public class Constants {
       public static final int IntakeMotor = 16;
       public static final int RemoverMotor = 18;
 
-      public static final int ArmUpSensorValue = 1;
-      public static final int ArmDownSensorValue = 2;
+      public static final int ArmUpSensorValue = 10;
+      public static final int ArmDownSensorValue = 5000;
+
     }
     public static final class Coral {
       public static final int FeedMotor = 17;

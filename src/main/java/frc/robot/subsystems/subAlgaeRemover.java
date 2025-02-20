@@ -26,6 +26,7 @@ public class subAlgaeRemover extends SubsystemBase {
       .positionConversionFactor(1000)
       .velocityConversionFactor(1000);
     removerMotor.configure(removerConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    resetEncoder();
   }
 
   @Override
@@ -42,5 +43,8 @@ public class subAlgaeRemover extends SubsystemBase {
   public void autoPosition(double position) {
     removerPID.setSetpoint(position);
     removerMotor.set(removerPID.calculate(removerEncoder.getPosition()));
+  }
+  public void resetEncoder(){
+    removerEncoder.setPosition(0);
   }
 }

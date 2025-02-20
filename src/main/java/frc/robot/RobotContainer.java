@@ -47,9 +47,9 @@ public class RobotContainer {
                                                                                            .headingWhile(true);
   
   public RobotContainer() {
-    //DriverOneControls();
-    //DriverTwoControls();
-    SingleDriverControls();
+    DriverOneControls();
+    DriverTwoControls();
+    //SingleDriverControls();
   }
 
   private void DriverOneControls(){
@@ -84,7 +84,7 @@ public class RobotContainer {
     
     // Manual Elevator
     elevator.setDefaultCommand(new cmdElevator_TeleOp(elevator, driverTwo::getLeftY));  
-    driverTwo.povUp().whileTrue(new cmdElevator_TeleOpNoSafety(elevator, () -> 0.6));
+    driverTwo.povUp().whileTrue(new cmdElevator_TeleOpNoSafety(elevator, () -> 0.5));
     driverTwo.povDown().whileTrue(new cmdElevator_TeleOpNoSafety(elevator, () -> -0.45));
 
     // Auto Coral
@@ -108,8 +108,8 @@ public class RobotContainer {
     driverOne.start().whileTrue(new InstantCommand(() -> swerve.zeroGyro()));
 
     // Elevator
-    driverOne.povUp().whileTrue(new cmdElevator_TeleOp(elevator, ()-> 0.8));
-    driverOne.povDown().whileTrue(new cmdElevator_TeleOp(elevator, ()-> -0.45));
+    driverOne.povUp().whileTrue(new cmdElevator_TeleOp(elevator, ()-> 1));
+    driverOne.povDown().whileTrue(new cmdElevator_TeleOp(elevator, ()-> -0.7));
 
     // Coral
     driverOne.povLeft().whileTrue(new cmdCoral_TeleOp(coral, ()-> 0.5));
@@ -118,7 +118,7 @@ public class RobotContainer {
     driverOne.rightBumper().onTrue(new cmdCoral_EjectCoral(coral));
           
     // Intake
-    driverOne.x().whileTrue(new cmdAlgaeIntake_TeleOp(algaeIntake, ()-> 0.6));
+    driverOne.x().whileTrue(new cmdAlgaeIntake_TeleOp(algaeIntake, ()-> 0.8));
     driverOne.b().whileTrue(new cmdAlgaeIntake_TeleOp(algaeIntake, ()-> -0.6));
 
     // Arm

@@ -19,6 +19,7 @@ public class subAlgaeArm extends SubsystemBase {
   RelativeEncoder armEncoder = armMotor.getEncoder();
   SparkMaxConfig armConfig = new SparkMaxConfig();
   public subAlgaeArm() {
+    armEncoder.setPosition(0);
     armConfig
       .inverted(false)
       .idleMode(IdleMode.kBrake);
