@@ -126,8 +126,8 @@ public class RobotContainer {
     driverOne.y().whileTrue(new cmdAlgaeArm_TeleOp(algaeArm, ()-> -0.2));
 
     // Algae Remover
-    driverOne.leftTrigger().whileTrue(new cmdAlgaeRemover_TeleOp(algaeRemover, () -> 0.5));
-    driverOne.rightTrigger().whileTrue(new cmdAlgaeRemover_TeleOp(algaeRemover, () -> -0.5));
+    driverOne.leftTrigger().whileTrue(new cmdAlgaeRemover_TeleOp(algaeRemover, () -> driverOne.getLeftTriggerAxis()*.5));
+    driverOne.rightTrigger().whileTrue(new cmdAlgaeRemover_TeleOp(algaeRemover, () -> -driverOne.getRightTriggerAxis()*.5));
   }
   public Command getAutonomousCommand() {
     return new InstantCommand();

@@ -96,7 +96,7 @@ public class subElevator extends SubsystemBase {
       stop();
     }
     else{
-      lowerMotor.set(elevatorPID.calculate(stringPotentiometer.get(), position));
+      lowerMotor.set(elevatorPID.calculate(elevatorEncoder.get(), position));
     }
   }
 
