@@ -8,7 +8,8 @@ public class Constants {
     public static final class OperatorConstants {
       public static final int DriverOne = 0;
       public static final int DriverTwo = 1;
-      public static final int StreamDeck = 2;
+      public static final int ButtonBoxControllerOne = 2;
+      public static final int ButtonBoxControllerTwo = 3;
     }
     public static final class DriveConstants {
       public static final double kMaxSpeedMetersPerSecond = 5.88264;
@@ -71,11 +72,18 @@ public class Constants {
       public static final int ArmUpSensorValue = 10;
       public static final int ArmDownSensorValue = 5000;
 
+      public static final double RemoverArmBack = 0;
+      public static final double RemoverArmUp = -880;
+      public static final double RemoverArmDown = -5357;
     }
     public static final class Coral {
       public static final int FeedMotor = 17;
 
       public static final int InSensor = 0;
       public static final int OutSensor = 1;
+    }
+    public static final class Climb {
+      public static final int hookMotor = 19;
+      public static final int winchMotor = 20;
     }
 }

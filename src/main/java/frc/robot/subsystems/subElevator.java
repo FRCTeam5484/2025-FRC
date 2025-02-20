@@ -7,7 +7,6 @@ import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -29,7 +28,7 @@ public class subElevator extends SubsystemBase {
   PIDController elevatorPID = new PIDController(0.04, 0.0, 0.0);
 
   public subElevator() {
-    elevatorPID.setTolerance(0.1);
+    elevatorPID.setTolerance(100);
     elevatorPID.setIntegratorRange(-0.1, 0.1);
 
     lowerEncoder.setPosition(0);

@@ -27,6 +27,7 @@ public class subAlgaeRemover extends SubsystemBase {
       .velocityConversionFactor(1000);
     removerMotor.configure(removerConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     resetEncoder();
+    autoPosition(Constants.Algae.RemoverArmUp);
   }
 
   @Override

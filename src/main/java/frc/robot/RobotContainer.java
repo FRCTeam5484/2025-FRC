@@ -2,18 +2,23 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.cmdAlgaeArm_TeleOp;
 import frc.robot.commands.cmdAlgaeIntake_TeleOp;
+import frc.robot.commands.cmdAlgaeRemover_AutoPosition;
+import frc.robot.commands.cmdAlgaeRemover_Stop;
 import frc.robot.commands.cmdAlgaeRemover_TeleOp;
 import frc.robot.commands.cmdAlgae_AutoEject;
 import frc.robot.commands.cmdAlgae_AutoHold;
 import frc.robot.commands.cmdAlgae_AutoIntake;
 import frc.robot.commands.cmdCoral_AutoIntake;
 import frc.robot.commands.cmdCoral_EjectCoral;
+import frc.robot.commands.cmdCoral_Stop;
 import frc.robot.commands.cmdCoral_TeleOp;
 import frc.robot.commands.cmdElevator_AutoToPosition;
+import frc.robot.commands.cmdElevator_Stop;
 import frc.robot.commands.cmdElevator_TeleOp;
 import frc.robot.commands.cmdElevator_TeleOpNoSafety;
 import frc.robot.subsystems.subSwerve;
@@ -34,6 +39,8 @@ public class RobotContainer {
   private final subElevator elevator = new subElevator();
   private final CommandXboxController driverOne = new CommandXboxController(OperatorConstants.DriverOne);
   private final CommandXboxController driverTwo = new CommandXboxController(OperatorConstants.DriverTwo);
+  private final CommandJoystick buttonBoxControllerOne = new CommandJoystick(OperatorConstants.ButtonBoxControllerOne);
+  private final CommandJoystick buttonBoxControllerTwo = new CommandJoystick(OperatorConstants.ButtonBoxControllerTwo);
   SwerveInputStream driveAngularVelocity = SwerveInputStream.of(swerve.getSwerveDrive(), 
                                                                 () -> driverOne.getLeftY() * -1, 
                                                                 () -> driverOne.getLeftX() * -1)
@@ -50,6 +57,7 @@ public class RobotContainer {
     DriverOneControls();
     DriverTwoControls();
     //SingleDriverControls();
+    //ButtonBoxControls();
   }
 
   private void DriverOneControls(){
@@ -128,6 +136,29 @@ public class RobotContainer {
     // Algae Remover
     driverOne.leftTrigger().whileTrue(new cmdAlgaeRemover_TeleOp(algaeRemover, () -> driverOne.getLeftTriggerAxis()*.5));
     driverOne.rightTrigger().whileTrue(new cmdAlgaeRemover_TeleOp(algaeRemover, () -> -driverOne.getRightTriggerAxis()*.5));
+  }
+  private void ButtonBoxControls(){
+    buttonBoxControllerOne.button(1).whileTrue(new cmdElevator_AutoToPosition(elevator, Constants.Elevator.L4));
+    buttonBoxControllerOne.button(2).whileTrue(new cmdElevator_AutoToPosition(elevator, Constants.Elevator.L3));
+    buttonBoxControllerOne.button(3).whileTrue(new cmdElevator_AutoToPosition(elevator, Constants.Elevator.L2));
+    buttonBoxControllerOne.button(4).whileTrue(new cmdElevator_AutoToPosition(elevator, Constants.Elevator.L1));
+    buttonBoxControllerOne.button(5).whileTrue(new cmdElevator_AutoToPosition(elevator, Constants.Elevator.bottomPosition));
+    buttonBoxControllerOne.button(6).whileTrue(new cmdElevator_Stop(elevator));
+    buttonBoxControllerOne.button(7).whileTrue(new cmdCoral_TeleOp(coral, ()->-0.5));
+    buttonBoxControllerOne.button(8).whileTrue(new cmdCoral_TeleOp(coral, ()->0.5));
+    buttonBoxControllerOne.button(9).whileTrue(new cmdCoral_EjectCoral(coral));
+    buttonBoxControllerOne.button(10).whileTrue(new cmdCoral_AutoIntake(coral));
+
+    buttonBoxControllerTwo.button(1).whileTrue(new cmdCoral_Stop(coral));
+    buttonBoxControllerTwo.button(2).whileTrue(new cmdAlgaeRemover_AutoPosition(algaeRemover, Constants.Algae.RemoverArmUp));
+    buttonBoxControllerTwo.button(3).whileTrue(new cmdAlgaeRemover_AutoPosition(algaeRemover, Constants.Algae.RemoverArmDown));
+    buttonBoxControllerTwo.button(4).whileTrue(new cmdAlgaeRemover_AutoPosition(algaeRemover, Constants.Algae.RemoverArmUp));
+    buttonBoxControllerTwo.button(5).whileTrue(new cmdAlgaeRemover_Stop(algaeRemover));
+    //buttonBoxControllerTwo.button(6).whileTrue(new cmdCoral_TeleOp(coral, ()->-0.5));
+    //buttonBoxControllerTwo.button(7).whileTrue(new cmdCoral_TeleOp(coral, ()->0.5));
+    //buttonBoxControllerTwo.button(8).whileTrue(new cmdCoral_EjectCoral(coral));
+    //buttonBoxControllerTwo.button(9).whileTrue(new cmdCoral_AutoIntake(coral));
+    //buttonBoxControllerTwo.button(10).whileTrue(new cmdCoral_Stop(coral));
   }
   public Command getAutonomousCommand() {
     return new InstantCommand();
