@@ -107,6 +107,10 @@ public class subElevator extends SubsystemBase {
     upperMotor.stopMotor();
   }
 
+  public boolean atSetPoint() {
+    return elevatorPID.atSetpoint();
+  }
+
   public void resetEncoders() {
     elevatorEncoder.reset();
   }

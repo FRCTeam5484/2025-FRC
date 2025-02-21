@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.subAlgaeArm;
 import frc.robot.subsystems.subAlgaeIntake;
 import frc.robot.subsystems.subAlgaeRemover;
+import frc.robot.subsystems.subBlinkin;
 import frc.robot.subsystems.subCoral;
 import frc.robot.subsystems.subElevator;
 
@@ -13,13 +14,15 @@ public class cmdStopAllCommands extends Command {
   subAlgaeRemover remover;
   subCoral coral;
   subElevator elevator;
-  public cmdStopAllCommands(subAlgaeArm arm, subAlgaeIntake intake, subAlgaeRemover remover, subCoral coral, subElevator elevator) {
+  subBlinkin blinkin;
+  public cmdStopAllCommands(subAlgaeArm arm, subAlgaeIntake intake, subAlgaeRemover remover, subCoral coral, subElevator elevator, subBlinkin blinkin) {
     this.arm = arm;
     this.intake = intake;
     this.remover = remover;
     this.coral = coral;
     this.elevator = elevator;
-    addRequirements(arm, intake, remover, coral, elevator);
+    this.blinkin = blinkin;
+    addRequirements(arm, intake, remover, coral, elevator, blinkin);
   }
 
   @Override
@@ -29,6 +32,7 @@ public class cmdStopAllCommands extends Command {
     remover.stop();
     coral.stop();
     elevator.stop();
+    blinkin.off();
   }
 
   @Override
