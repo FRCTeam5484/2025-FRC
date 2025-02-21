@@ -13,15 +13,19 @@ public class cmdAlgaeRemover_AutoPosition extends Command {
   }
 
   @Override
-  public void initialize() {}
-
-  @Override
-  public void execute() {
-    remover.autoPosition(position);
+  public void initialize() {
+    remover.pidSetPoint = position;
   }
 
   @Override
-  public void end(boolean interrupted) {}
+  public void execute() {
+    remover.autoPosition();
+  }
+
+  @Override
+  public void end(boolean interrupted) {
+    remover.stop();
+  }
 
   @Override
   public boolean isFinished() {

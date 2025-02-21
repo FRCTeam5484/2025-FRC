@@ -1,6 +1,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.subsystems.subAlgaeArm;
 import frc.robot.subsystems.subAlgaeIntake;
 
@@ -14,11 +15,13 @@ public class cmdAlgae_AutoHold extends Command {
   }
 
   @Override
-  public void initialize() {}
+  public void initialize() {
+    arm.setPoint = Constants.Algae.ArmUpSensorValue;
+  }
 
   @Override
   public void execute() {
-    arm.autoUpPosition();
+    arm.moveToPosition();
     intake.autoHold();
   }
 

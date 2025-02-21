@@ -13,11 +13,13 @@ public class cmdElevator_AutoToPosition extends Command {
   }
 
   @Override
-  public void initialize() {}
+  public void initialize() {
+    elevator.setPoint = position;
+  }
 
   @Override
   public void execute() {
-    elevator.moveToPosition(position);
+    elevator.moveToPosition();
   }
 
   @Override

@@ -11,7 +11,7 @@
         "vgap": 32.0,
         "titleType": 0,
         "tiles": {
-          "2,2": {
+          "2,3": {
             "size": [
               2,
               2
@@ -31,7 +31,7 @@
           "0,1": {
             "size": [
               2,
-              2
+              1
             ],
             "content": {
               "_type": "Field",
@@ -100,19 +100,6 @@
               "_showGlyph": false
             }
           },
-          "7,0": {
-            "size": [
-              2,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/Algae Remover Encoder",
-              "_title": "/SmartDashboard/Algae Remover Encoder",
-              "_glyph": 148,
-              "_showGlyph": false
-            }
-          },
           "0,0": {
             "size": [
               2,
@@ -129,14 +116,14 @@
           "2,0": {
             "size": [
               2,
-              2
+              3
             ],
             "content": {
               "_type": "List Layout",
               "_title": "Elevator",
               "_glyph": 149,
               "_showGlyph": false,
-              "Layout/Label position": "BOTTOM",
+              "Layout/Label position": "LEFT",
               "_children": [
                 {
                   "_type": "Text View",
@@ -146,8 +133,15 @@
                   "_showGlyph": false
                 },
                 {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/Elevator SetPoint",
+                  "_title": "SetPoint",
+                  "_glyph": 148,
+                  "_showGlyph": false
+                },
+                {
                   "_type": "Grid Layout",
-                  "_title": "Grid Layout",
+                  "_title": "",
                   "_glyph": 149,
                   "_showGlyph": false,
                   "Layout/Number of columns": 3,
@@ -281,6 +275,35 @@
               "_title": "/SmartDashboard/DB",
               "_glyph": 148,
               "_showGlyph": false
+            }
+          },
+          "0,2": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "List Layout",
+              "_title": "Remover",
+              "_glyph": 149,
+              "_showGlyph": false,
+              "Layout/Label position": "LEFT",
+              "_children": [
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/Algae Remover Encoder",
+                  "_title": "Encoder",
+                  "_glyph": 148,
+                  "_showGlyph": false
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/Algae Remover SetPoint",
+                  "_title": "SetPoint",
+                  "_glyph": 148,
+                  "_showGlyph": false
+                }
+              ]
             }
           }
         }

@@ -6,6 +6,8 @@ import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
+
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
@@ -25,14 +27,11 @@ public class subElevator extends SubsystemBase {
   DigitalInput upperLimitFront = new DigitalInput(Constants.Elevator.UpperLimitFront);
   DigitalInput upperLimitBack = new DigitalInput(Constants.Elevator.UpperLimitBack);
   Encoder elevatorEncoder = new Encoder(8, 9);
-  PIDController elevatorPID = new PIDController(0.04, 0.0, 0.0);
-
+  PIDController elevatorPID = new PIDController(0.001, 0.0, 0.0);
+  public double setPoint;
   public subElevator() {
+    setPoint = 0;
     elevatorPID.setTolerance(100);
-    elevatorPID.setIntegratorRange(-0.1, 0.1);
-
-    lowerEncoder.setPosition(0);
-    upperEncoder.setPosition(0);
 
     lowerConfig
       .inverted(false)
@@ -61,6 +60,8 @@ public class subElevator extends SubsystemBase {
     SmartDashboard.putBoolean("Elevator Bottom Combined", getLowerLimit());
     SmartDashboard.putBoolean("Elevator Top Combined", getUpperLimit());
     SmartDashboard.putNumber("Elevator Encoder", elevatorEncoder.get());
+    SmartDashboard.putNumber("Elevator SetPoint", setPoint);
+    SmartDashboard.putBoolean("Elevator At SetPoint", elevatorPID.atSetpoint());
   }
 
   public boolean getLowerLimit() {
@@ -77,6 +78,7 @@ public class subElevator extends SubsystemBase {
 
   public void teleOp(double speed) {
     if(getLowerLimit() && speed < 0) {
+      elevatorEncoder.reset();
       stop();
     }
     else if (getUpperLimit() && speed > 0) {
@@ -87,15 +89,16 @@ public class subElevator extends SubsystemBase {
     }    
   }
 
-  public void moveToPosition(double position) {
+  public void moveToPosition() {
     if(getLowerLimit() && lowerMotor.get() > 0) {
+      elevatorEncoder.reset();
       stop();
     }
     else if (getUpperLimit() && lowerMotor.get() < 0) {
       stop();
     }
     else{
-      lowerMotor.set(elevatorPID.calculate(elevatorEncoder.get(), position));
+      lowerMotor.set(MathUtil.clamp(elevatorPID.calculate(elevatorEncoder.get(), setPoint), -0.6, 0.9));
     }
   }
 
@@ -105,7 +108,6 @@ public class subElevator extends SubsystemBase {
   }
 
   public void resetEncoders() {
-    lowerEncoder.setPosition(0);
-    upperEncoder.setPosition(0);
+    elevatorEncoder.reset();
   }
 }

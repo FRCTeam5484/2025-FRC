@@ -1,5 +1,6 @@
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
@@ -8,6 +9,7 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.cmdAlgaeArm_TeleOp;
 import frc.robot.commands.cmdAlgaeIntake_TeleOp;
 import frc.robot.commands.cmdAlgaeRemover_AutoPosition;
+import frc.robot.commands.cmdAlgaeRemover_ResetEncoder;
 import frc.robot.commands.cmdAlgaeRemover_Stop;
 import frc.robot.commands.cmdAlgaeRemover_TeleOp;
 import frc.robot.commands.cmdAlgae_AutoEject;
@@ -21,6 +23,7 @@ import frc.robot.commands.cmdElevator_AutoToPosition;
 import frc.robot.commands.cmdElevator_Stop;
 import frc.robot.commands.cmdElevator_TeleOp;
 import frc.robot.commands.cmdElevator_TeleOpNoSafety;
+import frc.robot.commands.cmdStopAllCommands;
 import frc.robot.subsystems.subSwerve;
 import swervelib.SwerveInputStream;
 import frc.robot.subsystems.subAlgaeArm;
@@ -54,10 +57,24 @@ public class RobotContainer {
                                                                                            .headingWhile(true);
   
   public RobotContainer() {
-    DriverOneControls();
-    DriverTwoControls();
-    //SingleDriverControls();
+    //DriverOneControls();
+    //DriverTwoControls();
+    SingleDriverControls();
     //ButtonBoxControls();
+    //TestControls();
+  }
+
+  private void TestControls() {
+    driverOne.back().whileTrue(new cmdStopAllCommands(algaeArm, algaeIntake, algaeRemover, coral, elevator));
+    driverOne.start().whileTrue(new InstantCommand(()->algaeArm.reset()));
+    driverOne.leftBumper().whileTrue(new cmdAlgae_AutoIntake(algaeArm, algaeIntake));
+    driverOne.leftBumper().whileFalse(new cmdAlgae_AutoHold(algaeArm, algaeIntake));
+    driverOne.rightBumper().whileTrue(new cmdAlgae_AutoEject(algaeArm, algaeIntake));
+    
+    driverOne.povUp().whileTrue(new cmdAlgaeArm_TeleOp(algaeArm, ()-> 0.2));
+    driverOne.povDown().whileTrue(new cmdAlgaeArm_TeleOp(algaeArm, ()-> -0.2));
+    driverOne.povRight().whileTrue(new cmdAlgaeIntake_TeleOp(algaeIntake, ()-> 0.6));
+    driverOne.povLeft().whileTrue(new cmdAlgaeIntake_TeleOp(algaeIntake, ()-> -0.6));
   }
 
   private void DriverOneControls(){
@@ -118,24 +135,18 @@ public class RobotContainer {
     // Elevator
     driverOne.povUp().whileTrue(new cmdElevator_TeleOp(elevator, ()-> 1));
     driverOne.povDown().whileTrue(new cmdElevator_TeleOp(elevator, ()-> -0.7));
+    driverOne.y().whileTrue(new cmdElevator_AutoToPosition(elevator, Constants.Elevator.L4));
+    driverOne.x().whileTrue(new cmdElevator_AutoToPosition(elevator, Constants.Elevator.L3));
+    driverOne.b().whileTrue(new cmdElevator_AutoToPosition(elevator, Constants.Elevator.L2));
+    driverOne.a().whileTrue(new cmdElevator_AutoToPosition(elevator, Constants.Elevator.L1));
 
     // Coral
-    driverOne.povLeft().whileTrue(new cmdCoral_TeleOp(coral, ()-> 0.5));
-    driverOne.povRight().whileTrue(new cmdCoral_TeleOp(coral, ()-> -0.5));
     driverOne.leftBumper().onTrue(new cmdCoral_AutoIntake(coral));
     driverOne.rightBumper().onTrue(new cmdCoral_EjectCoral(coral));
-          
-    // Intake
-    driverOne.x().whileTrue(new cmdAlgaeIntake_TeleOp(algaeIntake, ()-> 0.8));
-    driverOne.b().whileTrue(new cmdAlgaeIntake_TeleOp(algaeIntake, ()-> -0.6));
-
-    // Arm
-    driverOne.a().whileTrue(new cmdAlgaeArm_TeleOp(algaeArm, ()-> 0.2));
-    driverOne.y().whileTrue(new cmdAlgaeArm_TeleOp(algaeArm, ()-> -0.2));
 
     // Algae Remover
-    driverOne.leftTrigger().whileTrue(new cmdAlgaeRemover_TeleOp(algaeRemover, () -> driverOne.getLeftTriggerAxis()*.5));
-    driverOne.rightTrigger().whileTrue(new cmdAlgaeRemover_TeleOp(algaeRemover, () -> -driverOne.getRightTriggerAxis()*.5));
+    driverOne.leftTrigger().whileTrue(new cmdAlgaeRemover_AutoPosition(algaeRemover, Constants.Algae.RemoverArmDown));
+    driverOne.rightTrigger().whileTrue(new cmdAlgaeRemover_AutoPosition(algaeRemover, Constants.Algae.RemoverArmUp));
   }
   private void ButtonBoxControls(){
     buttonBoxControllerOne.button(1).whileTrue(new cmdElevator_AutoToPosition(elevator, Constants.Elevator.L4));

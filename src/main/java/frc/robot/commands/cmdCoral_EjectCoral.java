@@ -20,7 +20,7 @@ public class cmdCoral_EjectCoral extends Command {
 
   @Override
   public void execute() {
-    coral.teleOp(0.5);
+    coral.teleOp(0.6);
   }
 
   @Override
@@ -30,6 +30,6 @@ public class cmdCoral_EjectCoral extends Command {
 
   @Override
   public boolean isFinished() {
-    return timer.get() > 2;
+    return timer.get() > 1.5;
   }
 }

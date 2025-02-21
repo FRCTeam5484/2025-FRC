@@ -7,6 +7,7 @@ import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -14,13 +15,16 @@ import frc.robot.Constants;
 
 public class subAlgaeArm extends SubsystemBase {
   SparkMax armMotor = new SparkMax(Constants.Algae.ArmMotor, SparkMax.MotorType.kBrushless);
-  PIDController armPID = new PIDController(0.04, 0.0, 0.0);
+  PIDController armPID = new PIDController(0.0001, 0.0, 0.0);
   RelativeEncoder armEncoder = armMotor.getEncoder();
   SparkMaxConfig armConfig = new SparkMaxConfig();
+  public double setPoint;
   public subAlgaeArm() {
+    armPID.setTolerance(400);
+    setPoint = 0;
     armEncoder.setPosition(0);
     armConfig
-      .inverted(false)
+      .inverted(true)
       .idleMode(IdleMode.kBrake);
     armConfig.encoder
       .positionConversionFactor(1000)
@@ -31,6 +35,9 @@ public class subAlgaeArm extends SubsystemBase {
   @Override
   public void periodic() {
     SmartDashboard.putNumber("Algae Arm Encoder", armEncoder.getPosition());
+    SmartDashboard.putNumber("Algae Arm SetPoint", setPoint);
+    SmartDashboard.putBoolean("Algae Arm At SetPoint", armPID.atSetpoint());
+    SmartDashboard.putNumber("Algae Arm PID", MathUtil.clamp(armPID.calculate(armEncoder.getPosition()), -0.1, 0.1));
   }
 
   public void teleOp_Arm(double speed) {
@@ -42,12 +49,10 @@ public class subAlgaeArm extends SubsystemBase {
   public void stopArm() {
     armMotor.stopMotor();
   }
-  public void autoDownPosition() {
-    armPID.setSetpoint(Constants.Algae.ArmDownSensorValue);
-    armMotor.set(armPID.calculate(armEncoder.getPosition()));
+  public void moveToPosition(){
+    armMotor.set(MathUtil.clamp(armPID.calculate(armEncoder.getPosition()), -0.1, 0.1));
   }
-  public void autoUpPosition() {
-    armPID.setSetpoint(Constants.Algae.ArmUpSensorValue);
-    armMotor.set(armPID.calculate(armEncoder.getPosition()));
+  public void reset(){
+    armEncoder.setPosition(0);
   }
 }

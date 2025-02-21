@@ -58,10 +58,10 @@ public class Constants {
       public static final int StringPot = 2;
 
       public static final double bottomPosition = 100;
-      public static final double L1 = 1000;
-      public static final double L2 = 1300;
-      public static final double L3 = 3300;
-      public static final double L4 = 6500;
+      public static final double L1 = 500;
+      public static final double L2 = 1100;
+      public static final double L3 = 3100;
+      public static final double L4 = 6400;
       public static final double topPosition = 6600;
     }
     public static final class Algae {
@@ -73,8 +73,8 @@ public class Constants {
       public static final int ArmDownSensorValue = 5000;
 
       public static final double RemoverArmBack = 0;
-      public static final double RemoverArmUp = -880;
-      public static final double RemoverArmDown = -5357;
+      public static final double RemoverArmUp = 1600;
+      public static final double RemoverArmDown = 5500;
     }
     public static final class Coral {
       public static final int FeedMotor = 17;

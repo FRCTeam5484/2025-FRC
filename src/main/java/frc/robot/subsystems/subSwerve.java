@@ -27,7 +27,7 @@ public class subSwerve extends SubsystemBase {
   private final double kMaxSpeed = Units.feetToMeters(19.3);
   private final SwerveDrive swerveDrive;
   private final File directory = new File(Filesystem.getDeployDirectory(), "swerve");
-  private final AprilTagFieldLayout aprilTagFieldLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2025Reefscape);
+  private final AprilTagFieldLayout aprilTagFieldLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2025ReefscapeWelded);
   public subSwerve() {
     SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;
     try {

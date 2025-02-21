@@ -1,6 +1,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.subsystems.subAlgaeArm;
 import frc.robot.subsystems.subAlgaeIntake;
 
@@ -15,16 +16,21 @@ public class cmdAlgae_AutoIntake extends Command {
   }
 
   @Override
-  public void initialize() {}
+  public void initialize() {
+    arm.setPoint = Constants.Algae.ArmDownSensorValue;
+  }
 
   @Override
   public void execute() {
-    arm.autoDownPosition();
+    arm.moveToPosition();
     intake.autoIntake();
   }
 
   @Override
-  public void end(boolean interrupted) {  }
+  public void end(boolean interrupted) { 
+    arm.stop();
+    intake.stop();
+  }
 
   @Override
   public boolean isFinished() {

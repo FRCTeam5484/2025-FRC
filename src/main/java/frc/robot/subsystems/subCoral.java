@@ -29,6 +29,7 @@ public class subCoral extends SubsystemBase {
   public void periodic() {
     SmartDashboard.putBoolean("Coral In Sensor", InSensor());
     SmartDashboard.putBoolean("Coral Out Sensor", OutSensor());
+    SmartDashboard.putBoolean("Coral Has Coral", hasCoral());
   }
 
   public void teleOp(double speed) {
