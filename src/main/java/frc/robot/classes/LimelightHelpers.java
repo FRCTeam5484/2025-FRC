@@ -1,5 +1,4 @@
 //LimelightHelpers v1.11 (REQUIRES LLOS 2025.0 OR LATER)
-//https://github.com/LimelightVision/limelightlib-wpijava/tree/main
 
 package frc.robot.classes;
 
