@@ -125,17 +125,15 @@ public class RobotContainer {
     buttonBoxControllerOne.button(8).whileTrue(new cmdCoral_TeleOp(coral, ()->0.5));
     buttonBoxControllerOne.button(9).whileTrue(new cmdCoral_EjectCoral(coral, blinkin));
     buttonBoxControllerOne.button(10).whileTrue(new cmdCoral_AutoIntake(coral, blinkin));
+    buttonBoxControllerOne.button(11).whileTrue(new cmdCoral_Stop(coral));
+    elevator.setDefaultCommand(new cmdElevator_TeleOp(elevator, ()->-buttonBoxControllerOne.getRawAxis(2)*.5));
 
-    buttonBoxControllerTwo.button(1).whileTrue(new cmdCoral_Stop(coral));
+
+    buttonBoxControllerTwo.button(1).whileTrue(new cmdAlgaeRemover_AutoPosition(algaeRemover, Constants.Algae.RemoverArmDown));
     buttonBoxControllerTwo.button(2).whileTrue(new cmdAlgaeRemover_AutoPosition(algaeRemover, Constants.Algae.RemoverArmUp));
-    buttonBoxControllerTwo.button(3).whileTrue(new cmdAlgaeRemover_AutoPosition(algaeRemover, Constants.Algae.RemoverArmDown));
-    buttonBoxControllerTwo.button(4).whileTrue(new cmdAlgaeRemover_AutoPosition(algaeRemover, Constants.Algae.RemoverArmUp));
+    buttonBoxControllerTwo.button(3).whileTrue(new cmdAlgaeRemover_TeleOp(algaeRemover, ()->0.3));
+    buttonBoxControllerTwo.button(4).whileTrue(new cmdAlgaeRemover_TeleOp(algaeRemover, ()->-0.3));
     buttonBoxControllerTwo.button(5).whileTrue(new cmdAlgaeRemover_Stop(algaeRemover));
-    //buttonBoxControllerTwo.button(6).whileTrue(new cmdCoral_TeleOp(coral, ()->-0.5));
-    //buttonBoxControllerTwo.button(7).whileTrue(new cmdCoral_TeleOp(coral, ()->0.5));
-    //buttonBoxControllerTwo.button(8).whileTrue(new cmdCoral_EjectCoral(coral));
-    //buttonBoxControllerTwo.button(9).whileTrue(new cmdCoral_AutoIntake(coral));
-    //buttonBoxControllerTwo.button(10).whileTrue(new cmdCoral_Stop(coral));
   }
   public Command getAutonomousCommand() {
     return new InstantCommand();
