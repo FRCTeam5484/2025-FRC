@@ -37,7 +37,6 @@ public class subAlgaeRemover extends SubsystemBase {
     SmartDashboard.putNumber("Algae Remover Encoder", removerEncoder.getPosition());
     SmartDashboard.putNumber("Algae Remover SetPoint", pidSetPoint);
     SmartDashboard.putBoolean("Algae Remover At SetPoint", removerPID.atSetpoint());
-    //System.out.println(removerEncoder.getPosition());
   }
 
   public void teleOp(double speed) {

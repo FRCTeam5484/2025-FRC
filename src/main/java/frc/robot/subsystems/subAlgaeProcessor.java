@@ -1,8 +1,8 @@
 package frc.robot.subsystems;
 
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
-import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
@@ -13,15 +13,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-public class subAlgaeArm extends SubsystemBase {
+public class subAlgaeProcessor extends SubsystemBase {
   SparkMax armMotor = new SparkMax(Constants.Algae.ArmMotor, SparkMax.MotorType.kBrushless);
+  SparkMax intakeMotor = new SparkMax(Constants.Algae.IntakeMotor, SparkMax.MotorType.kBrushless);
   PIDController armPID = new PIDController(0.0001, 0.0, 0.0);
   RelativeEncoder armEncoder = armMotor.getEncoder();
-  SparkMaxConfig armConfig = new SparkMaxConfig();
-  public double setPoint;
-  public subAlgaeArm() {
+  SparkMaxConfig armConfig = new SparkMaxConfig();  
+  SparkMaxConfig intakeConfig = new SparkMaxConfig();
+  double setPoint = 0;
+  public subAlgaeProcessor() {
     armPID.setTolerance(400);
-    setPoint = 0;
     armEncoder.setPosition(0);
     armConfig
       .inverted(true)
@@ -30,29 +31,42 @@ public class subAlgaeArm extends SubsystemBase {
       .positionConversionFactor(1000)
       .velocityConversionFactor(1000);
     armMotor.configure(armConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    
+    intakeConfig
+      .inverted(false)
+      .idleMode(IdleMode.kBrake);
+    intakeConfig.encoder 
+      .positionConversionFactor(1000)
+      .velocityConversionFactor(1000);
+    intakeMotor.configure(intakeConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
   }
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("Algae Arm Encoder", armEncoder.getPosition());
-    SmartDashboard.putNumber("Algae Arm SetPoint", setPoint);
-    SmartDashboard.putBoolean("Algae Arm At SetPoint", armPID.atSetpoint());
-    SmartDashboard.putNumber("Algae Arm PID", MathUtil.clamp(armPID.calculate(armEncoder.getPosition()), -0.1, 0.1));
+    SmartDashboard.putNumber("Processor Arm Encoder", armEncoder.getPosition());
+    SmartDashboard.putNumber("Processor Arm Setpoint", setPoint);
+    SmartDashboard.putBoolean("Processor Arm At Setpoint", armPID.atSetpoint());
   }
-
+  public void setSetPoint(double setPoint) {
+    this.setPoint = setPoint;
+  }
   public void teleOp_Arm(double speed) {
     armMotor.set(speed);
   }
+  public void teleOp_Intake(double speed) {
+    intakeMotor.set(speed);
+  }
   public void stop() {
     armMotor.stopMotor();
+    intakeMotor.stopMotor();
   }
   public void stopArm() {
     armMotor.stopMotor();
+  } 
+  public void stopIntake() {
+    intakeMotor.stopMotor();
   }
-  public void moveToPosition(){
+  public void moveArm(){
     armMotor.set(MathUtil.clamp(armPID.calculate(armEncoder.getPosition()), -0.1, 0.1));
-  }
-  public void reset(){
-    armEncoder.setPosition(0);
   }
 }

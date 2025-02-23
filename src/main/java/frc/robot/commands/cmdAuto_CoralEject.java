@@ -5,11 +5,11 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.subBlinkin;
 import frc.robot.subsystems.subCoral;
 
-public class cmdCoral_EjectCoral extends Command {
+public class cmdAuto_CoralEject extends Command {
   subCoral coral;
   subBlinkin blinkin;
   Timer timer = new Timer();
-  public cmdCoral_EjectCoral(subCoral coral, subBlinkin blinkin) {
+  public cmdAuto_CoralEject(subCoral coral, subBlinkin blinkin) {
     this.coral = coral;
     this.blinkin = blinkin;
     addRequirements(coral, blinkin);

@@ -1,34 +1,30 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.subAlgaeArm;
-import frc.robot.subsystems.subAlgaeIntake;
+import frc.robot.subsystems.subAlgaeProcessor;
 import frc.robot.subsystems.subAlgaeRemover;
 import frc.robot.subsystems.subBlinkin;
 import frc.robot.subsystems.subCoral;
 import frc.robot.subsystems.subElevator;
 
 public class cmdStopAllCommands extends Command {
-  subAlgaeArm arm;
-  subAlgaeIntake intake;
+  subAlgaeProcessor processor;
   subAlgaeRemover remover;
-  subCoral coral;
+  subCoral coral; 
   subElevator elevator;
   subBlinkin blinkin;
-  public cmdStopAllCommands(subAlgaeArm arm, subAlgaeIntake intake, subAlgaeRemover remover, subCoral coral, subElevator elevator, subBlinkin blinkin) {
-    this.arm = arm;
-    this.intake = intake;
+  public cmdStopAllCommands(subAlgaeProcessor processor, subAlgaeRemover remover, subCoral coral, subElevator elevator, subBlinkin blinkin) {
+    this.processor = processor;
     this.remover = remover;
     this.coral = coral;
     this.elevator = elevator;
     this.blinkin = blinkin;
-    addRequirements(arm, intake, remover, coral, elevator, blinkin);
+    addRequirements(processor, remover, coral, elevator, blinkin);
   }
 
   @Override
   public void initialize() {
-    arm.stop();
-    intake.stop();
+    processor.stop();
     remover.stop();
     coral.stop();
     elevator.stop();

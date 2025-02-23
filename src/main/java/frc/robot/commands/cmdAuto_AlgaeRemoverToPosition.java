@@ -3,10 +3,10 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.subAlgaeRemover;
 
-public class cmdAlgaeRemover_AutoPosition extends Command {
+public class cmdAuto_AlgaeRemoverToPosition extends Command {
   subAlgaeRemover remover;
   Double position;
-  public cmdAlgaeRemover_AutoPosition(subAlgaeRemover remover, Double position) {
+  public cmdAuto_AlgaeRemoverToPosition(subAlgaeRemover remover, Double position) {
     this.remover = remover;
     this.position = position;
     addRequirements(remover);

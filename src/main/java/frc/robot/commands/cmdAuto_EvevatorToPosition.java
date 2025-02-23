@@ -4,11 +4,11 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.subBlinkin;
 import frc.robot.subsystems.subElevator;
 
-public class cmdElevator_AutoToPosition extends Command {
+public class cmdAuto_EvevatorToPosition extends Command {
   subElevator elevator;
   subBlinkin blinkin;
   double position;
-  public cmdElevator_AutoToPosition(subElevator elevator, subBlinkin blinkin, double position) {
+  public cmdAuto_EvevatorToPosition(subElevator elevator, subBlinkin blinkin, double position) {
     this.elevator = elevator;
     this.blinkin = blinkin;
     this.position = position;
