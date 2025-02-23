@@ -56,10 +56,8 @@ public class RobotContainer {
 
   private void DriverOneControls(){
     //Swerve
-    Command driveFieldOrientatedDirectAngle = swerve.driveFieldOrientated(driveDirectAngle);
-    Command driveFieldOrientatedAngularVelocity = swerve.driveFieldOrientated(driveAngularVelocity);
-
-    swerve.setDefaultCommand(driveFieldOrientatedAngularVelocity);
+    swerve.setDefaultCommand(swerve.driveFieldOrientated(driveDirectAngle));
+    //swerve.setDefaultCommand(swerve.driveFieldOrientated(driveAngularVelocity));
     driverOne.start().whileTrue(new InstantCommand(() -> swerve.zeroGyro()));
           
     // Auto Intake
