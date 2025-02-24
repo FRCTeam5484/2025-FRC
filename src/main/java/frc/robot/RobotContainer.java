@@ -1,5 +1,7 @@
 package frc.robot;
 
+import com.pathplanner.lib.auto.NamedCommands;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -18,6 +20,7 @@ import frc.robot.commands.cmdCoral_TeleOp;
 import frc.robot.commands.cmdAuto_EvevatorToPosition;
 import frc.robot.commands.cmdElevator_Stop;
 import frc.robot.commands.cmdElevator_TeleOp;
+import frc.robot.commands.cmdSwerve_TeleOp;
 import frc.robot.subsystems.subSwerve;
 import swervelib.SwerveInputStream;
 import frc.robot.subsystems.subAlgaeProcessor;
@@ -52,12 +55,22 @@ public class RobotContainer {
   public RobotContainer() {
     DriverOneControls();
     ButtonBoxControls();
+
+    // Named Commands
+    NamedCommands.registerCommand("Coral Intake", new cmdAuto_CoralIntake(coral, blinkin));
+    NamedCommands.registerCommand("Coral Eject", new cmdAuto_CoralEject(coral, blinkin));
+    NamedCommands.registerCommand("Elevator Bottom", new cmdAuto_EvevatorToPosition(elevator, blinkin, Constants.Elevator.bottomPosition));
+    NamedCommands.registerCommand("Elevator L1", new cmdAuto_EvevatorToPosition(elevator, blinkin, Constants.Elevator.L1));
+    NamedCommands.registerCommand("Elevator L2", new cmdAuto_EvevatorToPosition(elevator, blinkin, Constants.Elevator.L2));
+    NamedCommands.registerCommand("Elevator L3", new cmdAuto_EvevatorToPosition(elevator, blinkin, Constants.Elevator.L3));
+    NamedCommands.registerCommand("Elevator L4", new cmdAuto_EvevatorToPosition(elevator, blinkin, Constants.Elevator.L4));
   }
 
   private void DriverOneControls(){
     //Swerve
-    swerve.setDefaultCommand(swerve.driveFieldOrientated(driveDirectAngle));
+    //swerve.setDefaultCommand(swerve.driveFieldOrientated(driveDirectAngle));
     //swerve.setDefaultCommand(swerve.driveFieldOrientated(driveAngularVelocity));
+    swerve.setDefaultCommand(new cmdSwerve_TeleOp(swerve, ()->driverOne.getLeftY(), ()->driverOne.getLeftX(), ()->driverOne.getRightX(), ()->driverOne.getRightY()));
     driverOne.start().whileTrue(new InstantCommand(() -> swerve.zeroGyro()));
           
     // Auto Intake
