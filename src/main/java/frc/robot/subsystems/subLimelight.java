@@ -9,6 +9,7 @@ import frc.robot.classes.LimelightHelpers;
 public class subLimelight extends SubsystemBase {
   PIDController limePID = new PIDController(0.02, 0, 0);
   public subLimelight() {
+    LimelightHelpers.setLEDMode_ForceOff("");
     limePID.setIntegratorRange(-0.2, 0.2);
   }
 
