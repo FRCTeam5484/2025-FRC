@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.cmdAuto_AlgaeRemoverToPosition;
+import frc.robot.commands.cmdAlgaeProcessor_TeleOp;
 import frc.robot.commands.cmdAlgaeRemover_ResetEncoder;
 import frc.robot.commands.cmdAlgaeRemover_Stop;
 import frc.robot.commands.cmdAlgaeRemover_TeleOp;
@@ -31,6 +32,7 @@ import frc.robot.subsystems.subBlinkin;
 import frc.robot.subsystems.subCoral;
 import frc.robot.subsystems.subElevator;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 
 public class RobotContainer {
   private SendableChooser<Command> chooser = new SendableChooser<>();
@@ -82,6 +84,9 @@ public class RobotContainer {
     driverOne.leftBumper().whileTrue(new cmdAuto_AlgaeIntake(algaeProcessor));
     driverOne.leftBumper().whileFalse(new cmdAuto_AlgaeHold(algaeProcessor));
     driverOne.rightBumper().whileTrue(new cmdAuto_AlgaeEject(algaeProcessor));
+
+    driverOne.povUp().whileTrue(new cmdAlgaeProcessor_TeleOp(algaeProcessor, ()->0.3));
+    driverOne.povDown().whileTrue(new cmdAlgaeProcessor_TeleOp(algaeProcessor, ()->-0.3));
   }
 
   private void ButtonBoxControls(){

@@ -23,7 +23,7 @@ public class cmdAuto_AlgaeEject extends Command {
   @Override
   public void execute() {
     processor.teleOp_Intake(-1);
-    processor.moveArm();
+    processor.moveArmUp();
   }
 
   @Override

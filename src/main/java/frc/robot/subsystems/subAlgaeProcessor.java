@@ -66,7 +66,12 @@ public class subAlgaeProcessor extends SubsystemBase {
   public void stopIntake() {
     intakeMotor.stopMotor();
   }
-  public void moveArm(){
-    armMotor.set(MathUtil.clamp(armPID.calculate(armEncoder.getPosition()), -0.1, 0.1));
+  public void moveArmUp(){
+    armPID.setSetpoint(Constants.Algae.ArmUpSensorValue);
+    armMotor.set(MathUtil.clamp(armPID.calculate(armEncoder.getPosition()), -0.3, 0.3));
+  }
+  public void moveArmDown(){
+    armPID.setSetpoint(Constants.Algae.ArmDownSensorValue);
+    armMotor.set(MathUtil.clamp(armPID.calculate(armEncoder.getPosition()), -0.2, 0.2));
   }
 }

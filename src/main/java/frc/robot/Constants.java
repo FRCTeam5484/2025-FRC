@@ -69,8 +69,8 @@ public class Constants {
       public static final int IntakeMotor = 16;
       public static final int RemoverMotor = 18;
 
-      public static final int ArmUpSensorValue = 10;
-      public static final int ArmDownSensorValue = 5000;
+      public static final int ArmUpSensorValue = -10;
+      public static final int ArmDownSensorValue = -5000;
 
       public static final double RemoverArmBack = 0;
       public static final double RemoverArmUp = 5700;
