@@ -70,7 +70,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("Elevator L3", new cmdAuto_EvevatorToPosition(elevator, blinkin, Constants.Elevator.L3));
     NamedCommands.registerCommand("Elevator L4", new cmdAuto_EvevatorToPosition(elevator, blinkin, Constants.Elevator.L4));
 
-    //addAutoOptions();
+    addAutoOptions();
   }
 
   private void DriverOneControls(){
@@ -113,10 +113,11 @@ public class RobotContainer {
     algaeRemover.setDefaultCommand(new cmdAlgaeRemover_TeleOp(algaeRemover, ()-> -buttonBoxControllerTwo.getRawAxis(1)*0.25));
   }
   private void addAutoOptions(){
-    chooser = AutoBuilder.buildAutoChooser();
+    chooser.addOption("Crossline Only", swerve.getAutonomousCommand("Crossline Only"));
+    chooser.addOption("Place 1 Coral", swerve.getAutonomousCommand("Place 1 Coral"));
     SmartDashboard.putData("Auto Options", chooser);
   }
   public Command getAutonomousCommand() {
-    return new InstantCommand();
+    return chooser.getSelected();
   }
 }
