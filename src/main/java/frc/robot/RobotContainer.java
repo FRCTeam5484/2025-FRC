@@ -1,7 +1,9 @@
 package frc.robot;
 
+import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
-
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -31,6 +33,7 @@ import frc.robot.subsystems.subElevator;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 public class RobotContainer {
+  private SendableChooser<Command> chooser = new SendableChooser<>();
   public final subCoral coral = new subCoral();
   public final subAlgaeProcessor algaeProcessor = new subAlgaeProcessor();
   public final subAlgaeRemover algaeRemover = new subAlgaeRemover();
@@ -45,8 +48,8 @@ public class RobotContainer {
                                                                 () -> driverOne.getLeftX() * -1)
                                                                 .withControllerRotationAxis(driverOne::getRightX)
                                                                 .deadband(0.01)
-                                                                .scaleTranslation(0.5)
-                                                                .allianceRelativeControl(true);
+                                                                .scaleTranslation(0.65)
+                                                                .allianceRelativeControl(false);
 
   SwerveInputStream driveDirectAngle = driveAngularVelocity.copy().withControllerHeadingAxis(driverOne::getRightX,
                                                                                             driverOne::getRightY)
@@ -64,13 +67,15 @@ public class RobotContainer {
     NamedCommands.registerCommand("Elevator L2", new cmdAuto_EvevatorToPosition(elevator, blinkin, Constants.Elevator.L2));
     NamedCommands.registerCommand("Elevator L3", new cmdAuto_EvevatorToPosition(elevator, blinkin, Constants.Elevator.L3));
     NamedCommands.registerCommand("Elevator L4", new cmdAuto_EvevatorToPosition(elevator, blinkin, Constants.Elevator.L4));
+
+    //addAutoOptions();
   }
 
   private void DriverOneControls(){
     //Swerve
     //swerve.setDefaultCommand(swerve.driveFieldOrientated(driveDirectAngle));
-    //swerve.setDefaultCommand(swerve.driveFieldOrientated(driveAngularVelocity));
-    swerve.setDefaultCommand(new cmdSwerve_TeleOp(swerve, ()->driverOne.getLeftY(), ()->driverOne.getLeftX(), ()->driverOne.getRightX(), ()->driverOne.getRightY()));
+    swerve.setDefaultCommand(swerve.driveFieldOrientated(driveAngularVelocity));
+    //swerve.setDefaultCommand(new cmdSwerve_TeleOp(swerve, ()->driverOne.getLeftY(), ()->driverOne.getLeftX(), ()->driverOne.getRightX(), ()->driverOne.getRightY()));
     driverOne.start().whileTrue(new InstantCommand(() -> swerve.zeroGyro()));
           
     // Auto Intake
@@ -101,6 +106,10 @@ public class RobotContainer {
     buttonBoxControllerTwo.button(5).onTrue(new cmdAlgaeRemover_Stop(algaeRemover));
     buttonBoxControllerTwo.button(6).onTrue(new cmdAlgaeRemover_ResetEncoder(algaeRemover));
     algaeRemover.setDefaultCommand(new cmdAlgaeRemover_TeleOp(algaeRemover, ()-> -buttonBoxControllerTwo.getRawAxis(1)*0.25));
+  }
+  private void addAutoOptions(){
+    chooser = AutoBuilder.buildAutoChooser();
+    SmartDashboard.putData("Auto Options", chooser);
   }
   public Command getAutonomousCommand() {
     return new InstantCommand();
