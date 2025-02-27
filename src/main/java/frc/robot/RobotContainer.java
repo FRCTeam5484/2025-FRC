@@ -97,7 +97,7 @@ public class RobotContainer {
     //Command driveRobotOrientedAngularVelocity  = swerve.driveFieldOriented(driveRobotOriented);
     //Command driveSetpointGen = swerve.driveWithSetpointGeneratorFieldRelative(driveDirectAngle);
     //swerve.setDefaultCommand(driveFieldOrientedAnglularVelocity);
-    swerve.setDefaultCommand(new cmdSwerve_TeleOp(swerve, ()->driverOne.getLeftY(), ()->driverOne.getLeftX(), ()->driverOne.getRightX(), ()->driverOne.getRightTriggerAxis()>0.5 ? false : true));
+    swerve.setDefaultCommand(new cmdSwerve_TeleOp(swerve, ()->driverOne.getLeftY()*-1, ()->driverOne.getLeftX()*-1, ()->driverOne.getRightX()*-1, ()->driverOne.getRightTriggerAxis()>0.5 ? false : true));
     
     if (DriverStation.isTest())
     {
