@@ -190,7 +190,7 @@ public class subSwerve extends SubsystemBase {
               // Rotation PID constants
           ),
           config,
-          ()->true,
+          ()->false,
           this);
 
     } catch (Exception e)
