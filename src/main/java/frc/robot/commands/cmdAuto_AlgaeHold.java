@@ -19,7 +19,7 @@ public class cmdAuto_AlgaeHold extends Command {
   @Override
   public void execute() {
     processor.moveArmUp();
-    processor.teleOp_Intake(0.3);
+    processor.teleOp_Intake(0.05);
   }
 
   @Override

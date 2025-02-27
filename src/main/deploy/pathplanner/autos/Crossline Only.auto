@@ -9,11 +9,17 @@
           "data": {
             "pathName": "Crossline"
           }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Elevator L2"
+          }
         }
       ]
     }
   },
-  "resetOdom": true,
+  "resetOdom": false,
   "folder": null,
   "choreoAuto": false
 }

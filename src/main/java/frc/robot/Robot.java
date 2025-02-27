@@ -28,7 +28,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
-    m_robotContainer.swerve.zeroGyroWithAlliance();
+    //m_robotContainer.swerve.zeroGyroWithAlliance();
+    m_robotContainer.swerve.zeroGyro();
     m_robotContainer.blinkin.off();
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 

@@ -29,6 +29,7 @@ import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import swervelib.parser.SwerveDriveConfiguration;
 import swervelib.parser.SwerveParser;
 import swervelib.telemetry.SwerveDriveTelemetry;
@@ -85,6 +86,7 @@ public class subSwerve extends SubsystemBase {
     SmartDashboard.putNumber("Front Right CanCoder", modules[1].getAbsolutePosition());
     SmartDashboard.putNumber("Back Left CanCoder", modules[2].getAbsolutePosition());
     SmartDashboard.putNumber("Back Right CanCoder", modules[3].getAbsolutePosition()); */
+    SmartDashboard.putString("Gryo", swerveDrive.getGyro().toString());
   }
   public SwerveDrive getSwerveDrive() {
     return swerveDrive;
@@ -122,6 +124,11 @@ public class subSwerve extends SubsystemBase {
 
   public void zeroGyro(){
     swerveDrive.zeroGyro();
+    //resetOdometry(new Pose2d(getPose().getTranslation(), Rotation2d.fromDegrees(180)));
+  }
+  public void zeroGyroAuto(){
+    swerveDrive.zeroGyro();
+    resetOdometry(new Pose2d(getPose().getTranslation(), Rotation2d.fromDegrees(180)));
   }
 
   public void setMotorBrake(boolean brake) {
@@ -177,20 +184,13 @@ public class subSwerve extends SubsystemBase {
             }
           },
           new PPHolonomicDriveController(
-              new PIDConstants(5.0, 0.0, 0.0),
+              new PIDConstants(1.0, 0.0, 0.0),
               // Translation PID constants
-              new PIDConstants(5.0, 0.0, 0.0)
+              new PIDConstants(1.0, 0.0, 0.0)
               // Rotation PID constants
           ),
           config,
-          () -> {
-            var alliance = DriverStation.getAlliance();
-            if (alliance.isPresent())
-            {
-              return alliance.get() == DriverStation.Alliance.Red;
-            }
-            return false;
-          },
+          ()->true,
           this);
 
     } catch (Exception e)
