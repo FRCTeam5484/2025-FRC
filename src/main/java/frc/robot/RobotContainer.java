@@ -92,17 +92,15 @@ public class RobotContainer {
 
   private void DriverOneControls(){
     //Swerve
-    Command driveFieldOrientedDirectAngle      = swerve.driveFieldOriented(driveDirectAngle);
-    Command driveFieldOrientedAnglularVelocity = swerve.driveFieldOriented(driveAngularVelocity);
-    Command driveRobotOrientedAngularVelocity  = swerve.driveFieldOriented(driveRobotOriented);
-    Command driveSetpointGen = swerve.driveWithSetpointGeneratorFieldRelative(driveDirectAngle);
+    //Command driveFieldOrientedDirectAngle      = swerve.driveFieldOriented(driveDirectAngle);
+    //Command driveFieldOrientedAnglularVelocity = swerve.driveFieldOriented(driveAngularVelocity);
+    //Command driveRobotOrientedAngularVelocity  = swerve.driveFieldOriented(driveRobotOriented);
+    //Command driveSetpointGen = swerve.driveWithSetpointGeneratorFieldRelative(driveDirectAngle);
     //swerve.setDefaultCommand(driveFieldOrientedAnglularVelocity);
     swerve.setDefaultCommand(new cmdSwerve_TeleOp(swerve, ()->driverOne.getLeftY(), ()->driverOne.getLeftX(), ()->driverOne.getRightX(), ()->driverOne.getRightTriggerAxis()>0.5 ? false : true));
     
     if (DriverStation.isTest())
     {
-      //swerve.setDefaultCommand(driveFieldOrientedAnglularVelocity);
-
       driverOne.start().onTrue((Commands.runOnce(swerve::zeroGyro)));
       driverOne.back().whileTrue(swerve.centerModulesCommand());
 
@@ -118,7 +116,8 @@ public class RobotContainer {
       driverOne.povDown().onTrue(Commands.none());
       driverOne.povLeft().onTrue(Commands.none());
       driverOne.povRight().onTrue(Commands.none());
-    } else
+    } 
+    else
     {
       driverOne.start().whileTrue(new InstantCommand(() -> swerve.zeroGyro()));
       driverOne.back().onTrue(Commands.runOnce(()->swerve.resetOdometry(new Pose2d(3,3, new Rotation2d()))));      
