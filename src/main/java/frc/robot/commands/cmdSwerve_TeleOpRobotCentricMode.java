@@ -9,22 +9,19 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.subsystems.subSwerve;
 import java.util.List;
-import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 import swervelib.SwerveController;
 import swervelib.math.SwerveMath;
 
-public class cmdSwerve_TeleOp extends Command {
+public class cmdSwerve_TeleOpRobotCentricMode extends Command {
   private final subSwerve swerve;
   private final DoubleSupplier  vX, vY, heading;
-  private final BooleanSupplier fieldCentric;
-  public cmdSwerve_TeleOp(subSwerve swerve, DoubleSupplier vX, DoubleSupplier vY, DoubleSupplier heading, BooleanSupplier fieldCentric)
+  public cmdSwerve_TeleOpRobotCentricMode(subSwerve swerve, DoubleSupplier vX, DoubleSupplier vY, DoubleSupplier heading)
   {
     this.swerve = swerve;
     this.vX = vX;
     this.vY = vY;
     this.heading = heading;
-    this.fieldCentric = fieldCentric;
 
     addRequirements(swerve);
   }
@@ -46,7 +43,7 @@ public class cmdSwerve_TeleOp extends Command {
     SmartDashboard.putString("Translation", translation.toString());
 
     // Make the robot move
-    swerve.drive(translation, desiredSpeeds.omegaRadiansPerSecond, fieldCentric.getAsBoolean());
+    swerve.drive(translation, desiredSpeeds.omegaRadiansPerSecond, false);
   }
 
   @Override

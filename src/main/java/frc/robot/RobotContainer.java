@@ -1,10 +1,19 @@
 package frc.robot;
 
+import java.io.File;
+
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
+
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.OperatorConstants;
@@ -32,30 +41,38 @@ import frc.robot.subsystems.subBlinkin;
 import frc.robot.subsystems.subCoral;
 import frc.robot.subsystems.subElevator;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.RunCommand;
 
 public class RobotContainer {
   private SendableChooser<Command> chooser = new SendableChooser<>();
   public final subCoral coral = new subCoral();
   public final subAlgaeProcessor algaeProcessor = new subAlgaeProcessor();
   public final subAlgaeRemover algaeRemover = new subAlgaeRemover();
-  public final subSwerve swerve = new subSwerve();
+  public final subSwerve swerve  = new subSwerve(new File(Filesystem.getDeployDirectory(), "swerve"));
   public final subElevator elevator = new subElevator();
   public final subBlinkin blinkin = new subBlinkin();
   private final CommandXboxController driverOne = new CommandXboxController(OperatorConstants.DriverOne);
   private final CommandJoystick buttonBoxControllerOne = new CommandJoystick(OperatorConstants.ButtonBoxControllerOne);
   private final CommandJoystick buttonBoxControllerTwo = new CommandJoystick(OperatorConstants.ButtonBoxControllerTwo);
-  SwerveInputStream driveAngularVelocity = SwerveInputStream.of(swerve.getSwerveDrive(), 
-                                                                () -> driverOne.getLeftY() * -1, 
+  SwerveInputStream driveAngularVelocity = SwerveInputStream.of(swerve.getSwerveDrive(),
+                                                                () -> driverOne.getLeftY() * -1,
                                                                 () -> driverOne.getLeftX() * -1)
-                                                                .withControllerRotationAxis(()-> driverOne.getRightX()*-1)
-                                                                .deadband(0.01)
-                                                                .scaleTranslation(0.65)
-                                                                .allianceRelativeControl(false);
+                                                            .withControllerRotationAxis(driverOne::getRightX)
+                                                            .deadband(0.02)
+                                                            .scaleTranslation(0.8)
+                                                            .allianceRelativeControl(true);
 
+  /**
+   * Clone's the angular velocity input stream and converts it to a fieldRelative input stream.
+   */
   SwerveInputStream driveDirectAngle = driveAngularVelocity.copy().withControllerHeadingAxis(driverOne::getRightX,
-                                                                                            driverOne::getRightY)
-                                                                                           .headingWhile(true);
+                                                                                             driverOne::getRightY)
+                                                           .headingWhile(true);
+
+  /**
+   * Clone's the angular velocity input stream and converts it to a robotRelative input stream.
+   */
+  SwerveInputStream driveRobotOriented = driveAngularVelocity.copy().robotRelative(true)
+                                                             .allianceRelativeControl(false);
   
   public RobotContainer() {
     DriverOneControls();
@@ -75,18 +92,53 @@ public class RobotContainer {
 
   private void DriverOneControls(){
     //Swerve
-    //swerve.setDefaultCommand(swerve.driveFieldOrientated(driveDirectAngle));
-    swerve.setDefaultCommand(swerve.driveFieldOrientated(driveAngularVelocity));
-    //swerve.setDefaultCommand(new cmdSwerve_TeleOp(swerve, ()->driverOne.getLeftY(), ()->driverOne.getLeftX(), ()->driverOne.getRightX(), ()->driverOne.getRightY()));
-    driverOne.start().whileTrue(new InstantCommand(() -> swerve.zeroGyro()));
-          
-    // Auto Intake
-    driverOne.leftBumper().whileTrue(new cmdAuto_AlgaeIntake(algaeProcessor));
-    driverOne.leftBumper().whileFalse(new cmdAuto_AlgaeHold(algaeProcessor));
-    driverOne.rightBumper().whileTrue(new cmdAuto_AlgaeEject(algaeProcessor));
+    Command driveFieldOrientedDirectAngle      = swerve.driveFieldOriented(driveDirectAngle);
+    Command driveFieldOrientedAnglularVelocity = swerve.driveFieldOriented(driveAngularVelocity);
+    Command driveRobotOrientedAngularVelocity  = swerve.driveFieldOriented(driveRobotOriented);
+    Command driveSetpointGen = swerve.driveWithSetpointGeneratorFieldRelative(driveDirectAngle);
+    //swerve.setDefaultCommand(driveFieldOrientedAnglularVelocity);
+    swerve.setDefaultCommand(new cmdSwerve_TeleOp(swerve, ()->driverOne.getLeftY(), ()->driverOne.getLeftX(), ()->driverOne.getRightX(), ()->driverOne.getRightTriggerAxis()>0.5 ? false : true));
+    
+    if (DriverStation.isTest())
+    {
+      //swerve.setDefaultCommand(driveFieldOrientedAnglularVelocity);
 
-    driverOne.povUp().whileTrue(new cmdAlgaeProcessor_TeleOp(algaeProcessor, ()->0.3));
-    driverOne.povDown().whileTrue(new cmdAlgaeProcessor_TeleOp(algaeProcessor, ()->-0.3));
+      driverOne.start().onTrue((Commands.runOnce(swerve::zeroGyro)));
+      driverOne.back().whileTrue(swerve.centerModulesCommand());
+
+      driverOne.a().whileTrue(Commands.runOnce(swerve::lock, swerve).repeatedly());
+      driverOne.b().whileTrue(Commands.none());
+      driverOne.x().whileTrue(Commands.runOnce(swerve::lock, swerve).repeatedly());
+      driverOne.y().whileTrue(swerve.driveToDistanceCommand(1.0, 0.2));
+
+      driverOne.leftBumper().onTrue(Commands.none());
+      driverOne.rightBumper().onTrue(Commands.none());
+
+      driverOne.povUp().onTrue(Commands.none());
+      driverOne.povDown().onTrue(Commands.none());
+      driverOne.povLeft().onTrue(Commands.none());
+      driverOne.povRight().onTrue(Commands.none());
+    } else
+    {
+      driverOne.start().whileTrue(new InstantCommand(() -> swerve.zeroGyro()));
+      driverOne.back().onTrue(Commands.runOnce(()->swerve.resetOdometry(new Pose2d(3,3, new Rotation2d()))));      
+
+      driverOne.a().onTrue((Commands.runOnce(swerve::zeroGyro)));
+      driverOne.b().whileTrue(swerve.driveToPose(new Pose2d(new Translation2d(4, 4), Rotation2d.fromDegrees(0))));
+      //driverOne.x().onTrue(Commands.runOnce(swerve::addFakeVisionReading));
+      driverOne.x().onTrue(Commands.none());
+      driverOne.y().onTrue(Commands.none());
+            
+      // Auto Intake
+      driverOne.leftBumper().whileTrue(new cmdAuto_AlgaeIntake(algaeProcessor));
+      driverOne.leftBumper().whileFalse(new cmdAuto_AlgaeHold(algaeProcessor));
+      driverOne.rightBumper().whileTrue(new cmdAuto_AlgaeEject(algaeProcessor));
+
+      driverOne.povUp().whileTrue(new cmdAlgaeProcessor_TeleOp(algaeProcessor, ()->0.3));
+      driverOne.povDown().whileTrue(new cmdAlgaeProcessor_TeleOp(algaeProcessor, ()->-0.3));
+      driverOne.povLeft().onTrue(Commands.none());
+      driverOne.povRight().onTrue(Commands.none());
+    }
   }
 
   private void ButtonBoxControls(){
