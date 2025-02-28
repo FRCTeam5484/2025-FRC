@@ -12,12 +12,15 @@ import java.util.List;
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 import swervelib.SwerveController;
+import swervelib.SwerveInputStream;
 import swervelib.math.SwerveMath;
 
 public class cmdSwerve_TeleOp extends Command {
   private final subSwerve swerve;
   private final DoubleSupplier  vX, vY, heading;
   private final BooleanSupplier fieldCentric;
+  Command fieldCentricMode;
+  Command robotCentricMode;
   public cmdSwerve_TeleOp(subSwerve swerve, DoubleSupplier vX, DoubleSupplier vY, DoubleSupplier heading, BooleanSupplier fieldCentric)
   {
     this.swerve = swerve;
@@ -25,7 +28,8 @@ public class cmdSwerve_TeleOp extends Command {
     this.vY = vY;
     this.heading = heading;
     this.fieldCentric = fieldCentric;
-
+    fieldCentricMode = new cmdSwerve_TeleOpFieldCentricMode(this.swerve, this.vX, this.vY, this.heading);
+    robotCentricMode = new cmdSwerve_TeleOpRobotCentricMode(this.swerve, this.vX, this.vY, this.heading);
     addRequirements(swerve);
   }
 
@@ -34,19 +38,11 @@ public class cmdSwerve_TeleOp extends Command {
 
   @Override
   public void execute() {
-    ChassisSpeeds desiredSpeeds = swerve.getTargetSpeeds(vX.getAsDouble(), vY.getAsDouble(),
-                                                         new Rotation2d(heading.getAsDouble() * Math.PI));
-
-    // Limit velocity to prevent tippy
-    Translation2d translation = SwerveController.getTranslation2d(desiredSpeeds);
-    translation = SwerveMath.limitVelocity(translation, swerve.getFieldVelocity(), swerve.getPose(),
-                                           Constants.LOOP_TIME, Constants.ROBOT_MASS, List.of(Constants.CHASSIS),
-                                           swerve.getSwerveDriveConfiguration());
-    SmartDashboard.putNumber("LimitedTranslation", translation.getX());
-    SmartDashboard.putString("Translation", translation.toString());
-
-    // Make the robot move
-    swerve.drive(translation, desiredSpeeds.omegaRadiansPerSecond, fieldCentric.getAsBoolean());
+    if (fieldCentric.getAsBoolean()) {
+      fieldCentricMode.execute();
+    } else {
+      robotCentricMode.execute();
+    }
   }
 
   @Override

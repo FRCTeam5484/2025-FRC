@@ -5,7 +5,7 @@
     "data": {
       "commands": [
         {
-          "type": "sequential",
+          "type": "parallel",
           "data": {
             "commands": [
               {
@@ -17,7 +17,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "Elevator L2"
+                  "name": "Elevator L3"
                 }
               }
             ]
@@ -27,6 +27,12 @@
           "type": "named",
           "data": {
             "name": "Coral Eject"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Elevator Bottom"
           }
         }
       ]
