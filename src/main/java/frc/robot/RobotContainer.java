@@ -172,6 +172,7 @@ public class RobotContainer {
     SmartDashboard.putData("Auto Options", chooser);
   }
   public Command getAutonomousCommand() {
-    return new cmdAutonomous_Crossline(swerve); //chooser.getSelected();
+    //return new cmdAutonomous_Crossline(swerve); 
+    return chooser.getSelected();
   }
 }
