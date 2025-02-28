@@ -30,6 +30,7 @@ import frc.robot.commands.cmdAuto_CoralEject;
 import frc.robot.commands.cmdCoral_Stop;
 import frc.robot.commands.cmdCoral_TeleOp;
 import frc.robot.commands.cmdAuto_EvevatorToPosition;
+import frc.robot.commands.cmdAutonomous_Crossline;
 import frc.robot.commands.cmdElevator_Stop;
 import frc.robot.commands.cmdElevator_TeleOp;
 import frc.robot.commands.cmdSwerve_TeleOp;
@@ -56,7 +57,7 @@ public class RobotContainer {
   SwerveInputStream driveAngularVelocity = SwerveInputStream.of(swerve.getSwerveDrive(),
                                                                 () -> driverOne.getLeftY() * -1,
                                                                 () -> driverOne.getLeftX() * -1)
-                                                            .withControllerRotationAxis(driverOne::getRightX)
+                                                            .withControllerRotationAxis(()->driverOne.getRightX()*-1)
                                                             .deadband(0.02)
                                                             .scaleTranslation(0.8)
                                                             .allianceRelativeControl(true);
@@ -93,11 +94,11 @@ public class RobotContainer {
   private void DriverOneControls(){
     //Swerve
     //Command driveFieldOrientedDirectAngle      = swerve.driveFieldOriented(driveDirectAngle);
-    //Command driveFieldOrientedAnglularVelocity = swerve.driveFieldOriented(driveAngularVelocity);
+    Command driveFieldOrientedAnglularVelocity = swerve.driveFieldOriented(driveAngularVelocity);
     //Command driveRobotOrientedAngularVelocity  = swerve.driveFieldOriented(driveRobotOriented);
     //Command driveSetpointGen = swerve.driveWithSetpointGeneratorFieldRelative(driveDirectAngle);
-    //swerve.setDefaultCommand(driveFieldOrientedAnglularVelocity);
-    swerve.setDefaultCommand(new cmdSwerve_TeleOp(swerve, ()->driverOne.getLeftY()*-1, ()->driverOne.getLeftX()*-1, ()->driverOne.getRightX()*-1, ()->driverOne.getRightTriggerAxis()>0.5 ? false : true));
+    swerve.setDefaultCommand(driveFieldOrientedAnglularVelocity);
+    //swerve.setDefaultCommand(new cmdSwerve_TeleOp(swerve, ()->driverOne.getLeftY()*-1, ()->driverOne.getLeftX()*-1, ()->driverOne.getRightX()*-1, ()->driverOne.getRightTriggerAxis()>0.5 ? false : true));
     
     if (DriverStation.isTest())
     {
@@ -169,6 +170,6 @@ public class RobotContainer {
     SmartDashboard.putData("Auto Options", chooser);
   }
   public Command getAutonomousCommand() {
-    return chooser.getSelected();
+    return new cmdAutonomous_Crossline(swerve); //chooser.getSelected();
   }
 }
