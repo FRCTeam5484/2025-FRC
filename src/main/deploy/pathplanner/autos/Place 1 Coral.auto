@@ -23,7 +23,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "Elevator L3"
+                  "name": "Elevator L4"
                 }
               }
             ]
@@ -33,6 +33,12 @@
           "type": "named",
           "data": {
             "name": "Coral Eject"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Backup From Middle"
           }
         },
         {
