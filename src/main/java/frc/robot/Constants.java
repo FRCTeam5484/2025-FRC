@@ -68,7 +68,7 @@ public class Constants {
       public static final double L1 = 500;
       public static final double L2 = 1100;
       public static final double L3 = 3100;
-      public static final double L4 = 6400;
+      public static final double L4 = 6150;
       public static final double topPosition = 6600;
     }
     public static final class Algae {

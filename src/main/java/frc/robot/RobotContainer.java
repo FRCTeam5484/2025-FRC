@@ -159,7 +159,7 @@ public class RobotContainer {
     buttonBoxControllerOne.button(9).onTrue(new cmdAuto_CoralEject(coral, blinkin));
     buttonBoxControllerOne.button(10).onTrue(new cmdAuto_CoralIntake(coral, blinkin));
     buttonBoxControllerOne.button(11).onTrue(new cmdCoral_Stop(coral));
-    elevator.setDefaultCommand(new cmdElevator_TeleOp(elevator, ()->buttonBoxControllerOne.getRawAxis(1)*.5));
+    elevator.setDefaultCommand(new cmdElevator_TeleOp(elevator, ()->-buttonBoxControllerOne.getRawAxis(1)*.5));
 
 
     buttonBoxControllerTwo.button(1).onTrue(new cmdAuto_AlgaeRemoverToPosition(algaeRemover, Constants.Algae.RemoverArmDown));
