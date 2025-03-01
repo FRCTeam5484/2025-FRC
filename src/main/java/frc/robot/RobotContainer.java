@@ -78,16 +78,16 @@ public class RobotContainer {
   
   public RobotContainer() {
     DriverOneControls();
-    //ButtonBoxControls();
+    ButtonBoxControls();
 
     // Named Commands
     NamedCommands.registerCommand("Coral Intake", new cmdAuto_CoralIntake(coral, blinkin));
-    NamedCommands.registerCommand("Coral Eject", new cmdAuto_CoralEject(coral, blinkin));
+    NamedCommands.registerCommand("Coral Eject", new cmdAuto_CoralEject(coral, blinkin).withTimeout(2));
     NamedCommands.registerCommand("Elevator Bottom", new cmdAuto_EvevatorToPosition(elevator, blinkin, Constants.Elevator.bottomPosition));
-    NamedCommands.registerCommand("Elevator L1", new cmdAuto_EvevatorToPosition(elevator, blinkin, Constants.Elevator.L1));
-    NamedCommands.registerCommand("Elevator L2", new cmdAuto_EvevatorToPosition(elevator, blinkin, Constants.Elevator.L2));
-    NamedCommands.registerCommand("Elevator L3", new cmdAuto_EvevatorToPosition(elevator, blinkin, Constants.Elevator.L3));
-    NamedCommands.registerCommand("Elevator L4", new cmdAuto_EvevatorToPosition(elevator, blinkin, Constants.Elevator.L4));
+    NamedCommands.registerCommand("Elevator L1", new cmdAuto_EvevatorToPosition(elevator, blinkin, Constants.Elevator.L1).withTimeout(2));
+    NamedCommands.registerCommand("Elevator L2", new cmdAuto_EvevatorToPosition(elevator, blinkin, Constants.Elevator.L2).withTimeout(2));
+    NamedCommands.registerCommand("Elevator L3", new cmdAuto_EvevatorToPosition(elevator, blinkin, Constants.Elevator.L3).withTimeout(2));
+    NamedCommands.registerCommand("Elevator L4", new cmdAuto_EvevatorToPosition(elevator, blinkin, Constants.Elevator.L4).withTimeout(2));
 
     addAutoOptions();
   }
