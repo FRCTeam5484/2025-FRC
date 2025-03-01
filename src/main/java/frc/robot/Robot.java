@@ -47,6 +47,8 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    m_robotContainer.algaeRemover.pidSetPoint = Constants.Algae.RemoverArmUp;
+    m_robotContainer.algaeRemover.autoPosition();
   }
 
   @Override

@@ -9,6 +9,12 @@
           "data": {
             "commands": [
               {
+                "type": "named",
+                "data": {
+                  "name": "Algae Remover Up"
+                }
+              },
+              {
                 "type": "path",
                 "data": {
                   "pathName": "Drive To Center Reef From Line"

@@ -83,6 +83,7 @@ public class RobotContainer {
     // Named Commands
     NamedCommands.registerCommand("Coral Intake", new cmdAuto_CoralIntake(coral, blinkin));
     NamedCommands.registerCommand("Coral Eject", new cmdAuto_CoralEject(coral, blinkin).withTimeout(2));
+    NamedCommands.registerCommand("Algae Remover Up", new cmdAuto_AlgaeRemoverToPosition(algaeRemover, Constants.Algae.RemoverArmUp).withTimeout(1));
     NamedCommands.registerCommand("Elevator Bottom", new cmdAuto_EvevatorToPosition(elevator, blinkin, Constants.Elevator.bottomPosition));
     NamedCommands.registerCommand("Elevator L1", new cmdAuto_EvevatorToPosition(elevator, blinkin, Constants.Elevator.L1).withTimeout(2));
     NamedCommands.registerCommand("Elevator L2", new cmdAuto_EvevatorToPosition(elevator, blinkin, Constants.Elevator.L2).withTimeout(2));
@@ -145,6 +146,8 @@ public class RobotContainer {
   }
 
   private void ButtonBoxControls(){
+    //algaeRemover.setDefaultCommand(new cmdAuto_AlgaeRemoverToPosition(algaeRemover, Constants.Algae.RemoverArmUp));
+
     buttonBoxControllerOne.button(1).onTrue(new cmdAuto_EvevatorToPosition(elevator, blinkin, Constants.Elevator.L4));
     buttonBoxControllerOne.button(2).onTrue(new cmdAuto_EvevatorToPosition(elevator, blinkin, Constants.Elevator.L3));
     buttonBoxControllerOne.button(3).onTrue(new cmdAuto_EvevatorToPosition(elevator, blinkin, Constants.Elevator.L2));

@@ -15,7 +15,8 @@ public class cmdAlgaeRemover_TeleOp extends Command {
   }
 
   @Override
-  public void initialize() {}
+  public void initialize() {
+  }
 
   @Override
   public void execute() {
