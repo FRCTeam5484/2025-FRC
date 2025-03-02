@@ -93,4 +93,17 @@ public class Constants {
       public static final int hookMotor = 19;
       public static final int winchMotor = 20;
     }
+    public static final class LimeLightOffsets{
+      public static final double L4HorizontalOffset = 0;
+      public static final double L4DistanceOffset = 0;
+
+      public static final double L3HorizontalOffset = 0;
+      public static final double L3DistanceOffset = 0;
+
+      public static final double L2HorizontalOffset = 0;
+      public static final double L2DistanceOffset = 0;
+
+      public static final double L1HorizontalOffset = 0;
+      public static final double L1DistanceOffset = 0;
+    }
 }

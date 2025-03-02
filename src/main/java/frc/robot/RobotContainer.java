@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.cmdAuto_AlgaeRemoverToPosition;
+import frc.robot.commands.cmdAuto_AlignRobot;
 import frc.robot.commands.cmdAlgaeProcessor_TeleOp;
 import frc.robot.commands.cmdAlgaeRemover_ResetEncoder;
 import frc.robot.commands.cmdAlgaeRemover_Stop;
@@ -42,6 +43,7 @@ import frc.robot.subsystems.subAlgaeRemover;
 import frc.robot.subsystems.subBlinkin;
 import frc.robot.subsystems.subCoral;
 import frc.robot.subsystems.subElevator;
+import frc.robot.subsystems.subLimelight;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 public class RobotContainer {
@@ -52,6 +54,7 @@ public class RobotContainer {
   public final subSwerve swerve  = new subSwerve(new File(Filesystem.getDeployDirectory(), "swerve"));
   public final subElevator elevator = new subElevator();
   public final subBlinkin blinkin = new subBlinkin();
+  public final subLimelight limelight = new subLimelight();
   private final CommandXboxController driverOne = new CommandXboxController(OperatorConstants.DriverOne);
   private final CommandJoystick buttonBoxControllerOne = new CommandJoystick(OperatorConstants.ButtonBoxControllerOne);
   private final CommandJoystick buttonBoxControllerTwo = new CommandJoystick(OperatorConstants.ButtonBoxControllerTwo);
@@ -127,11 +130,10 @@ public class RobotContainer {
       driverOne.start().whileTrue(new InstantCommand(() -> swerve.zeroGyro()));
       driverOne.back().onTrue(Commands.runOnce(()->swerve.resetOdometry(new Pose2d(3,3, new Rotation2d()))));      
 
-      driverOne.a().onTrue((Commands.runOnce(swerve::zeroGyro)));
-      driverOne.b().whileTrue(swerve.driveToPose(new Pose2d(new Translation2d(4, 4), Rotation2d.fromDegrees(0))));
-      //driverOne.x().onTrue(Commands.runOnce(swerve::addFakeVisionReading));
+      driverOne.a().whileTrue(new cmdAuto_AlignRobot(swerve, limelight, "L2"));
+      driverOne.b().whileTrue(new cmdAuto_AlignRobot(swerve, limelight, "L3"));
       driverOne.x().onTrue(Commands.none());
-      driverOne.y().onTrue(Commands.none());
+      driverOne.y().whileTrue(new cmdAuto_AlignRobot(swerve, limelight, "L4"));
             
       // Auto Intake
       driverOne.leftBumper().whileTrue(new cmdAuto_AlgaeIntake(algaeProcessor));
