@@ -87,6 +87,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("Coral Intake", new cmdAuto_CoralIntake(coral, blinkin));
     NamedCommands.registerCommand("Coral Eject", new cmdAuto_CoralEject(coral, blinkin).withTimeout(2));
     NamedCommands.registerCommand("Algae Remover Up", new cmdAuto_AlgaeRemoverToPosition(algaeRemover, Constants.Algae.RemoverArmUp).withTimeout(1));
+    NamedCommands.registerCommand("Algae Remover Down", new cmdAuto_AlgaeRemoverToPosition(algaeRemover, Constants.Algae.RemoverArmDown).withTimeout(1));
     NamedCommands.registerCommand("Elevator Bottom", new cmdAuto_EvevatorToPosition(elevator, blinkin, Constants.Elevator.bottomPosition));
     NamedCommands.registerCommand("Elevator L1", new cmdAuto_EvevatorToPosition(elevator, blinkin, Constants.Elevator.L1).withTimeout(2));
     NamedCommands.registerCommand("Elevator L2", new cmdAuto_EvevatorToPosition(elevator, blinkin, Constants.Elevator.L2).withTimeout(2));
@@ -130,10 +131,10 @@ public class RobotContainer {
       driverOne.start().whileTrue(new InstantCommand(() -> swerve.zeroGyro()));
       driverOne.back().onTrue(Commands.runOnce(()->swerve.resetOdometry(new Pose2d(3,3, new Rotation2d()))));      
 
-      driverOne.a().whileTrue(new cmdAuto_AlignRobot(swerve, limelight, "L2"));
-      driverOne.b().whileTrue(new cmdAuto_AlignRobot(swerve, limelight, "L3"));
+      driverOne.a().whileTrue(new cmdAuto_AlignRobot(swerve, limelight));
+      driverOne.b().onTrue(Commands.none());
       driverOne.x().onTrue(Commands.none());
-      driverOne.y().whileTrue(new cmdAuto_AlignRobot(swerve, limelight, "L4"));
+      driverOne.y().onTrue(Commands.none());
             
       // Auto Intake
       driverOne.leftBumper().whileTrue(new cmdAuto_AlgaeIntake(algaeProcessor));
@@ -175,6 +176,7 @@ public class RobotContainer {
   private void addAutoOptions(){
     chooser.addOption("Crossline Only", swerve.getAutonomousCommand("Crossline Only"));
     chooser.addOption("Place 1 Coral", swerve.getAutonomousCommand("Place 1 Coral"));
+    chooser.addOption("Drive Forward and Wait", swerve.getAutonomousCommand("Drive Forward and Wait"));
     SmartDashboard.putData("Auto Options", chooser);
   }
   public Command getAutonomousCommand() {
