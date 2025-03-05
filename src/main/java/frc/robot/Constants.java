@@ -94,7 +94,7 @@ public class Constants {
       public static final int winchMotor = 20;
     }
     public static final class LimeLightOffsets{
-      public static final double HorizontalOffset = 9.56;
-      public static final double DistanceOffset = -5.174;
+      public static final double HorizontalOffset = 5.92;
+      public static final double DistanceOffset = 5.1;
     }
 }

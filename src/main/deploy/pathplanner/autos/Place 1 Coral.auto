@@ -17,7 +17,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Drive To Center Reef From Line"
+                  "pathName": "Drive Towards Reef From Line"
                 }
               },
               {
@@ -27,6 +27,12 @@
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Limelight Lineup"
           }
         },
         {
