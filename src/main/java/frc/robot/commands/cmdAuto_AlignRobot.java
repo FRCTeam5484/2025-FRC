@@ -45,7 +45,8 @@ public class cmdAuto_AlignRobot extends Command {
     forwardCommand = MathUtil.clamp(pidDistanceController.calculate(distanceError), -1, 1);
     strafeCommand = MathUtil.clamp(pidHorizontalController.calculate(horizontalError), -1, 1);
     //System.out.println("Horizontal Error: " + strafeCommand + " Distance Error: " + horizontalError);
-    swerve.drive(new ChassisSpeeds(-forwardCommand, -strafeCommand, 0));    
+    //swerve.drive(new ChassisSpeeds(-forwardCommand, -strafeCommand, 0));    
+    swerve.drive(new ChassisSpeeds(-forwardCommand, 0, 0));    
   }
 
   @Override
