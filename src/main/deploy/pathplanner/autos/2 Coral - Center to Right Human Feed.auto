@@ -1,0 +1,177 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Algae Remover Up"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Drive Towards Reef From Line"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Elevator L4"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Elevator L4"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Limelight Lineup"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Elevator L4"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Coral Eject"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Go To Human Feed On Right"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Elevator Bottom"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Coral Intake"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Drive to Right Reef From Human Feed"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Elevator L4"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Limelight Lineup"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Elevator L4"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Coral Eject"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Elevator L4"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Right Reef to Human Feed"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Elevator Bottom"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}

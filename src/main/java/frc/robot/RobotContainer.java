@@ -162,6 +162,7 @@ public class RobotContainer {
   private void addAutoOptions(){
     chooser.addOption("Crossline Only", swerve.getAutonomousCommand("Crossline Only"));
     chooser.addOption("Place 1 Coral", swerve.getAutonomousCommand("Place 1 Coral"));
+    chooser.addOption("2 Coral - Center to Right Human Feed", swerve.getAutonomousCommand("2 Coral - Center to Right Human Feed"));
     //chooser.addOption("Drive Forward and Wait", swerve.getAutonomousCommand("Drive Forward and Wait"));
     SmartDashboard.putData("Autonomous Options", chooser);
   }
