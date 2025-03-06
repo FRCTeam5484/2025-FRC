@@ -6,25 +6,21 @@ import frc.robot.subsystems.subElevator;
 
 public class cmdAuto_EvevatorToPosition extends Command {
   subElevator elevator;
-  subBlinkin blinkin;
   double position;
-  public cmdAuto_EvevatorToPosition(subElevator elevator, subBlinkin blinkin, double position) {
+  public cmdAuto_EvevatorToPosition(subElevator elevator, double position) {
     this.elevator = elevator;
-    this.blinkin = blinkin;
     this.position = position;
-    addRequirements(elevator, blinkin);
+    addRequirements(elevator);
   }
 
   @Override
   public void initialize() {
-    blinkin.strobeBlue();
     elevator.setPoint = position;
   }
 
   @Override
   public void execute() {
     if(elevator.atSetPoint()) {
-      blinkin.green();
     }
     elevator.moveToPosition();
   }

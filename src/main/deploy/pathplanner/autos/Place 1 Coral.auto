@@ -30,27 +30,60 @@
           }
         },
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "Limelight Lineup"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Elevator L4"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Limelight Lineup"
+                }
+              }
+            ]
           }
         },
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "Coral Eject"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Elevator L4"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Coral Eject"
+                }
+              }
+            ]
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "Backup From Middle"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Elevator Bottom"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Backup From Middle"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Elevator Bottom"
+                }
+              }
+            ]
           }
         }
       ]

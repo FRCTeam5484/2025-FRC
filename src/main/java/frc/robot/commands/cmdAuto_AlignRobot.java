@@ -13,8 +13,8 @@ import swervelib.SwerveInputStream;
 public class cmdAuto_AlignRobot extends Command {
   subSwerve swerve;
   subLimelight limelight;
-  PIDController pidHorizontalController = new PIDController(0.1, 0.0, 0.0);
-  PIDController pidDistanceController = new PIDController(0.7, 0.0, 0.0);
+  PIDController pidHorizontalController = new PIDController(0.5, 0.0, 0.0);
+  PIDController pidDistanceController = new PIDController(0.2, 0.0, 0.0);
   SwerveInputStream driveAngularVelocity;
 
   public cmdAuto_AlignRobot(subSwerve swerve, subLimelight lime) {
@@ -38,11 +38,11 @@ public class cmdAuto_AlignRobot extends Command {
       return;
     }
     swerve.drive(new ChassisSpeeds(
-      MathUtil.clamp(-pidDistanceController.calculate(limelight.getDistanceError()), -0.6, 0),
-      MathUtil.clamp(-pidHorizontalController.calculate(limelight.getHorizontalError()), -0.6, 0.6), 
+      MathUtil.clamp(-pidDistanceController.calculate(limelight.getDistanceError()), -0.4, 0),
+      MathUtil.clamp(-pidHorizontalController.calculate(limelight.getHorizontalError()), -0.5, 0.5), 
       0));     
-    SmartDashboard.putBoolean("Limelight Hz OnPoint", pidHorizontalController.atSetpoint());
-    SmartDashboard.putBoolean("Limelight Dt OnPoint", pidDistanceController.atSetpoint());
+    //SmartDashboard.putBoolean("Limelight Hz OnPoint", pidHorizontalController.atSetpoint());
+    //SmartDashboard.putBoolean("Limelight Dt OnPoint", pidDistanceController.atSetpoint());
   }
 
   @Override

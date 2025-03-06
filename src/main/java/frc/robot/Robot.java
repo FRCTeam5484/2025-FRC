@@ -20,7 +20,6 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledInit() {
-    m_robotContainer.blinkin.teamColorsWaves();
   }
 
   @Override
@@ -30,7 +29,6 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     //m_robotContainer.swerve.zeroGyroWithAlliance();
     m_robotContainer.swerve.zeroGyro();
-    m_robotContainer.blinkin.off();
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     if (m_autonomousCommand != null) {
@@ -43,7 +41,6 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    m_robotContainer.blinkin.off();
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }

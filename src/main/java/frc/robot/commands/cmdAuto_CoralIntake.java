@@ -7,16 +7,13 @@ import frc.robot.subsystems.subCoral;
 
 public class cmdAuto_CoralIntake extends Command {
   subCoral coral;
-  subBlinkin blinkin;
-  public cmdAuto_CoralIntake(subCoral coral, subBlinkin blinkin) {
+  public cmdAuto_CoralIntake(subCoral coral) {
     this.coral = coral;
-    this.blinkin = blinkin;
-    addRequirements(coral, blinkin);
+    addRequirements(coral);
   }
 
   @Override
   public void initialize() {
-    blinkin.strobeBlue();
   }
 
   @Override
@@ -26,7 +23,6 @@ public class cmdAuto_CoralIntake extends Command {
 
   @Override
   public void end(boolean interrupted) {
-    blinkin.green();
     coral.stop();
   }
 

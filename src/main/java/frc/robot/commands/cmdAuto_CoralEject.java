@@ -7,17 +7,14 @@ import frc.robot.subsystems.subCoral;
 
 public class cmdAuto_CoralEject extends Command {
   subCoral coral;
-  subBlinkin blinkin;
   Timer timer = new Timer();
-  public cmdAuto_CoralEject(subCoral coral, subBlinkin blinkin) {
+  public cmdAuto_CoralEject(subCoral coral) {
     this.coral = coral;
-    this.blinkin = blinkin;
-    addRequirements(coral, blinkin);
+    addRequirements(coral);
   }
 
   @Override
   public void initialize() {
-    blinkin.strobeRed();
     timer.reset();
     timer.start();
   }
@@ -29,7 +26,6 @@ public class cmdAuto_CoralEject extends Command {
 
   @Override
   public void end(boolean interrupted) {
-    blinkin.green();
     coral.stop();
   }
 
