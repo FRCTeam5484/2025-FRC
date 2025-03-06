@@ -1,13 +1,10 @@
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.subBlinkin;
 import frc.robot.subsystems.subCoral;
 
 public class cmdAuto_CoralEject extends Command {
   subCoral coral;
-  Timer timer = new Timer();
   public cmdAuto_CoralEject(subCoral coral) {
     this.coral = coral;
     addRequirements(coral);
@@ -15,13 +12,11 @@ public class cmdAuto_CoralEject extends Command {
 
   @Override
   public void initialize() {
-    timer.reset();
-    timer.start();
   }
 
   @Override
   public void execute() {
-    coral.teleOp(0.6);
+    coral.teleOp(0.8);
   }
 
   @Override
@@ -31,6 +26,6 @@ public class cmdAuto_CoralEject extends Command {
 
   @Override
   public boolean isFinished() {
-    return timer.get() > 1.5;
+    return !coral.InSensor()  && !coral.OutSensor();
   }
 }

@@ -68,14 +68,14 @@ public class RobotContainer {
     // Named Commands
     NamedCommands.registerCommand("Coral Intake", new cmdAuto_CoralIntake(coral));
     NamedCommands.registerCommand("Coral Eject", new cmdAuto_CoralEject(coral).withTimeout(2));
-    NamedCommands.registerCommand("Limelight Lineup", new cmdAuto_AlignRobot(swerve, limelight).withTimeout(5));
+    NamedCommands.registerCommand("Limelight Lineup", new cmdAuto_AlignRobot(swerve, limelight).withTimeout(4));
     NamedCommands.registerCommand("Algae Remover Up", new cmdAuto_AlgaeRemoverToPosition(algaeRemover, Constants.Algae.RemoverArmUp).withTimeout(1));
     NamedCommands.registerCommand("Algae Remover Down", new cmdAuto_AlgaeRemoverToPosition(algaeRemover, Constants.Algae.RemoverArmDown).withTimeout(1));
-    NamedCommands.registerCommand("Elevator Bottom", new cmdAuto_EvevatorToPosition(elevator, Constants.Elevator.bottomPosition));
+    NamedCommands.registerCommand("Elevator Bottom", new cmdAuto_EvevatorToPosition(elevator, Constants.Elevator.bottomPosition).withTimeout(3));
     NamedCommands.registerCommand("Elevator L1", new cmdAuto_EvevatorToPosition(elevator, Constants.Elevator.L1).withTimeout(2));
     NamedCommands.registerCommand("Elevator L2", new cmdAuto_EvevatorToPosition(elevator, Constants.Elevator.L2).withTimeout(2));
     NamedCommands.registerCommand("Elevator L3", new cmdAuto_EvevatorToPosition(elevator, Constants.Elevator.L3).withTimeout(2));
-    NamedCommands.registerCommand("Elevator L4", new cmdAuto_EvevatorToPosition(elevator, Constants.Elevator.L4).withTimeout(2));
+    NamedCommands.registerCommand("Elevator L4", new cmdAuto_EvevatorToPosition(elevator, Constants.Elevator.L4).withTimeout(3));
 
     addAutoOptions();
   }
@@ -115,7 +115,7 @@ public class RobotContainer {
     else
     {
       driverOne.start().whileTrue(new InstantCommand(() -> swerve.zeroGyro()));
-      driverOne.back().onTrue(Commands.runOnce(()->swerve.resetOdometry(new Pose2d(3,3, new Rotation2d()))));      
+      driverOne.back().onTrue(Commands.none());//Commands.runOnce(()->swerve.resetOdometry(new Pose2d(3,3, new Rotation2d()))));      
 
       driverOne.a().whileTrue(new cmdAuto_AlignRobot(swerve, limelight));
       driverOne.b().onTrue(Commands.none());
@@ -161,8 +161,10 @@ public class RobotContainer {
   }
   private void addAutoOptions(){
     chooser.addOption("Crossline Only", swerve.getAutonomousCommand("Crossline Only"));
-    chooser.addOption("Place 1 Coral", swerve.getAutonomousCommand("Place 1 Coral"));
+    chooser.addOption("1 Cotal - Center Wait", swerve.getAutonomousCommand("1 Coral - Center Wait"));
     chooser.addOption("2 Coral - Center to Right Human Feed", swerve.getAutonomousCommand("2 Coral - Center to Right Human Feed"));
+    chooser.addOption("2 Coral - Right Wall to Human Feed", swerve.getAutonomousCommand("2 Coral - Right Wall to Human Feed"));
+    chooser.addOption("2 Coral - Left Wall to Human Feed", swerve.getAutonomousCommand("2 Coral - Left Wall to Human Feed"));
     //chooser.addOption("Drive Forward and Wait", swerve.getAutonomousCommand("Drive Forward and Wait"));
     SmartDashboard.putData("Autonomous Options", chooser);
   }
