@@ -68,7 +68,7 @@ public class Constants {
       public static final double L1 = 500;
       public static final double L2 = 1100;
       public static final double L3 = 3100;
-      public static final double L4 = 6150;
+      public static final double L4 = 6400;
       public static final double topPosition = 6600;
     }
     public static final class Algae {
@@ -94,7 +94,7 @@ public class Constants {
       public static final int winchMotor = 20;
     }
     public static final class LimeLightOffsets{
-      public static final double HorizontalOffset = 5.92;
-      public static final double DistanceOffset = 5.1;
+      public static final double HorizontalOffset = 13.01;
+      public static final double DistanceOffset = 6.88;
     }
 }
