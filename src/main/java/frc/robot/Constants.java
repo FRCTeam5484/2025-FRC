@@ -64,12 +64,12 @@ public class Constants {
       public static final int UpperLimitBack = 4;
       public static final int StringPot = 2;
 
-      public static final double bottomPosition = 0;
+      public static final double bottomPosition = -50;
       public static final double L1 = 500;
       public static final double L2 = 1100;
       public static final double L3 = 3100;
-      public static final double L4 = 6400;
-      public static final double topPosition = 6600;
+      public static final double L4 = 6250;
+      public static final double topPosition = 6300;
     }
     public static final class Algae {
       public static final int ArmMotor = 15;
@@ -94,7 +94,7 @@ public class Constants {
       public static final int winchMotor = 20;
     }
     public static final class LimeLightOffsets{
-      public static final double HorizontalOffset = 13.01;
-      public static final double DistanceOffset = 6.88;
+      public static final double HorizontalOffset = 15.46;
+      public static final double DistanceOffset = 7.36;
     }
 }

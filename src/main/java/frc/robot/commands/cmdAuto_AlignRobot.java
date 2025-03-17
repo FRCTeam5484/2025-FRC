@@ -13,7 +13,7 @@ import swervelib.SwerveInputStream;
 public class cmdAuto_AlignRobot extends Command {
   subSwerve swerve;
   subLimelight limelight;
-  PIDController pidHorizontalController = new PIDController(0.7, 0.0, 0.0);
+  PIDController pidHorizontalController = new PIDController(0.9, 0.0, 0.0);
   PIDController pidDistanceController = new PIDController(0.5, 0.0, 0.0);
   SwerveInputStream driveAngularVelocity;
 
@@ -22,7 +22,7 @@ public class cmdAuto_AlignRobot extends Command {
     this.limelight = lime;
     pidHorizontalController.setSetpoint(Constants.LimeLightOffsets.HorizontalOffset);
     pidDistanceController.setSetpoint(Constants.LimeLightOffsets.DistanceOffset);
-    pidHorizontalController.setTolerance(2);
+    pidHorizontalController.setTolerance(1);
     pidDistanceController.setTolerance(1);
     addRequirements(swerve, limelight);
   }

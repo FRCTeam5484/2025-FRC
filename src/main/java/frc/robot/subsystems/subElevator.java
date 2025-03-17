@@ -31,7 +31,7 @@ public class subElevator extends SubsystemBase {
   public double setPoint;
   public subElevator() {
     setPoint = 0;
-    elevatorPID.setTolerance(100);
+    elevatorPID.setTolerance(50);
 
     lowerConfig
       .inverted(false)
