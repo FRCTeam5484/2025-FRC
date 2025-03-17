@@ -26,6 +26,6 @@ public class cmdAuto_CoralEject extends Command {
 
   @Override
   public boolean isFinished() {
-    return !coral.InSensor()  && !coral.OutSensor();
+    return !coral.InSensor() && !coral.OutSensor();
   }
 }

@@ -6,25 +6,23 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
-import frc.robot.subsystems.subLimelight;
+import frc.robot.classes.LimelightHelpers;
 import frc.robot.subsystems.subSwerve;
 import swervelib.SwerveInputStream;
 
 public class cmdAuto_AlignRobot extends Command {
   subSwerve swerve;
-  subLimelight limelight;
   PIDController pidHorizontalController = new PIDController(0.9, 0.0, 0.0);
   PIDController pidDistanceController = new PIDController(0.5, 0.0, 0.0);
   SwerveInputStream driveAngularVelocity;
 
-  public cmdAuto_AlignRobot(subSwerve swerve, subLimelight lime) {
+  public cmdAuto_AlignRobot(subSwerve swerve) {
     this.swerve = swerve;
-    this.limelight = lime;
     pidHorizontalController.setSetpoint(Constants.LimeLightOffsets.HorizontalOffset);
     pidDistanceController.setSetpoint(Constants.LimeLightOffsets.DistanceOffset);
-    pidHorizontalController.setTolerance(1);
-    pidDistanceController.setTolerance(1);
-    addRequirements(swerve, limelight);
+    pidHorizontalController.setTolerance(5);
+    pidDistanceController.setTolerance(2);
+    addRequirements(swerve);
   }
 
   @Override
@@ -33,16 +31,14 @@ public class cmdAuto_AlignRobot extends Command {
 
   @Override
   public void execute() {
-    if(!limelight.hasTarget()){
+    if(!LimelightHelpers.getTV("limelight-right")){
       swerve.drive(new ChassisSpeeds(0, 0, 0));    
       return;
     }
     swerve.drive(new ChassisSpeeds(
-      MathUtil.clamp(-pidDistanceController.calculate(limelight.getDistanceError()), -0.4, 0),
-      MathUtil.clamp(-pidHorizontalController.calculate(limelight.getHorizontalError()), -0.5, 0.5), 
+      MathUtil.clamp(-pidDistanceController.calculate(LimelightHelpers.getTA("limelight-right")), -0.4, 0),
+      MathUtil.clamp(-pidHorizontalController.calculate(LimelightHelpers.getTX("limelight-right")), -0.6, 0.6), 
       0));     
-    //SmartDashboard.putBoolean("Limelight Hz OnPoint", pidHorizontalController.atSetpoint());
-    //SmartDashboard.putBoolean("Limelight Dt OnPoint", pidDistanceController.atSetpoint());
   }
 
   @Override

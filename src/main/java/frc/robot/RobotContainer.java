@@ -3,8 +3,6 @@ package frc.robot;
 import java.io.File;
 
 import com.pathplanner.lib.auto.NamedCommands;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -29,21 +27,16 @@ import frc.robot.commands.cmdElevator_TeleOp;
 import frc.robot.subsystems.subSwerve;
 import swervelib.SwerveInputStream;
 import frc.robot.subsystems.subAlgaeRemover;
-import frc.robot.subsystems.subBlinkin;
 import frc.robot.subsystems.subCoral;
 import frc.robot.subsystems.subElevator;
-import frc.robot.subsystems.subLimelight;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 public class RobotContainer {
   private SendableChooser<Command> chooser = new SendableChooser<>();
   public final subCoral coral = new subCoral();
-  //public final subAlgaeProcessor algaeProcessor = new subAlgaeProcessor();
   public final subAlgaeRemover algaeRemover = new subAlgaeRemover();
   public final subSwerve swerve  = new subSwerve(new File(Filesystem.getDeployDirectory(), "swerve"));
   public final subElevator elevator = new subElevator();
-  //public final subBlinkin blinkin = new subBlinkin();
-  public final subLimelight limelight = new subLimelight();
   private final CommandXboxController driverOne = new CommandXboxController(OperatorConstants.DriverOne);
   private final CommandJoystick buttonBoxControllerOne = new CommandJoystick(OperatorConstants.ButtonBoxControllerOne);
   private final CommandJoystick buttonBoxControllerTwo = new CommandJoystick(OperatorConstants.ButtonBoxControllerTwo);
@@ -67,10 +60,10 @@ public class RobotContainer {
 
     // Named Commands
     NamedCommands.registerCommand("Coral Intake", new cmdAuto_CoralIntake(coral));
-    NamedCommands.registerCommand("Coral Eject", new cmdAuto_CoralEject(coral).withTimeout(2));
-    NamedCommands.registerCommand("Limelight Lineup", new cmdAuto_AlignRobot(swerve, limelight).withTimeout(4));
-    NamedCommands.registerCommand("Algae Remover Up", new cmdAuto_AlgaeRemoverToPosition(algaeRemover, Constants.Algae.RemoverArmUp).withTimeout(1));
-    NamedCommands.registerCommand("Algae Remover Down", new cmdAuto_AlgaeRemoverToPosition(algaeRemover, Constants.Algae.RemoverArmDown).withTimeout(1));
+    NamedCommands.registerCommand("Coral Eject", new cmdAuto_CoralEject(coral));
+    NamedCommands.registerCommand("Limelight Lineup", new cmdAuto_AlignRobot(swerve).withTimeout(3));
+    NamedCommands.registerCommand("Algae Remover Up", new cmdAuto_AlgaeRemoverToPosition(algaeRemover, Constants.Algae.RemoverArmUp));
+    NamedCommands.registerCommand("Algae Remover Down", new cmdAuto_AlgaeRemoverToPosition(algaeRemover, Constants.Algae.RemoverArmDown));
     NamedCommands.registerCommand("Elevator Bottom", new cmdAuto_EvevatorToPosition(elevator, Constants.Elevator.bottomPosition).withTimeout(3));
     NamedCommands.registerCommand("Elevator L1", new cmdAuto_EvevatorToPosition(elevator, Constants.Elevator.L1).withTimeout(2));
     NamedCommands.registerCommand("Elevator L2", new cmdAuto_EvevatorToPosition(elevator, Constants.Elevator.L2).withTimeout(2));
@@ -117,7 +110,7 @@ public class RobotContainer {
       driverOne.start().whileTrue(new InstantCommand(() -> swerve.zeroGyro()));
       driverOne.back().onTrue(Commands.none());//Commands.runOnce(()->swerve.resetOdometry(new Pose2d(3,3, new Rotation2d()))));      
 
-      driverOne.a().whileTrue(new cmdAuto_AlignRobot(swerve, limelight));
+      driverOne.a().whileTrue(new cmdAuto_AlignRobot(swerve));
       driverOne.b().onTrue(Commands.none());
       driverOne.x().onTrue(Commands.none());
       driverOne.y().onTrue(Commands.none());

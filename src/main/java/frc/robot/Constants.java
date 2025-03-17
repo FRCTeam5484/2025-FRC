@@ -62,7 +62,7 @@ public class Constants {
       public static final int LowerLimitBack = 5;
       public static final int UpperLimitFront = 6;
       public static final int UpperLimitBack = 4;
-      public static final int StringPot = 2;
+      //public static final int StringPot = 8,9;
 
       public static final double bottomPosition = -50;
       public static final double L1 = 500;
@@ -72,12 +72,7 @@ public class Constants {
       public static final double topPosition = 6300;
     }
     public static final class Algae {
-      public static final int ArmMotor = 15;
-      public static final int IntakeMotor = 16;
       public static final int RemoverMotor = 18;
-
-      public static final int ArmUpSensorValue = -10;
-      public static final int ArmDownSensorValue = -5000;
 
       public static final double RemoverArmBack = 0;
       public static final double RemoverArmUp = 5700;
@@ -97,4 +92,39 @@ public class Constants {
       public static final double HorizontalOffset = 15.46;
       public static final double DistanceOffset = 7.36;
     }
+    // Motor IDs
+      
+      // Front Left Drive = 1
+      // Front Left Turn = 2
+      // Front Right Drive = 4
+      // Front Right Turn = 5
+      // Rear Left Drive = 7
+      // Rear Left Turn = 8
+      // Rear Right Drive = 10
+      // Rear Right Turn = 11
+
+      // Elevator Lower Motor = 13
+      // Elevator Upper Motor = 14
+      
+      // Coral Feed Motor = 17
+      // Algae Remover Motor = 18      
+
+    // CAN Sensors
+
+      // Front Left CANcoder = 3
+      // Front Right CANcoder = 6
+      // Rear Left CANcoder = 9
+      // Rear Right CANcoder = 12
+      // Pigeon = 0
+
+    // Digital Inputs
+
+      // Coral In Sensor = 0
+      // Coral Out Sensor = 1
+      // Elevator Lower Limit Front = 3
+      // Elevator Upper Limit Front = 4
+      // Elevator Lower Limit Back = 5
+      // Elevator Upper Limit Back = 6
+      // Elevator String Pot Port 1 = 8
+      // Elevator String Pot Port 2 = 9
 }

@@ -50,4 +50,7 @@ public class subCoral extends SubsystemBase {
   public boolean OutSensor(){
     return !outSensor.get();
   }
+  public boolean motorRunning(){
+    return feedMotor.get() != 0;
+  }
 }
