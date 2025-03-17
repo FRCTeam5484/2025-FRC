@@ -11,6 +11,7 @@ import frc.robot.Constants;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.BooleanSupplier;
@@ -29,7 +30,9 @@ import com.pathplanner.lib.util.DriveFeedforwards;
 import com.pathplanner.lib.util.swerve.SwerveSetpoint;
 import com.pathplanner.lib.util.swerve.SwerveSetpointGenerator;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import swervelib.parser.SwerveControllerConfiguration;
 import swervelib.parser.SwerveDriveConfiguration;
 import swervelib.parser.SwerveParser;
@@ -39,22 +42,38 @@ import swervelib.SwerveController;
 import swervelib.SwerveDrive;
 import swervelib.SwerveDriveTest;
 import swervelib.math.SwerveMath;
+import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.util.struct.parser.ParseException;
+import frc.robot.classes.LimelightHelpers;
 import frc.robot.classes.Vision;
+import limelight.Limelight;
+import limelight.networktables.AngularVelocity3d;
+import limelight.networktables.LimelightPoseEstimator;
+import limelight.networktables.LimelightResults;
+import limelight.networktables.LimelightSettings.LEDMode;
+import limelight.networktables.Orientation3d;
+import limelight.networktables.PoseEstimate;
 
+import static edu.wpi.first.units.Units.DegreesPerSecond;
 import static edu.wpi.first.units.Units.Meter;
 
 public class subSwerve extends SubsystemBase {
   private final SwerveDrive         swerveDrive;
   private final boolean             visionDriveTest     = false;
+  private Limelight limelight = new Limelight("limelight-right");
+  private LimelightPoseEstimator limelightPoseEstimator;
   private Vision vision;
 
   public subSwerve(File directory)
@@ -84,6 +103,22 @@ public class subSwerve extends SubsystemBase {
       swerveDrive.stopOdometryThread();
     }
     setupPathPlanner();
+    setupLimelight();
+  }
+
+  public void setupLimelight()
+  {
+    swerveDrive.stopOdometryThread();
+    limelight.getSettings()
+             .withPipelineIndex(0)
+             .withCameraOffset(new Pose3d(Units.inchesToMeters(0),
+                                          Units.inchesToMeters(0),
+                                          Units.inchesToMeters(0),
+                                          new Rotation3d(0, 0, Units.degreesToRadians(180))))
+             .withArilTagIdFilter(List.of(17.0, 18.0, 19.0, 20.0, 21.0, 22.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0))
+             .save();
+    limelightPoseEstimator = limelight.getPoseEstimator(true);
+
   }
 
   public subSwerve(SwerveDriveConfiguration driveCfg, SwerveControllerConfiguration controllerCfg)
@@ -100,10 +135,62 @@ public class subSwerve extends SubsystemBase {
     vision = new Vision(swerveDrive::getPose, swerveDrive.field);
   }
 
+  private int     outofAreaReading = 0;
+  private boolean initialReading   = false;
+
   @Override
   public void periodic()
   {
-    // When vision is enabled we must manually update odometry in SwerveDrive
+    limelight.getSettings()
+             .withRobotOrientation(new Orientation3d(new Rotation3d(swerveDrive.getOdometryHeading()
+                                                                               .rotateBy(Rotation2d.kZero)),
+                                                     new AngularVelocity3d(DegreesPerSecond.of(0),
+                                                                           DegreesPerSecond.of(0),
+                                                                           DegreesPerSecond.of(0))))
+             .save();
+    Optional<PoseEstimate>     poseEstimates = limelightPoseEstimator.getPoseEstimate();
+    Optional<LimelightResults> results       = limelight.getLatestResults();
+    if (results.isPresent()/* && poseEstimates.isPresent()*/)
+    {
+      LimelightResults result       = results.get();
+      PoseEstimate     poseEstimate = poseEstimates.get();
+      SmartDashboard.putNumber("Avg Tag Ambiguity", poseEstimate.getAvgTagAmbiguity());
+      SmartDashboard.putNumber("Min Tag Ambiguity", poseEstimate.getMinTagAmbiguity());
+      SmartDashboard.putNumber("Max Tag Ambiguity", poseEstimate.getMaxTagAmbiguity());
+      SmartDashboard.putNumber("Avg Distance", poseEstimate.avgTagDist);
+      SmartDashboard.putNumber("Avg Tag Area", poseEstimate.avgTagArea);
+      SmartDashboard.putNumber("Odom Pose/x", swerveDrive.getPose().getX());
+      SmartDashboard.putNumber("Odom Pose/y", swerveDrive.getPose().getY());
+      SmartDashboard.putNumber("Odom Pose/degrees", swerveDrive.getPose().getRotation().getDegrees());
+      SmartDashboard.putNumber("Limelight Pose/x", poseEstimate.pose.getX());
+      SmartDashboard.putNumber("Limelight Pose/y", poseEstimate.pose.getY());
+      SmartDashboard.putNumber("Limelight Pose/degrees", poseEstimate.pose.toPose2d().getRotation().getDegrees());
+      if (result.valid)
+      {
+        // Pose2d estimatorPose = poseEstimate.pose.toPose2d();
+        Pose2d usefulPose     = result.getBotPose2d(Alliance.Blue);
+        double distanceToPose = usefulPose.getTranslation().getDistance(swerveDrive.getPose().getTranslation());
+        if (distanceToPose < 0.5 || (outofAreaReading > 10) || (outofAreaReading > 10 && !initialReading))
+        {
+          if (!initialReading)
+          {
+            initialReading = true;
+          }
+          outofAreaReading = 0;
+          // System.out.println(usefulPose.toString());
+          swerveDrive.setVisionMeasurementStdDevs(VecBuilder.fill(0.05, 0.05, 0.022));
+          // System.out.println(result.timestamp_LIMELIGHT_publish);
+          // System.out.println(result.timestamp_RIOFPGA_capture);
+          swerveDrive.addVisionMeasurement(usefulPose, Timer.getTimestamp());
+        } else
+        {
+          outofAreaReading += 1;
+        }
+//        swerveDrive.addVisionMeasurement(estimatorPose, poseEstimate.timestampSeconds);
+      }
+    }
+    swerveDrive.updateOdometry();
+	 // When vision is enabled we must manually update odometry in SwerveDrive
     if (visionDriveTest)
     {
       swerveDrive.updateOdometry();
