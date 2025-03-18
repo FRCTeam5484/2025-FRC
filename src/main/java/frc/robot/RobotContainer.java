@@ -3,6 +3,10 @@ package frc.robot;
 import java.io.File;
 
 import com.pathplanner.lib.auto.NamedCommands;
+
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -18,6 +22,7 @@ import frc.robot.commands.cmdAlgaeRemover_ResetEncoder;
 import frc.robot.commands.cmdAlgaeRemover_Stop;
 import frc.robot.commands.cmdAlgaeRemover_TeleOp;
 import frc.robot.commands.cmdAuto_CoralIntake;
+import frc.robot.commands.cmdAuto_DriveToPose;
 import frc.robot.commands.cmdAuto_CoralEject;
 import frc.robot.commands.cmdCoral_Stop;
 import frc.robot.commands.cmdCoral_TeleOp;
@@ -69,6 +74,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("Elevator L2", new cmdAuto_EvevatorToPosition(elevator, Constants.Elevator.L2).withTimeout(2));
     NamedCommands.registerCommand("Elevator L3", new cmdAuto_EvevatorToPosition(elevator, Constants.Elevator.L3).withTimeout(2));
     NamedCommands.registerCommand("Elevator L4", new cmdAuto_EvevatorToPosition(elevator, Constants.Elevator.L4).withTimeout(3));
+    NamedCommands.registerCommand("Pose ID 20", new cmdAuto_DriveToPose(swerve, new Pose2d(new Translation2d(5.792, 3.756), new Rotation2d(180))));
 
     addAutoOptions();
   }
