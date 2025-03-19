@@ -1,5 +1,7 @@
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
@@ -91,6 +93,36 @@ public class Constants {
     public static final class LimeLightOffsets{
       public static final double HorizontalOffset = 15.46;
       public static final double DistanceOffset = 7.36;
+    }
+    public static final class PosePositions{
+      public static final class Blue{
+        public static final Pose2d BackLeft = new Pose2d(new Translation2d(5.792, 3.756), new Rotation2d(0));
+        public static final Pose2d BackRight = new Pose2d(new Translation2d(5.803, 3.990), new Rotation2d(0));
+        public static final Pose2d LeftBackLeft = new Pose2d(new Translation2d(5.512, 5.117), new Rotation2d(45));
+        public static final Pose2d LeftBackRight = new Pose2d(new Translation2d(5.504, 4.957), new Rotation2d(45));
+        public static final Pose2d LeftFrontLeft = new Pose2d(new Translation2d(4.128, 5.336), new Rotation2d(135));
+        public static final Pose2d LeftFrontRight = new Pose2d(new Translation2d(3.839, 5.157), new Rotation2d(135));
+        public static final Pose2d FrontLeft = new Pose2d(new Translation2d(3.171, 4.399), new Rotation2d(180));
+        public static final Pose2d FrontRight = new Pose2d(new Translation2d(3.151, 4.020), new Rotation2d(180));
+        public static final Pose2d RightFrontLeft = new Pose2d(new Translation2d(3.530, 3.053), new Rotation2d(225));
+        public static final Pose2d RightFrontRight = new Pose2d(new Translation2d(3.809, 2.913), new Rotation2d(225));
+        public static final Pose2d RightBackLeft = new Pose2d(new Translation2d(4.856, 2.704), new Rotation2d(270));
+        public static final Pose2d RightBackRight = new Pose2d(new Translation2d(5.115, 2.883), new Rotation2d(270));
+      }
+      public static final class Red{
+        public static final Pose2d BackLeft = new Pose2d(new Translation2d(5.792, 3.756), new Rotation2d(0));
+        public static final Pose2d BackRight = new Pose2d(new Translation2d(5.803, 3.990), new Rotation2d(0));
+        public static final Pose2d LeftBackLeft = new Pose2d(new Translation2d(5.512, 5.117), new Rotation2d(45));
+        public static final Pose2d LeftBackRight = new Pose2d(new Translation2d(5.504, 4.957), new Rotation2d(45));
+        public static final Pose2d LeftFrontLeft = new Pose2d(new Translation2d(4.128, 5.336), new Rotation2d(135));
+        public static final Pose2d LeftFrontRight = new Pose2d(new Translation2d(3.839, 5.157), new Rotation2d(135));
+        public static final Pose2d FrontLeft = new Pose2d(new Translation2d(3.171, 4.399), new Rotation2d(180));
+        public static final Pose2d FrontRight = new Pose2d(new Translation2d(3.151, 4.020), new Rotation2d(180));
+        public static final Pose2d RightFrontLeft = new Pose2d(new Translation2d(3.530, 3.053), new Rotation2d(225));
+        public static final Pose2d RightFrontRight = new Pose2d(new Translation2d(3.809, 2.913), new Rotation2d(225));
+        public static final Pose2d RightBackLeft = new Pose2d(new Translation2d(4.856, 2.704), new Rotation2d(270));
+        public static final Pose2d RightBackRight = new Pose2d(new Translation2d(5.115, 2.883), new Rotation2d(270));
+      }
     }
     // Motor IDs
       

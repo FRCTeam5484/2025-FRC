@@ -116,10 +116,10 @@ public class RobotContainer {
       driverOne.start().whileTrue(new InstantCommand(() -> swerve.zeroGyro()));
       driverOne.back().onTrue(Commands.none());//Commands.runOnce(()->swerve.resetOdometry(new Pose2d(3,3, new Rotation2d()))));      
 
-      driverOne.a().whileTrue(new cmdAuto_AlignRobot(swerve));
-      driverOne.b().onTrue(Commands.none());
-      driverOne.x().onTrue(Commands.none());
-      driverOne.y().onTrue(Commands.none());
+      driverOne.a().whileTrue(swerve.driveToPose(Constants.PosePositions.Blue.BackLeft));
+      driverOne.b().whileTrue(swerve.driveToPose(Constants.PosePositions.Blue.BackRight));
+      driverOne.x().whileTrue(swerve.driveToPose(Constants.PosePositions.Blue.LeftBackLeft));
+      driverOne.y().whileTrue(swerve.driveToPose(Constants.PosePositions.Blue.LeftBackRight));
             
       // Auto Intake
       //driverOne.leftBumper().whileTrue(new cmdAuto_AlgaeIntake(algaeProcessor));

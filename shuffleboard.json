@@ -41,7 +41,9 @@
               "_showGlyph": false,
               "Game/Game": "k2025Reefscape",
               "Visuals/Robot Icon Size": 50.0,
-              "Visuals/Show Outside Circles": false
+              "Visuals/Show Outside Circles": false,
+              "Colors/XModules": "#FFFFFFFF",
+              "Colors/OdometryPose": "#FFFFFFFF"
             }
           },
           "4,0": {
@@ -96,19 +98,6 @@
               "_type": "Text View",
               "_source0": "network_table:///SmartDashboard/Algae Arm Encoder",
               "_title": "/SmartDashboard/Algae Arm Encoder",
-              "_glyph": 148,
-              "_showGlyph": false
-            }
-          },
-          "0,0": {
-            "size": [
-              2,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/Auto Selector",
-              "_title": "Auto Selector",
               "_glyph": 148,
               "_showGlyph": false
             }
@@ -305,6 +294,183 @@
                 }
               ]
             }
+          },
+          "7,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Alerts",
+              "_source0": "network_table:///SmartDashboard/Alerts",
+              "_title": "/SmartDashboard/Alerts",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "8,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Alerts",
+              "_source0": "network_table:///SmartDashboard/PathPlanner",
+              "_title": "/SmartDashboard/PathPlanner",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "8,3": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "ComboBox Chooser",
+              "_source0": "network_table:///SmartDashboard/Autonomous Options",
+              "_title": "/SmartDashboard/Autonomous Options",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "9,3": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Network Table Tree",
+              "_source0": "network_table:///SmartDashboard/Auto Options",
+              "_title": "/SmartDashboard/Auto Options",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "0,0": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "ComboBox Chooser",
+              "_source0": "network_table:///SmartDashboard/Autonomous Options",
+              "_title": "/SmartDashboard/Autonomous Options",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "10,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Network Table Tree",
+              "_source0": "network_table:///SmartDashboard/BatterySim",
+              "_title": "/SmartDashboard/BatterySim",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "11,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Network Table Tree",
+              "_source0": "network_table:///SmartDashboard/MapleArenaSimulation",
+              "_title": "/SmartDashboard/MapleArenaSimulation",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "12,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///SmartDashboard/Coral Has Coral",
+              "_title": "/SmartDashboard/Coral Has Coral",
+              "_glyph": 148,
+              "_showGlyph": false,
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "13,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///SmartDashboard/Algae Remover At SetPoint",
+              "_title": "/SmartDashboard/Algae Remover At SetPoint",
+              "_glyph": 148,
+              "_showGlyph": false,
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "14,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///SmartDashboard/Elevator At SetPoint",
+              "_title": "/SmartDashboard/Elevator At SetPoint",
+              "_glyph": 148,
+              "_showGlyph": false,
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "15,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///SmartDashboard/Limelight Has Target",
+              "_title": "/SmartDashboard/Limelight Has Target",
+              "_glyph": 148,
+              "_showGlyph": false,
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "10,1": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Limelight Horizontal Error",
+              "_title": "/SmartDashboard/Limelight Horizontal Error",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "11,1": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Limelight Distance Error",
+              "_title": "/SmartDashboard/Limelight Distance Error",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
           }
         }
       }
@@ -321,12 +487,119 @@
         "titleType": 0,
         "tiles": {}
       }
+    },
+    {
+      "title": "Tab 3",
+      "autoPopulate": false,
+      "autoPopulatePrefix": "",
+      "widgetPane": {
+        "gridSize": 128.0,
+        "showGrid": true,
+        "hgap": 16.0,
+        "vgap": 16.0,
+        "titleType": 0,
+        "tiles": {
+          "0,0": {
+            "size": [
+              9,
+              5
+            ],
+            "content": {
+              "_type": "Field",
+              "_source0": "network_table:///SmartDashboard/Field",
+              "_title": "/SmartDashboard/Field",
+              "_glyph": 148,
+              "_showGlyph": false,
+              "Game/Game": "k2025Reefscape",
+              "Visuals/Robot Icon Size": 50.0,
+              "Visuals/Show Outside Circles": false,
+              "Colors/XModules": "#FFFFFFFF",
+              "Colors/OdometryPose": "#FFFFFFFF"
+            }
+          },
+          "0,5": {
+            "size": [
+              3,
+              3
+            ],
+            "content": {
+              "_type": "Graph",
+              "_source0": "network_table:///SmartDashboard/Field/OdometryPose",
+              "_title": "/SmartDashboard/Field/OdometryPose",
+              "_glyph": 148,
+              "_showGlyph": false,
+              "Graph/Visible time": 30.0,
+              "Graph/X-axis auto scrolling": true,
+              "Y-axis/Automatic bounds": true,
+              "Y-axis/Upper bound": 1.0,
+              "Y-axis/Lower bound": -1.0,
+              "Y-axis/Unit": "ul",
+              "Visible data//SmartDashboard/Field/OdometryPose[0]": true,
+              "Visible data//SmartDashboard/Field/OdometryPose[1]": true,
+              "Visible data//SmartDashboard/Field/OdometryPose[2]": true
+            }
+          },
+          "3,5": {
+            "size": [
+              3,
+              3
+            ],
+            "content": {
+              "_type": "Graph",
+              "_source0": "network_table:///SmartDashboard/Field/Robot",
+              "_title": "/SmartDashboard/Field/Robot",
+              "_glyph": 148,
+              "_showGlyph": false,
+              "Graph/Visible time": 30.0,
+              "Graph/X-axis auto scrolling": true,
+              "Y-axis/Automatic bounds": true,
+              "Y-axis/Upper bound": 1.0,
+              "Y-axis/Lower bound": -1.0,
+              "Y-axis/Unit": "ul",
+              "Visible data//SmartDashboard/Field/Robot[0]": true,
+              "Visible data//SmartDashboard/Field/Robot[1]": true,
+              "Visible data//SmartDashboard/Field/Robot[2]": true
+            }
+          },
+          "6,5": {
+            "size": [
+              3,
+              3
+            ],
+            "content": {
+              "_type": "Graph",
+              "_source0": "network_table:///SmartDashboard/Field/XModules",
+              "_title": "/SmartDashboard/Field/XModules",
+              "_glyph": 148,
+              "_showGlyph": false,
+              "Graph/Visible time": 30.0,
+              "Graph/X-axis auto scrolling": true,
+              "Y-axis/Automatic bounds": true,
+              "Y-axis/Upper bound": 1.0,
+              "Y-axis/Lower bound": -1.0,
+              "Y-axis/Unit": "ul",
+              "Visible data//SmartDashboard/Field/XModules[0]": true,
+              "Visible data//SmartDashboard/Field/XModules[1]": true,
+              "Visible data//SmartDashboard/Field/XModules[2]": true,
+              "Visible data//SmartDashboard/Field/XModules[3]": true,
+              "Visible data//SmartDashboard/Field/XModules[4]": true,
+              "Visible data//SmartDashboard/Field/XModules[5]": true,
+              "Visible data//SmartDashboard/Field/XModules[6]": true,
+              "Visible data//SmartDashboard/Field/XModules[7]": true,
+              "Visible data//SmartDashboard/Field/XModules[8]": true,
+              "Visible data//SmartDashboard/Field/XModules[9]": true,
+              "Visible data//SmartDashboard/Field/XModules[10]": true,
+              "Visible data//SmartDashboard/Field/XModules[11]": true
+            }
+          }
+        }
+      }
     }
   ],
   "windowGeometry": {
-    "x": 7.0,
-    "y": 223.0,
-    "width": 1680.0,
-    "height": 782.0
+    "x": -2737.0,
+    "y": 0.0,
+    "width": 1662.6666259765625,
+    "height": 1398.0
   }
 }
