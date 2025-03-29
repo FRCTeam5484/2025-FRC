@@ -27,11 +27,11 @@ public class subElevator extends SubsystemBase {
   DigitalInput upperLimitFront = new DigitalInput(Constants.Elevator.UpperLimitFront);
   DigitalInput upperLimitBack = new DigitalInput(Constants.Elevator.UpperLimitBack);
   Encoder elevatorEncoder = new Encoder(8, 9);
-  PIDController elevatorPID = new PIDController(0.001, 0.0, 0.0);
+  PIDController elevatorPID = new PIDController(0.0015, 0.0, 0.0);
   public double setPoint;
   public subElevator() {
     setPoint = 0;
-    elevatorPID.setTolerance(50);
+    elevatorPID.setTolerance(20);
 
     lowerConfig
       .inverted(false)

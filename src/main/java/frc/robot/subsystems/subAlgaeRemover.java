@@ -21,7 +21,7 @@ public class subAlgaeRemover extends SubsystemBase {
   public double pidSetPoint;
   public subAlgaeRemover() {
     removerConfig
-      .inverted(true)
+      .inverted(false)
       .idleMode(IdleMode.kBrake);
       //.smartCurrentLimit(20);
     removerConfig.encoder 

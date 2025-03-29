@@ -16,7 +16,7 @@ public class cmdAuto_CoralEject extends Command {
 
   @Override
   public void execute() {
-    coral.teleOp(0.8);
+    coral.teleOp(0.5);
   }
 
   @Override

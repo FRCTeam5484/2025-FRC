@@ -17,7 +17,7 @@ public class subCoral extends SubsystemBase {
   SparkMaxConfig feedConfig = new SparkMaxConfig();
   public subCoral() {
     feedConfig
-      .inverted(false)
+      .inverted(true)
       .idleMode(IdleMode.kBrake);
     feedConfig.encoder
       .positionConversionFactor(1000)
