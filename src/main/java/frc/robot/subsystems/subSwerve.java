@@ -72,8 +72,10 @@ import static edu.wpi.first.units.Units.Meter;
 public class subSwerve extends SubsystemBase {
   private final SwerveDrive         swerveDrive;
   private final boolean             visionDriveTest     = false;
-  private Limelight limelight = new Limelight("limelight-right");
-  private LimelightPoseEstimator limelightPoseEstimator;
+  private Limelight limelightRight = new Limelight("limelight-right");
+  private Limelight limelightLeft = new Limelight("limelight-left");
+  private LimelightPoseEstimator limelightPoseEstimatorRight;
+  private LimelightPoseEstimator limelightPoseEstimatorLeft;
   private Vision vision;
 
   public subSwerve(File directory)
@@ -109,15 +111,25 @@ public class subSwerve extends SubsystemBase {
   public void setupLimelight()
   {
     swerveDrive.stopOdometryThread();
-    limelight.getSettings()
+    limelightRight.getSettings()
              .withPipelineIndex(0)
-             .withCameraOffset(new Pose3d(Units.inchesToMeters(0),
+             .withCameraOffset(new Pose3d(Units.inchesToMeters(1.75),
                                           Units.inchesToMeters(0),
-                                          Units.inchesToMeters(0),
-                                          new Rotation3d(0, 0, Units.degreesToRadians(180))))
-             .withArilTagIdFilter(List.of(17.0, 18.0, 19.0, 20.0, 21.0, 22.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0))
+                                          Units.inchesToMeters(12),
+                                          new Rotation3d(0, 0, Units.degreesToRadians(38))))
+             .withArilTagIdFilter(List.of(17.0, 18.0, 19.0, 20.0, 21.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0))
              .save();
-    limelightPoseEstimator = limelight.getPoseEstimator(true);
+    limelightPoseEstimatorRight = limelightRight.getPoseEstimator(true);
+
+    limelightLeft.getSettings()
+             .withPipelineIndex(0)
+             .withCameraOffset(new Pose3d(Units.inchesToMeters(13),
+                                          Units.inchesToMeters(0),
+                                          Units.inchesToMeters(11.5),
+                                          new Rotation3d(0, 0, Units.degreesToRadians(43))))
+             .withArilTagIdFilter(List.of(17.0, 18.0, 19.0, 20.0, 21.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0))
+             .save();
+    limelightPoseEstimatorLeft = limelightLeft.getPoseEstimator(true);
 
   }
 
@@ -141,34 +153,82 @@ public class subSwerve extends SubsystemBase {
   @Override
   public void periodic()
   {
-    limelight.getSettings()
+    limelightRight.getSettings()
              .withRobotOrientation(new Orientation3d(new Rotation3d(swerveDrive.getOdometryHeading()
                                                                                .rotateBy(Rotation2d.kZero)),
                                                      new AngularVelocity3d(DegreesPerSecond.of(0),
                                                                            DegreesPerSecond.of(0),
                                                                            DegreesPerSecond.of(0))))
              .save();
-    Optional<PoseEstimate>     poseEstimates = limelightPoseEstimator.getPoseEstimate();
-    Optional<LimelightResults> results       = limelight.getLatestResults();
-    if (results.isPresent()/* && poseEstimates.isPresent()*/)
+    Optional<PoseEstimate>     poseEstimatesRight = limelightPoseEstimatorRight.getPoseEstimate();
+    Optional<LimelightResults> resultsRight       = limelightRight.getLatestResults();
+    if (resultsRight.isPresent()/* && poseEstimates.isPresent()*/)
     {
-      LimelightResults result       = results.get();
-      PoseEstimate     poseEstimate = poseEstimates.get();
-      SmartDashboard.putNumber("Avg Tag Ambiguity", poseEstimate.getAvgTagAmbiguity());
-      SmartDashboard.putNumber("Min Tag Ambiguity", poseEstimate.getMinTagAmbiguity());
-      SmartDashboard.putNumber("Max Tag Ambiguity", poseEstimate.getMaxTagAmbiguity());
-      SmartDashboard.putNumber("Avg Distance", poseEstimate.avgTagDist);
-      SmartDashboard.putNumber("Avg Tag Area", poseEstimate.avgTagArea);
-      SmartDashboard.putNumber("Odom Pose/x", swerveDrive.getPose().getX());
-      SmartDashboard.putNumber("Odom Pose/y", swerveDrive.getPose().getY());
-      SmartDashboard.putNumber("Odom Pose/degrees", swerveDrive.getPose().getRotation().getDegrees());
-      SmartDashboard.putNumber("Limelight Pose/x", poseEstimate.pose.getX());
-      SmartDashboard.putNumber("Limelight Pose/y", poseEstimate.pose.getY());
-      SmartDashboard.putNumber("Limelight Pose/degrees", poseEstimate.pose.toPose2d().getRotation().getDegrees());
-      if (result.valid)
+      LimelightResults resultRight       = resultsRight.get();
+      PoseEstimate     poseEstimateRight = poseEstimatesRight.get();
+      SmartDashboard.putNumber("Avg Tag Ambiguity Right", poseEstimateRight.getAvgTagAmbiguity());
+      SmartDashboard.putNumber("Min Tag Ambiguity Right", poseEstimateRight.getMinTagAmbiguity());
+      SmartDashboard.putNumber("Max Tag Ambiguity Right", poseEstimateRight.getMaxTagAmbiguity());
+      SmartDashboard.putNumber("Avg Distance Right", poseEstimateRight.avgTagDist);
+      SmartDashboard.putNumber("Avg Tag Area Right", poseEstimateRight.avgTagArea);
+      SmartDashboard.putNumber("Odom Pose/x Right", swerveDrive.getPose().getX());
+      SmartDashboard.putNumber("Odom Pose/y Right", swerveDrive.getPose().getY());
+      SmartDashboard.putNumber("Odom Pose/degrees Right", swerveDrive.getPose().getRotation().getDegrees());
+      SmartDashboard.putNumber("Limelight Pose/x Right", poseEstimateRight.pose.getX());
+      SmartDashboard.putNumber("Limelight Pose/y Right", poseEstimateRight.pose.getY());
+      SmartDashboard.putNumber("Limelight Pose/degrees Right", poseEstimateRight.pose.toPose2d().getRotation().getDegrees());
+      if (resultRight.valid)
       {
         // Pose2d estimatorPose = poseEstimate.pose.toPose2d();
-        Pose2d usefulPose     = result.getBotPose2d(Alliance.Blue);
+        Pose2d usefulPose     = resultRight.getBotPose2d(Alliance.Blue);
+        double distanceToPose = usefulPose.getTranslation().getDistance(swerveDrive.getPose().getTranslation());
+        if (distanceToPose < 0.5 || (outofAreaReading > 10) || (outofAreaReading > 10 && !initialReading))
+        {
+          if (!initialReading)
+          {
+            initialReading = true;
+          }
+          outofAreaReading = 0;
+          // System.out.println(usefulPose.toString());
+          swerveDrive.setVisionMeasurementStdDevs(VecBuilder.fill(0.05, 0.05, 0.022));
+          // System.out.println(result.timestamp_LIMELIGHT_publish);
+          // System.out.println(result.timestamp_RIOFPGA_capture);
+          swerveDrive.addVisionMeasurement(usefulPose, Timer.getTimestamp());
+        } else
+        {
+          outofAreaReading += 1;
+        }
+//        swerveDrive.addVisionMeasurement(estimatorPose, poseEstimate.timestampSeconds);
+      }
+    }
+    limelightLeft.getSettings()
+             .withRobotOrientation(new Orientation3d(new Rotation3d(swerveDrive.getOdometryHeading()
+                                                                               .rotateBy(Rotation2d.kZero)),
+                                                     new AngularVelocity3d(DegreesPerSecond.of(0),
+                                                                           DegreesPerSecond.of(0),
+                                                                           DegreesPerSecond.of(0))))
+             .save();
+    Optional<PoseEstimate>     poseEstimatesLeft = limelightPoseEstimatorLeft.getPoseEstimate();
+    Optional<LimelightResults> resultsLeft       = limelightLeft.getLatestResults();
+    if (resultsLeft.isPresent()/* && poseEstimates.isPresent()*/)
+    {
+      LimelightResults resultLeft       = resultsLeft.get();
+      PoseEstimate     poseEstimateLeft = poseEstimatesLeft.get();
+      SmartDashboard.putNumber("Avg Tag Ambiguity Left", poseEstimateLeft.getAvgTagAmbiguity());
+      SmartDashboard.putNumber("Min Tag Ambiguity Left", poseEstimateLeft.getMinTagAmbiguity());
+      SmartDashboard.putNumber("Max Tag Ambiguity Left", poseEstimateLeft.getMaxTagAmbiguity());
+      SmartDashboard.putNumber("Avg Distance Left", poseEstimateLeft.avgTagDist);
+      SmartDashboard.putNumber("Avg Tag Area Left", poseEstimateLeft.avgTagArea);
+      SmartDashboard.putNumber("Odom Pose/x Left", swerveDrive.getPose().getX());
+      SmartDashboard.putNumber("Odom Pose/y Left", swerveDrive.getPose().getY());
+      SmartDashboard.putNumber("Odom Pose/degrees Left", swerveDrive.getPose().getRotation().getDegrees());
+      SmartDashboard.putNumber("Limelight Pose/x Left", poseEstimateLeft.pose.getX());
+      SmartDashboard.putNumber("Limelight Pose/y Left", poseEstimateLeft.pose.getY());
+      SmartDashboard.putNumber("Limelight Pose/degrees Left", poseEstimateLeft.pose.toPose2d().getRotation().getDegrees());
+      if (resultLeft.valid)
+      {
+        // Pose2d estimatorPose = poseEstimate.pose.toPose2d();
+        Pose2d usefulPose     = resultLeft.getBotPose2d(Alliance.Blue);
         double distanceToPose = usefulPose.getTranslation().getDistance(swerveDrive.getPose().getTranslation());
         if (distanceToPose < 0.5 || (outofAreaReading > 10) || (outofAreaReading > 10 && !initialReading))
         {

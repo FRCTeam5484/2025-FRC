@@ -1,6 +1,7 @@
 package frc.robot;
 
 import java.io.File;
+import java.util.Optional;
 
 import com.pathplanner.lib.auto.NamedCommands;
 
@@ -8,6 +9,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -45,6 +47,7 @@ public class RobotContainer {
   private final CommandXboxController driverOne = new CommandXboxController(OperatorConstants.DriverOne);
   private final CommandJoystick buttonBoxControllerOne = new CommandJoystick(OperatorConstants.ButtonBoxControllerOne);
   private final CommandJoystick buttonBoxControllerTwo = new CommandJoystick(OperatorConstants.ButtonBoxControllerTwo);
+  private final CommandJoystick buttonBoxControllerThree = new CommandJoystick(OperatorConstants.ButtonBoxControllerThree);
   SwerveInputStream driveAngularVelocity = SwerveInputStream.of(swerve.getSwerveDrive(),
                                                                 () -> driverOne.getLeftY() * -1,
                                                                 () -> driverOne.getLeftX() * -1)
@@ -157,6 +160,38 @@ public class RobotContainer {
     buttonBoxControllerTwo.button(5).onTrue(new cmdAlgaeRemover_Stop(algaeRemover));
     buttonBoxControllerTwo.button(6).onTrue(new cmdAlgaeRemover_ResetEncoder(algaeRemover));
     algaeRemover.setDefaultCommand(new cmdAlgaeRemover_TeleOp(algaeRemover, ()-> -buttonBoxControllerTwo.getRawAxis(1)*0.25));
+
+    Optional<Alliance> ally = DriverStation.getAlliance();
+    if (ally.isPresent()) {
+      if (ally.get() == Alliance.Red) {
+        buttonBoxControllerThree.button(1).onTrue(new cmdAuto_DriveToPose(swerve, Constants.PosePositions.Red.BackLeft));
+        buttonBoxControllerThree.button(2).onTrue(new cmdAuto_DriveToPose(swerve, Constants.PosePositions.Red.BackRight));
+        buttonBoxControllerThree.button(3).onTrue(new cmdAuto_DriveToPose(swerve, Constants.PosePositions.Red.LeftBackLeft));
+        buttonBoxControllerThree.button(4).onTrue(new cmdAuto_DriveToPose(swerve, Constants.PosePositions.Red.LeftBackRight));
+        buttonBoxControllerThree.button(5).onTrue(new cmdAuto_DriveToPose(swerve, Constants.PosePositions.Red.LeftFrontLeft));
+        buttonBoxControllerThree.button(6).onTrue(new cmdAuto_DriveToPose(swerve, Constants.PosePositions.Red.LeftFrontRight));
+        buttonBoxControllerThree.button(7).onTrue(new cmdAuto_DriveToPose(swerve, Constants.PosePositions.Red.FrontLeft));
+        buttonBoxControllerThree.button(8).onTrue(new cmdAuto_DriveToPose(swerve, Constants.PosePositions.Red.FrontRight));
+        buttonBoxControllerThree.button(9).onTrue(new cmdAuto_DriveToPose(swerve, Constants.PosePositions.Red.RightFrontLeft));
+        buttonBoxControllerThree.button(10).onTrue(new cmdAuto_DriveToPose(swerve, Constants.PosePositions.Red.RightFrontRight));
+        buttonBoxControllerThree.button(11).onTrue(new cmdAuto_DriveToPose(swerve, Constants.PosePositions.Red.RightBackLeft));
+        buttonBoxControllerThree.button(12).onTrue(new cmdAuto_DriveToPose(swerve, Constants.PosePositions.Red.RightBackRight));
+      }
+      if (ally.get() == Alliance.Blue) {
+        buttonBoxControllerThree.button(1).onTrue(new cmdAuto_DriveToPose(swerve, Constants.PosePositions.Blue.BackLeft));
+        buttonBoxControllerThree.button(2).onTrue(new cmdAuto_DriveToPose(swerve, Constants.PosePositions.Blue.BackRight));
+        buttonBoxControllerThree.button(3).onTrue(new cmdAuto_DriveToPose(swerve, Constants.PosePositions.Blue.LeftBackLeft));
+        buttonBoxControllerThree.button(4).onTrue(new cmdAuto_DriveToPose(swerve, Constants.PosePositions.Blue.LeftBackRight));
+        buttonBoxControllerThree.button(5).onTrue(new cmdAuto_DriveToPose(swerve, Constants.PosePositions.Blue.LeftFrontLeft));
+        buttonBoxControllerThree.button(6).onTrue(new cmdAuto_DriveToPose(swerve, Constants.PosePositions.Blue.LeftFrontRight));
+        buttonBoxControllerThree.button(7).onTrue(new cmdAuto_DriveToPose(swerve, Constants.PosePositions.Blue.FrontLeft));
+        buttonBoxControllerThree.button(8).onTrue(new cmdAuto_DriveToPose(swerve, Constants.PosePositions.Blue.FrontRight));
+        buttonBoxControllerThree.button(9).onTrue(new cmdAuto_DriveToPose(swerve, Constants.PosePositions.Blue.RightFrontLeft));
+        buttonBoxControllerThree.button(10).onTrue(new cmdAuto_DriveToPose(swerve, Constants.PosePositions.Blue.RightFrontRight));
+        buttonBoxControllerThree.button(11).onTrue(new cmdAuto_DriveToPose(swerve, Constants.PosePositions.Blue.RightBackLeft));
+        buttonBoxControllerThree.button(12).onTrue(new cmdAuto_DriveToPose(swerve, Constants.PosePositions.Blue.RightBackRight));
+      }
+    }
   }
   private void addAutoOptions(){
     chooser.addOption("Crossline Only", swerve.getAutonomousCommand("Crossline Only"));
