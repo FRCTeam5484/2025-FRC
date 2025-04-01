@@ -9,17 +9,17 @@ import frc.robot.classes.LimelightHelpers;
 import frc.robot.subsystems.subSwerve;
 import swervelib.SwerveInputStream;
 
-public class cmdAuto_AlignRobot extends Command {
+public class cmdAuto_AlignRobotRight extends Command {
   subSwerve swerve;
-  PIDController pidHorizontalController = new PIDController(0.9, 0.0, 0.0);
-  PIDController pidDistanceController = new PIDController(0.5, 0.0, 0.0);
+  PIDController pidHorizontalController = new PIDController(0.06, 0.0, 0.0);
+  PIDController pidDistanceController = new PIDController(0.05, 0.0, 0.0);
   SwerveInputStream driveAngularVelocity;
 
-  public cmdAuto_AlignRobot(subSwerve swerve) {
+  public cmdAuto_AlignRobotRight(subSwerve swerve) {
     this.swerve = swerve;
-    pidHorizontalController.setSetpoint(Constants.LimeLightOffsets.HorizontalOffset);
-    pidDistanceController.setSetpoint(Constants.LimeLightOffsets.DistanceOffset);
-    pidHorizontalController.setTolerance(5);
+    pidHorizontalController.setSetpoint(Constants.LimeLightOffsets.Right.HorizontalOffset);
+    pidDistanceController.setSetpoint(Constants.LimeLightOffsets.Right.DistanceOffset);
+    pidHorizontalController.setTolerance(1);
     pidDistanceController.setTolerance(2);
     addRequirements(swerve);
   }
@@ -35,8 +35,8 @@ public class cmdAuto_AlignRobot extends Command {
       return;
     }
     swerve.drive(new ChassisSpeeds(
-      MathUtil.clamp(-pidDistanceController.calculate(LimelightHelpers.getTA("limelight-right")), -0.4, 0),
-      MathUtil.clamp(-pidHorizontalController.calculate(LimelightHelpers.getTX("limelight-right")), -0.6, 0.6), 
+      0,//MathUtil.clamp(pidDistanceController.calculate(LimelightHelpers.getTA("limelight-right")), -0.4, 0),
+      MathUtil.clamp(pidHorizontalController.calculate(LimelightHelpers.getTX("limelight-right")), -0.6, 0.6), 
       0));     
   }
 

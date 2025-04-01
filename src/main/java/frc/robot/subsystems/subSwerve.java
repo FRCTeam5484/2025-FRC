@@ -153,6 +153,18 @@ public class subSwerve extends SubsystemBase {
   @Override
   public void periodic()
   {
+    rightLimelightPose();
+    leftLimelightPose();    
+    swerveDrive.updateOdometry();
+	 // When vision is enabled we must manually update odometry in SwerveDrive
+    if (visionDriveTest)
+    {
+      swerveDrive.updateOdometry();
+      vision.updatePoseEstimation(swerveDrive);
+    }
+  }
+
+  private void rightLimelightPose(){
     limelightRight.getSettings()
              .withRobotOrientation(new Orientation3d(new Rotation3d(swerveDrive.getOdometryHeading()
                                                                                .rotateBy(Rotation2d.kZero)),
@@ -201,6 +213,8 @@ public class subSwerve extends SubsystemBase {
 //        swerveDrive.addVisionMeasurement(estimatorPose, poseEstimate.timestampSeconds);
       }
     }
+  }
+  private void leftLimelightPose(){
     limelightLeft.getSettings()
              .withRobotOrientation(new Orientation3d(new Rotation3d(swerveDrive.getOdometryHeading()
                                                                                .rotateBy(Rotation2d.kZero)),
@@ -249,18 +263,11 @@ public class subSwerve extends SubsystemBase {
 //        swerveDrive.addVisionMeasurement(estimatorPose, poseEstimate.timestampSeconds);
       }
     }
-    swerveDrive.updateOdometry();
-	 // When vision is enabled we must manually update odometry in SwerveDrive
-    if (visionDriveTest)
-    {
-      swerveDrive.updateOdometry();
-      vision.updatePoseEstimation(swerveDrive);
-    }
   }
-
   @Override
   public void simulationPeriodic()
   {
+
   }
 
   public void setupPathPlanner()

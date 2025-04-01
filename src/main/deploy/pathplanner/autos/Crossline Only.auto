@@ -9,18 +9,6 @@
           "data": {
             "pathName": "Crossline"
           }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Elevator L2"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Algae Remover Up"
-          }
         }
       ]
     }

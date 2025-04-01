@@ -66,10 +66,10 @@ public class Constants {
       public static final int UpperLimitBack = 4;
       //public static final int StringPot = 8,9;
 
-      public static final double bottomPosition = -50;
+      public static final double bottomPosition = -10;
       public static final double L1 = 500;
       public static final double L2 = 920;
-      public static final double L3 = 2900;
+      public static final double L3 = 3000;
       public static final double L4 = 6250;
       public static final double topPosition = 6300;
     }
@@ -91,8 +91,14 @@ public class Constants {
       public static final int winchMotor = 20;
     }
     public static final class LimeLightOffsets{
-      public static final double HorizontalOffset = 15.46;
-      public static final double DistanceOffset = 7.36;
+      public static final class Left{
+        public static final double HorizontalOffset = 6.13;
+        public static final double DistanceOffset = 13.03;
+      }
+      public static final class Right{
+        public static final double HorizontalOffset = -20.78;
+        public static final double DistanceOffset = 13.01;
+      }
     }
     public static final class PosePositions{
       public static final class Blue{

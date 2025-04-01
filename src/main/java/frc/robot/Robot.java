@@ -18,9 +18,9 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     CommandScheduler.getInstance().run();
-    SmartDashboard.putBoolean("Limelight Has Target", LimelightHelpers.getTV("limelight-right"));
-    SmartDashboard.putNumber("Limelight Horizontal Error", LimelightHelpers.getTX("limelight-right")-Constants.LimeLightOffsets.HorizontalOffset);
-    SmartDashboard.putNumber("Limelight Distance Error", LimelightHelpers.getTA("limelight-right")-Constants.LimeLightOffsets.DistanceOffset);
+    SmartDashboard.putBoolean("Limelight Right Has Target", LimelightHelpers.getTV("limelight-right"));
+    SmartDashboard.putBoolean("Limelight Left Has Target", LimelightHelpers.getTV("limelight-left"));
+    
   }
 
   @Override

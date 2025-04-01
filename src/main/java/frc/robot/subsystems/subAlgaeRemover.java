@@ -49,7 +49,7 @@ public class subAlgaeRemover extends SubsystemBase {
   public void autoPosition() {
     removerPID.setSetpoint(pidSetPoint);
     removerPID.setTolerance(200);
-    removerMotor.set(MathUtil.clamp(removerPID.calculate(removerEncoder.getPosition()), -0.5, 0.5));
+    removerMotor.set(MathUtil.clamp(removerPID.calculate(removerEncoder.getPosition()), -0.3, 0.5));
   }
   public void resetEncoder(){
     removerEncoder.setPosition(0);
