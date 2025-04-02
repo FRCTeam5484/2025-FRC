@@ -165,6 +165,7 @@ public class RobotContainer {
     buttonBoxControllerOne.button(12).onTrue(new cmdElevator_Stop(elevator));
     elevator.setDefaultCommand(new cmdElevator_TeleOp(elevator, ()->buttonBoxControllerOne.getRawAxis(1)*.5));
 
+    /*
     Optional<Alliance> ally = DriverStation.getAlliance();
     if (ally.isPresent()) {
       if (ally.get() == Alliance.Red) {
@@ -196,6 +197,7 @@ public class RobotContainer {
         buttonBoxControllerTwo.button(1).onTrue(new cmdAuto_DriveToPose(swerve, Constants.PosePositions.Blue.RightBackRight));
       }
     }
+       */
 
     buttonBoxControllerThree.button(1).onTrue(new cmdAuto_AlgaeRemoverToPosition(algaeRemover, Constants.Algae.RemoverArmDown));
     buttonBoxControllerThree.button(2).onTrue(new cmdAuto_AlgaeRemoverToPosition(algaeRemover, Constants.Algae.RemoverArmUp));
