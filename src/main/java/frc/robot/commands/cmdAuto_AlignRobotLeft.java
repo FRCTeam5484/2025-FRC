@@ -11,7 +11,7 @@ import swervelib.SwerveInputStream;
 
 public class cmdAuto_AlignRobotLeft extends Command {
   subSwerve swerve;
-  PIDController pidHorizontalController = new PIDController(0.06, 0.0, 0.0);
+  PIDController pidHorizontalController = new PIDController(0.07, 0.0, 0.0);
   PIDController pidDistanceController = new PIDController(0.06, 0.0, 0.0);
   SwerveInputStream driveAngularVelocity;
 
@@ -35,8 +35,8 @@ public class cmdAuto_AlignRobotLeft extends Command {
       return;
     }
     swerve.drive(new ChassisSpeeds(
-      0,//MathUtil.clamp(-pidDistanceController.calculate(LimelightHelpers.getTA("limelight-left")), 0, 0.4),
-      MathUtil.clamp(pidHorizontalController.calculate(LimelightHelpers.getTX("limelight-left")), -0.6, 0.6), 
+      MathUtil.clamp(-pidDistanceController.calculate(LimelightHelpers.getTA("limelight-left")), 0, 0.4),
+      MathUtil.clamp(pidHorizontalController.calculate(LimelightHelpers.getTX("limelight-left")), -0.9, 0.9), 
       0));     
   }
 
@@ -47,6 +47,6 @@ public class cmdAuto_AlignRobotLeft extends Command {
 
   @Override
   public boolean isFinished() {
-    return pidHorizontalController.atSetpoint() && pidDistanceController.atSetpoint() ? true : false;
+    return pidHorizontalController.atSetpoint();
   }
 }

@@ -9,12 +9,6 @@
           "data": {
             "commands": [
               {
-                "type": "named",
-                "data": {
-                  "name": "Algae Remover Up"
-                }
-              },
-              {
                 "type": "path",
                 "data": {
                   "pathName": "Drive Towards Reef From Line"
@@ -23,29 +17,22 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "Elevator L4"
+                  "name": "Elevator L3"
                 }
               }
             ]
           }
         },
         {
-          "type": "parallel",
+          "type": "named",
           "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "Elevator L4"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Limelight Lineup"
-                }
-              }
-            ]
+            "name": "Limelight Lineup"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Elevator L4"
           }
         },
         {
@@ -72,15 +59,15 @@
           "data": {
             "commands": [
               {
-                "type": "path",
-                "data": {
-                  "pathName": "Backup From Middle"
-                }
-              },
-              {
                 "type": "named",
                 "data": {
                   "name": "Elevator Bottom"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Backup From Middle"
                 }
               }
             ]

@@ -44,6 +44,12 @@
                 "data": {
                   "name": "Limelight Lineup"
                 }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Algae Remover Up"
+                }
               }
             ]
           }
@@ -63,6 +69,12 @@
                 "data": {
                   "name": "Coral Eject"
                 }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Algae Remover Up"
+                }
               }
             ]
           }
@@ -81,6 +93,12 @@
                 "type": "named",
                 "data": {
                   "name": "Elevator Bottom"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Algae Remover Up"
                 }
               }
             ]
@@ -107,6 +125,12 @@
                 "data": {
                   "name": "Elevator L4"
                 }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Algae Remover Up"
+                }
               }
             ]
           }
@@ -125,6 +149,12 @@
                 "type": "named",
                 "data": {
                   "name": "Elevator L4"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Algae Remover Up"
                 }
               }
             ]
@@ -145,6 +175,12 @@
                 "data": {
                   "name": "Elevator L4"
                 }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Algae Remover Up"
+                }
               }
             ]
           }
@@ -163,6 +199,12 @@
                 "type": "named",
                 "data": {
                   "name": "Elevator Bottom"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Algae Remover Up"
                 }
               }
             ]

@@ -117,7 +117,7 @@ public class subSwerve extends SubsystemBase {
                                           Units.inchesToMeters(0),
                                           Units.inchesToMeters(12),
                                           new Rotation3d(0, 0, Units.degreesToRadians(38))))
-             .withArilTagIdFilter(List.of(17.0, 18.0, 19.0, 20.0, 21.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0))
+             .withArilTagIdFilter(List.of(17.0, 18.0, 19.0, 20.0, 21.0, 22.0,  6.0, 7.0, 8.0, 9.0, 10.0, 11.0))
              .save();
     limelightPoseEstimatorRight = limelightRight.getPoseEstimator(true);
 
@@ -127,7 +127,7 @@ public class subSwerve extends SubsystemBase {
                                           Units.inchesToMeters(0),
                                           Units.inchesToMeters(11.5),
                                           new Rotation3d(0, 0, Units.degreesToRadians(43))))
-             .withArilTagIdFilter(List.of(17.0, 18.0, 19.0, 20.0, 21.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0))
+             .withArilTagIdFilter(List.of(17.0, 18.0, 19.0, 20.0, 21.0, 22.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0))
              .save();
     limelightPoseEstimatorLeft = limelightLeft.getPoseEstimator(true);
 

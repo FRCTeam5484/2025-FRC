@@ -11,6 +11,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Filesystem;
+import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -45,6 +46,7 @@ public class RobotContainer {
   public final subAlgaeRemover algaeRemover = new subAlgaeRemover();
   public final subSwerve swerve  = new subSwerve(new File(Filesystem.getDeployDirectory(), "swerve"));
   public final subElevator elevator = new subElevator();
+  public final PowerDistribution pdh = new PowerDistribution();
   private final CommandXboxController driverOne = new CommandXboxController(OperatorConstants.DriverOne);
   private final CommandJoystick buttonBoxControllerOne = new CommandJoystick(OperatorConstants.ButtonBoxControllerOne);
   private final CommandJoystick buttonBoxControllerTwo = new CommandJoystick(OperatorConstants.ButtonBoxControllerTwo);
@@ -70,14 +72,13 @@ public class RobotContainer {
     // Named Commands
     NamedCommands.registerCommand("Coral Intake", new cmdAuto_CoralIntake(coral));
     NamedCommands.registerCommand("Coral Eject", new cmdAuto_CoralEject(coral));
-    NamedCommands.registerCommand("Limelight Lineup", new cmdAuto_AlignRobotLeft(swerve).withTimeout(2));
-    NamedCommands.registerCommand("Algae Remover Up", new cmdAuto_AlgaeRemoverToPosition(algaeRemover, Constants.Algae.RemoverArmUp));
-    NamedCommands.registerCommand("Algae Remover Down", new cmdAuto_AlgaeRemoverToPosition(algaeRemover, Constants.Algae.RemoverArmDown));
-    NamedCommands.registerCommand("Elevator Bottom", new cmdAuto_EvevatorToPosition(elevator, Constants.Elevator.bottomPosition).withTimeout(3));
-    NamedCommands.registerCommand("Elevator L1", new cmdAuto_EvevatorToPosition(elevator, Constants.Elevator.L1).withTimeout(2));
-    NamedCommands.registerCommand("Elevator L2", new cmdAuto_EvevatorToPosition(elevator, Constants.Elevator.L2).withTimeout(2));
-    NamedCommands.registerCommand("Elevator L3", new cmdAuto_EvevatorToPosition(elevator, Constants.Elevator.L3).withTimeout(2));
-    NamedCommands.registerCommand("Elevator L4", new cmdAuto_EvevatorToPosition(elevator, Constants.Elevator.L4).withTimeout(3));
+    NamedCommands.registerCommand("Limelight Lineup", new cmdAuto_AlignRobotLeft(swerve).withTimeout(4));
+    NamedCommands.registerCommand("Algae Remover Up", new cmdAuto_AlgaeRemoverToPosition(algaeRemover, Constants.Algae.RemoverArmUp).withTimeout(1));
+    NamedCommands.registerCommand("Elevator Bottom", new cmdAuto_EvevatorToPosition(elevator, Constants.Elevator.bottomPosition).withTimeout(2));
+    NamedCommands.registerCommand("Elevator L1", new cmdAuto_EvevatorToPosition(elevator, Constants.Elevator.L1).withTimeout(1.5));
+    NamedCommands.registerCommand("Elevator L2", new cmdAuto_EvevatorToPosition(elevator, Constants.Elevator.L2).withTimeout(1.5));
+    NamedCommands.registerCommand("Elevator L3", new cmdAuto_EvevatorToPosition(elevator, Constants.Elevator.L3).withTimeout(1.5));
+    NamedCommands.registerCommand("Elevator L4", new cmdAuto_EvevatorToPosition(elevator, Constants.Elevator.L4).withTimeout(2));
     NamedCommands.registerCommand("Pose ID 20", new cmdAuto_DriveToPose(swerve, new Pose2d(new Translation2d(5.792, 3.756), new Rotation2d(180))));
 
     addAutoOptions();
@@ -122,6 +123,8 @@ public class RobotContainer {
       
       driverOne.b().whileTrue(new cmdAuto_AlignRobotRight(swerve));
       driverOne.a().whileTrue(new cmdAuto_AlignRobotLeft(swerve));
+      driverOne.y().onTrue(new InstantCommand(()->pdh.setSwitchableChannel(false)));
+      driverOne.y().onFalse(new InstantCommand(()->pdh.setSwitchableChannel(true)));
 
       /* 
       driverOne.a().whileTrue(swerve.driveToPose(Constants.PosePositions.Blue.BackLeft));
@@ -194,7 +197,7 @@ public class RobotContainer {
     buttonBoxControllerThree.button(1).onTrue(new cmdAuto_AlgaeRemoverToPosition(algaeRemover, Constants.Algae.RemoverArmDown));
     buttonBoxControllerThree.button(2).onTrue(new cmdAuto_AlgaeRemoverToPosition(algaeRemover, Constants.Algae.RemoverArmUp));
     //buttonBoxControllerTwo.button(3).onTrue(new cmdAlgaeRemover_Stop(algaeRemover));
-    buttonBoxControllerTwo.button(3).onTrue(new cmdAlgaeRemover_ResetEncoder(algaeRemover));
+    buttonBoxControllerThree.button(3).onTrue(new cmdAlgaeRemover_ResetEncoder(algaeRemover));
     algaeRemover.setDefaultCommand(new cmdAlgaeRemover_TeleOp(algaeRemover, ()-> buttonBoxControllerThree.getRawAxis(1)*0.25));
 
     
