@@ -5,25 +5,25 @@
     "data": {
       "commands": [
         {
+          "type": "path",
+          "data": {
+            "pathName": "Drive Towards Reef From Line"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "named",
                 "data": {
-                  "name": "Algae Remover Up"
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Drive Towards Reef From Line"
+                  "name": "Limelight Lineup Extended (6sec)"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "Elevator L4"
+                  "name": "Elevator L4 (6sec)"
                 }
               }
             ]
@@ -36,32 +36,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "Elevator L4"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Limelight Lineup"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Algae Remover Up"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "Elevator L4"
+                  "name": "Elevator L4 (2sec)"
                 }
               },
               {
@@ -69,12 +44,6 @@
                 "data": {
                   "name": "Coral Eject"
                 }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Algae Remover Up"
-                }
               }
             ]
           }
@@ -84,21 +53,15 @@
           "data": {
             "commands": [
               {
+                "type": "named",
+                "data": {
+                  "name": "Elevator Bottom (2sec)"
+                }
+              },
+              {
                 "type": "path",
                 "data": {
                   "pathName": "Go To Human Feed On Right"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Elevator Bottom"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Algae Remover Up"
                 }
               }
             ]
@@ -123,91 +86,16 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "Elevator L4"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Algae Remover Up"
+                  "name": "Elevator L3 (1.5sec)"
                 }
               }
             ]
           }
         },
         {
-          "type": "parallel",
+          "type": "named",
           "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "Limelight Lineup"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Elevator L4"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Algae Remover Up"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "Coral Eject"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Elevator L4"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Algae Remover Up"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Right Reef to Human Feed"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Elevator Bottom"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Algae Remover Up"
-                }
-              }
-            ]
+            "name": "Limelight Lineup Extended (6sec)"
           }
         }
       ]

@@ -72,13 +72,16 @@ public class RobotContainer {
     // Named Commands
     NamedCommands.registerCommand("Coral Intake", new cmdAuto_CoralIntake(coral));
     NamedCommands.registerCommand("Coral Eject", new cmdAuto_CoralEject(coral));
-    NamedCommands.registerCommand("Limelight Lineup", new cmdAuto_AlignRobotLeft(swerve).withTimeout(4));
-    NamedCommands.registerCommand("Algae Remover Up", new cmdAuto_AlgaeRemoverToPosition(algaeRemover, Constants.Algae.RemoverArmUp).withTimeout(1));
-    NamedCommands.registerCommand("Elevator Bottom", new cmdAuto_EvevatorToPosition(elevator, Constants.Elevator.bottomPosition).withTimeout(2));
-    NamedCommands.registerCommand("Elevator L1", new cmdAuto_EvevatorToPosition(elevator, Constants.Elevator.L1).withTimeout(1.5));
-    NamedCommands.registerCommand("Elevator L2", new cmdAuto_EvevatorToPosition(elevator, Constants.Elevator.L2).withTimeout(1.5));
-    NamedCommands.registerCommand("Elevator L3", new cmdAuto_EvevatorToPosition(elevator, Constants.Elevator.L3).withTimeout(1.5));
-    NamedCommands.registerCommand("Elevator L4", new cmdAuto_EvevatorToPosition(elevator, Constants.Elevator.L4).withTimeout(2));
+    NamedCommands.registerCommand("Limelight Lineup (3sec)", new cmdAuto_AlignRobotLeft(swerve).withTimeout(3));
+    NamedCommands.registerCommand("Limelight Lineup Extended (6sec)", new cmdAuto_AlignRobotLeft(swerve).withTimeout(6));
+    NamedCommands.registerCommand("Algae Remover Up (1sec)", new cmdAuto_AlgaeRemoverToPosition(algaeRemover, Constants.Algae.RemoverArmUp).withTimeout(1));
+    NamedCommands.registerCommand("Elevator Bottom (2sec)", new cmdAuto_EvevatorToPosition(elevator, Constants.Elevator.bottomPosition).withTimeout(2));
+    NamedCommands.registerCommand("Elevator L1 (1.5sec)", new cmdAuto_EvevatorToPosition(elevator, Constants.Elevator.L1).withTimeout(1.5));
+    NamedCommands.registerCommand("Elevator L2 (1.5sec)", new cmdAuto_EvevatorToPosition(elevator, Constants.Elevator.L2).withTimeout(1.5));
+    NamedCommands.registerCommand("Elevator L3 (1.5sec)", new cmdAuto_EvevatorToPosition(elevator, Constants.Elevator.L3).withTimeout(1.5));
+    NamedCommands.registerCommand("Elevator L4 (2sec)", new cmdAuto_EvevatorToPosition(elevator, Constants.Elevator.L4).withTimeout(2));
+    NamedCommands.registerCommand("Elevator L4 (3sec)", new cmdAuto_EvevatorToPosition(elevator, Constants.Elevator.L4).withTimeout(3));    
+    NamedCommands.registerCommand("Elevator L4 (6sec)", new cmdAuto_EvevatorToPosition(elevator, Constants.Elevator.L4).withTimeout(6));
     NamedCommands.registerCommand("Pose ID 20", new cmdAuto_DriveToPose(swerve, new Pose2d(new Translation2d(5.792, 3.756), new Rotation2d(180))));
 
     addAutoOptions();

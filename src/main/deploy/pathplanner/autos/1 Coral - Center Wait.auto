@@ -5,44 +5,38 @@
     "data": {
       "commands": [
         {
+          "type": "path",
+          "data": {
+            "pathName": "Drive Towards Reef From Line"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
               {
-                "type": "path",
+                "type": "named",
                 "data": {
-                  "pathName": "Drive Towards Reef From Line"
+                  "name": "Limelight Lineup Extended (6sec)"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "Elevator L3"
+                  "name": "Elevator L4 (6sec)"
                 }
               }
             ]
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "Limelight Lineup"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Elevator L4"
-          }
-        },
-        {
           "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "named",
                 "data": {
-                  "name": "Elevator L4"
+                  "name": "Elevator L4 (2sec)"
                 }
               },
               {
@@ -61,7 +55,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "Elevator Bottom"
+                  "name": "Elevator Bottom (2sec)"
                 }
               },
               {

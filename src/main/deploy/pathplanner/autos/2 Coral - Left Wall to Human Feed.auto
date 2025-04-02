@@ -17,13 +17,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "Algae Remover Up"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Elevator L4"
+                  "name": "Elevator L3 (1.5sec)"
                 }
               }
             ]
@@ -36,13 +30,13 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "Elevator L4"
+                  "name": "Elevator L4 (6sec)"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "Limelight Lineup"
+                  "name": "Limelight Lineup Extended (4sec)"
                 }
               }
             ]
@@ -55,7 +49,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "Elevator L4"
+                  "name": "Elevator L4 (2sec)"
                 }
               },
               {
@@ -80,7 +74,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "Elevator Bottom"
+                  "name": "Elevator Bottom (2sec)"
                 }
               }
             ]
@@ -99,70 +93,13 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "Elevator L4"
+                  "name": "Elevator L4 (4sec)"
                 }
               },
               {
                 "type": "path",
                 "data": {
                   "pathName": "Left Human Feed to Reef"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "Limelight Lineup"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Elevator L4"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "Elevator L4"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Coral Eject"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "Elevator Bottom"
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Left Reef Front to Human Feed"
                 }
               }
             ]

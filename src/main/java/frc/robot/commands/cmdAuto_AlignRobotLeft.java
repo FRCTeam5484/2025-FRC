@@ -11,7 +11,7 @@ import swervelib.SwerveInputStream;
 
 public class cmdAuto_AlignRobotLeft extends Command {
   subSwerve swerve;
-  PIDController pidHorizontalController = new PIDController(0.07, 0.0, 0.0);
+  PIDController pidHorizontalController = new PIDController(0.08, 0.0, 0.0);
   PIDController pidDistanceController = new PIDController(0.06, 0.0, 0.0);
   SwerveInputStream driveAngularVelocity;
 
