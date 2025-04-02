@@ -19,14 +19,14 @@
                 "data": {
                   "name": "Limelight Lineup Extended (6sec)"
                 }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Elevator L4 (6sec)"
-                }
               }
             ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Elevator L4 (2sec)"
           }
         },
         {

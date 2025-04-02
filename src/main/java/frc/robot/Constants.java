@@ -70,7 +70,7 @@ public class Constants {
       public static final double L1 = 500;
       public static final double L2 = 920;
       public static final double L3 = 3000;
-      public static final double L4 = 6250;
+      public static final double L4 = 6200;
       public static final double topPosition = 6300;
     }
     public static final class Algae {
@@ -92,8 +92,8 @@ public class Constants {
     }
     public static final class LimeLightOffsets{
       public static final class Left{
-        public static final double HorizontalOffset = 6.13;
-        public static final double DistanceOffset = 13.03;
+        public static final double HorizontalOffset = 5.08;
+        public static final double DistanceOffset = 13.63;
       }
       public static final class Right{
         public static final double HorizontalOffset = -20.78;

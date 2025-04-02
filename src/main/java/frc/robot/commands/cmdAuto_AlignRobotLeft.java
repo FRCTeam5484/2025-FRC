@@ -11,16 +11,16 @@ import swervelib.SwerveInputStream;
 
 public class cmdAuto_AlignRobotLeft extends Command {
   subSwerve swerve;
-  PIDController pidHorizontalController = new PIDController(0.08, 0.0, 0.0);
-  PIDController pidDistanceController = new PIDController(0.06, 0.0, 0.0);
+  PIDController pidHorizontalController = new PIDController(0.0005, 0.0, 0.0);
+  PIDController pidDistanceController = new PIDController(0.04, 0.0, 0.0);
   SwerveInputStream driveAngularVelocity;
 
   public cmdAuto_AlignRobotLeft(subSwerve swerve) {
     this.swerve = swerve;
-    pidHorizontalController.setSetpoint(Constants.LimeLightOffsets.Left.HorizontalOffset);
-    pidDistanceController.setSetpoint(Constants.LimeLightOffsets.Left.DistanceOffset);
-    pidHorizontalController.setTolerance(1);
-    pidDistanceController.setTolerance(1);
+    pidHorizontalController.setSetpoint(Constants.LimeLightOffsets.Left.HorizontalOffset*100);
+    pidDistanceController.setSetpoint(Constants.LimeLightOffsets.Left.DistanceOffset*100);
+    pidHorizontalController.setTolerance(10);
+    pidDistanceController.setTolerance(10);
     addRequirements(swerve);
   }
 
@@ -30,13 +30,16 @@ public class cmdAuto_AlignRobotLeft extends Command {
 
   @Override
   public void execute() {
+    System.out.println(LimelightHelpers.getTV("limelight-left"));
     if(!LimelightHelpers.getTV("limelight-left")){
       swerve.drive(new ChassisSpeeds(0, 0, 0));    
       return;
     }
+    double horizontalCommand = MathUtil.clamp(pidHorizontalController.calculate(LimelightHelpers.getTX("limelight-left")*100), -0.9, 0.9);
+    System.out.println(horizontalCommand);
     swerve.drive(new ChassisSpeeds(
-      MathUtil.clamp(-pidDistanceController.calculate(LimelightHelpers.getTA("limelight-left")), 0, 0.4),
-      MathUtil.clamp(pidHorizontalController.calculate(LimelightHelpers.getTX("limelight-left")), -0.9, 0.9), 
+      MathUtil.clamp(-pidDistanceController.calculate(LimelightHelpers.getTA("limelight-left")*100), 0, 0.4),
+      horizontalCommand, 
       0));     
   }
 
