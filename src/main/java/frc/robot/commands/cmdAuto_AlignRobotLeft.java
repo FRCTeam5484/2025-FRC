@@ -30,13 +30,13 @@ public class cmdAuto_AlignRobotLeft extends Command {
 
   @Override
   public void execute() {
-    System.out.println(LimelightHelpers.getTV("limelight-left"));
+    System.out.println("Left Limelight: " + LimelightHelpers.getTV("limelight-left"));
     if(!LimelightHelpers.getTV("limelight-left")){
       swerve.drive(new ChassisSpeeds(0, 0, 0));    
       return;
     }
     double horizontalCommand = MathUtil.clamp(pidHorizontalController.calculate(LimelightHelpers.getTX("limelight-left")*100), -0.9, 0.9);
-    System.out.println(horizontalCommand);
+    //System.out.println(horizontalCommand);
     swerve.drive(new ChassisSpeeds(
       MathUtil.clamp(-pidDistanceController.calculate(LimelightHelpers.getTA("limelight-left")*100), 0, 0.4),
       horizontalCommand, 

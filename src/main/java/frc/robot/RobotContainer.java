@@ -26,6 +26,7 @@ import frc.robot.commands.cmdAlgaeRemover_ResetEncoder;
 import frc.robot.commands.cmdAlgaeRemover_Stop;
 import frc.robot.commands.cmdAlgaeRemover_TeleOp;
 import frc.robot.commands.cmdAuto_CoralIntake;
+import frc.robot.commands.cmdAuto_CoralIntakeElevatorL2;
 import frc.robot.commands.cmdAuto_DriveToPose;
 import frc.robot.commands.cmdAuto_CoralEject;
 import frc.robot.commands.cmdCoral_Stop;
@@ -73,6 +74,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("Coral Intake", new cmdAuto_CoralIntake(coral));
     NamedCommands.registerCommand("Coral Eject", new cmdAuto_CoralEject(coral));
     NamedCommands.registerCommand("Limelight Lineup (3sec)", new cmdAuto_AlignRobotLeft(swerve).withTimeout(3));
+    NamedCommands.registerCommand("Limelight Lineup Extended (4sec)", new cmdAuto_AlignRobotLeft(swerve).withTimeout(4));
     NamedCommands.registerCommand("Limelight Lineup Extended (6sec)", new cmdAuto_AlignRobotLeft(swerve).withTimeout(6));
     NamedCommands.registerCommand("Algae Remover Up (1sec)", new cmdAuto_AlgaeRemoverToPosition(algaeRemover, Constants.Algae.RemoverArmUp).withTimeout(1));
     NamedCommands.registerCommand("Elevator Bottom (2sec)", new cmdAuto_EvevatorToPosition(elevator, Constants.Elevator.bottomPosition).withTimeout(2));
@@ -81,6 +83,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("Elevator L3 (1.5sec)", new cmdAuto_EvevatorToPosition(elevator, Constants.Elevator.L3).withTimeout(1.5));
     NamedCommands.registerCommand("Elevator L4 (2sec)", new cmdAuto_EvevatorToPosition(elevator, Constants.Elevator.L4).withTimeout(2));
     NamedCommands.registerCommand("Elevator L4 (3sec)", new cmdAuto_EvevatorToPosition(elevator, Constants.Elevator.L4).withTimeout(3));    
+    NamedCommands.registerCommand("Elevator L4 (4sec)", new cmdAuto_EvevatorToPosition(elevator, Constants.Elevator.L4).withTimeout(4)); 
     NamedCommands.registerCommand("Elevator L4 (6sec)", new cmdAuto_EvevatorToPosition(elevator, Constants.Elevator.L4).withTimeout(6));
     NamedCommands.registerCommand("Pose ID 20", new cmdAuto_DriveToPose(swerve, new Pose2d(new Translation2d(5.792, 3.756), new Rotation2d(180))));
 
@@ -160,7 +163,7 @@ public class RobotContainer {
     buttonBoxControllerOne.button(7).whileTrue(new cmdCoral_TeleOp(coral, ()->-0.5));
     buttonBoxControllerOne.button(8).whileTrue(new cmdCoral_TeleOp(coral, ()->0.5));
     buttonBoxControllerOne.button(9).onTrue(new cmdAuto_CoralEject(coral));
-    buttonBoxControllerOne.button(10).onTrue(new cmdAuto_CoralIntake(coral));
+    buttonBoxControllerOne.button(10).onTrue(new cmdAuto_CoralIntakeElevatorL2(coral, elevator));
     buttonBoxControllerOne.button(11).onTrue(new cmdCoral_Stop(coral));
     buttonBoxControllerOne.button(12).onTrue(new cmdElevator_Stop(elevator));
     elevator.setDefaultCommand(new cmdElevator_TeleOp(elevator, ()->buttonBoxControllerOne.getRawAxis(1)*.5));

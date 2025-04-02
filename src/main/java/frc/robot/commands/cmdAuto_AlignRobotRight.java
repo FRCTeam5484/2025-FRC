@@ -30,6 +30,7 @@ public class cmdAuto_AlignRobotRight extends Command {
 
   @Override
   public void execute() {
+    System.out.println("Left Limelight: " + LimelightHelpers.getTV("limelight-right"));
     if(!LimelightHelpers.getTV("limelight-right")){
       swerve.drive(new ChassisSpeeds(0, 0, 0));    
       return;
