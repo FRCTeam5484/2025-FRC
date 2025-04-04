@@ -98,7 +98,12 @@ public class subElevator extends SubsystemBase {
       stop();
     }
     else{
-      lowerMotor.set(MathUtil.clamp(elevatorPID.calculate(elevatorEncoder.get(), setPoint), -0.6, 0.9));
+      if(elevatorEncoder.get() > 5000){
+        lowerMotor.set(MathUtil.clamp(elevatorPID.calculate(elevatorEncoder.get(), setPoint), -0.6, 0.4));
+      }
+      else{
+        lowerMotor.set(MathUtil.clamp(elevatorPID.calculate(elevatorEncoder.get(), setPoint), -0.6, 0.9));
+      }
     }
   }
 
