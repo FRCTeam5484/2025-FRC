@@ -77,6 +77,8 @@ public class subSwerve extends SubsystemBase {
   private LimelightPoseEstimator limelightPoseEstimatorRight;
   private LimelightPoseEstimator limelightPoseEstimatorLeft;
   private Vision vision;
+  private boolean llRightThere = true;
+  private boolean llLeftThere = true;
 
   public subSwerve(File directory)
   {
@@ -111,26 +113,34 @@ public class subSwerve extends SubsystemBase {
   public void setupLimelight()
   {
     swerveDrive.stopOdometryThread();
-    limelightRight.getSettings()
-             .withPipelineIndex(0)
-             .withCameraOffset(new Pose3d(Units.inchesToMeters(1.75),
-                                          Units.inchesToMeters(0),
-                                          Units.inchesToMeters(12),
-                                          new Rotation3d(0, 0, Units.degreesToRadians(38))))
-             .withArilTagIdFilter(List.of(17.0, 18.0, 19.0, 20.0, 21.0, 22.0,  6.0, 7.0, 8.0, 9.0, 10.0, 11.0))
-             .save();
-    limelightPoseEstimatorRight = limelightRight.getPoseEstimator(true);
-
-    limelightLeft.getSettings()
-             .withPipelineIndex(0)
-             .withCameraOffset(new Pose3d(Units.inchesToMeters(13),
-                                          Units.inchesToMeters(0),
-                                          Units.inchesToMeters(11.5),
-                                          new Rotation3d(0, 0, Units.degreesToRadians(43))))
-             .withArilTagIdFilter(List.of(17.0, 18.0, 19.0, 20.0, 21.0, 22.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0))
-             .save();
-    limelightPoseEstimatorLeft = limelightLeft.getPoseEstimator(true);
-
+    try{
+      limelightRight.getSettings()
+              .withPipelineIndex(0)
+              .withCameraOffset(new Pose3d(Units.inchesToMeters(1.75),
+                                            Units.inchesToMeters(0),
+                                            Units.inchesToMeters(12),
+                                            new Rotation3d(0, 0, Units.degreesToRadians(38))))
+              .withArilTagIdFilter(List.of(17.0, 18.0, 19.0, 20.0, 21.0, 22.0,  6.0, 7.0, 8.0, 9.0, 10.0, 11.0))
+              .save();
+      limelightPoseEstimatorRight = limelightRight.getPoseEstimator(true);
+    }
+    catch(Exception ex){
+      llRightThere = false;
+    }
+    try{
+      limelightLeft.getSettings()
+              .withPipelineIndex(0)
+              .withCameraOffset(new Pose3d(Units.inchesToMeters(13),
+                                            Units.inchesToMeters(0),
+                                            Units.inchesToMeters(11.5),
+                                            new Rotation3d(0, 0, Units.degreesToRadians(43))))
+              .withArilTagIdFilter(List.of(17.0, 18.0, 19.0, 20.0, 21.0, 22.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0))
+              .save();
+      limelightPoseEstimatorLeft = limelightLeft.getPoseEstimator(true);
+    }
+    catch(Exception ex){
+      llLeftThere = false;
+    }
   }
 
   public subSwerve(SwerveDriveConfiguration driveCfg, SwerveControllerConfiguration controllerCfg)
@@ -153,8 +163,13 @@ public class subSwerve extends SubsystemBase {
   @Override
   public void periodic()
   {
-    rightLimelightPose();
-    leftLimelightPose();    
+    if(llRightThere){
+      rightLimelightPose();
+    }
+    if(llLeftThere){
+      leftLimelightPose();   
+    }
+     
     swerveDrive.updateOdometry();
 	 // When vision is enabled we must manually update odometry in SwerveDrive
     if (visionDriveTest)
