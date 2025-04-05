@@ -100,6 +100,7 @@ public class RobotContainer {
     swerve.setDefaultCommand(
         swerve.driveFieldOriented(
             driveRobotOriented.robotRelative(()->driverOne.getRightTriggerAxis()>0.5?true:false)
+            .scaleTranslation(driverOne.getLeftTriggerAxis() > 0.5 ? 1 : 0.8)
             .allianceRelativeControl(()->driverOne.getRightTriggerAxis()>0.5?false:true)));
     //swerve.setDefaultCommand(new cmdSwerve_TeleOp(swerve, ()->driverOne.getLeftY()*-1, ()->driverOne.getLeftX()*-1, ()->driverOne.getRightX()*-1, ()->driverOne.getRightTriggerAxis()>0.5 ? false : true));
     //swerve.setDefaultCommand(new cmdSwerve_TeleOpAlt(swerve, ()->driverOne.getLeftY()*-1, ()->driverOne.getLeftX()*-1, ()->driverOne.getRightX()*-1, ()->driverOne.getRightTriggerAxis()>0.5 ? false : true));
