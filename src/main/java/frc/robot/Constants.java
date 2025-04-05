@@ -66,7 +66,7 @@ public class Constants {
       public static final int UpperLimitBack = 4;
       //public static final int StringPot = 8,9;
 
-      public static final double bottomPosition = -10;
+      public static final double bottomPosition = -5;
       public static final double L1 = 500;
       public static final double L2 = 920;
       public static final double L3 = 3000;

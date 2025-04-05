@@ -77,11 +77,11 @@ public class subElevator extends SubsystemBase {
   }
 
   public void teleOp(double speed) {
-    if(getLowerLimit() && speed < 0) {
+    if((!lowerLimitBack.get() || !lowerLimitFront.get()) && speed < 0) {
       elevatorEncoder.reset();
       stop();
     }
-    else if (getUpperLimit() && speed > 0) {
+    else if ((!upperLimitFront.get() || !upperLimitBack.get()) && speed > 0) {
       stop();
     }
     else{
@@ -90,11 +90,11 @@ public class subElevator extends SubsystemBase {
   }
 
   public void moveToPosition() {
-    if(getLowerLimit() && lowerMotor.get() > 0) {
+    if((!lowerLimitBack.get() || !lowerLimitFront.get()) && lowerMotor.get() > 0) {
       elevatorEncoder.reset();
       stop();
     }
-    else if (getUpperLimit() && lowerMotor.get() < 0) {
+    else if ((!upperLimitFront.get() || !upperLimitBack.get()) && lowerMotor.get() < 0) {
       stop();
     }
     else{
